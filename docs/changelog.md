@@ -147,16 +147,44 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 | Custom thumbnails uploaded | 20 (batch 1: 10, batch 2: 10) |
 | Reassigned Short thumbnails to long-form | 4 |
 | Competitor analysis doc created | 1 |
+| Tribe playlists created | 2 (Judah: 10, Benjamin: 5) — quota hit, rest tomorrow |
+| Channel trailer script written | 1 |
+| Project pushed to GitHub | 1 |
+
+---
+
+### March 17, 2026 — Phase 4A: Content Strategy (Started)
+
+#### 9. Playlist reorganization by tribe/topic (partial)
+- **Playlists created:** 2 of 14 planned
+  - The Tribe of Judah — Lions of Israel (10 videos) ✅
+  - The Tribe of Benjamin — Wolves of the Last Days (5/6 videos) — quota hit mid-add
+- **Remaining playlists (resume March 18):** Ephraim, Naphtali, Zebulun/Issachar, Gad, Reuben, Asher, Simeon/Levi, Dan, Joseph, Lost Tribes, Deuteronomy 28
+- **Why:** "Part 1-80" playlists don't help discovery. Tribe-based playlists let new viewers binge their topic of interest
+- **Quota cost per playlist:** 50 (create) + 50 per video added
+
+#### 10. Channel trailer script prepared
+- **Script:** 2:30 cinematic trailer covering all major tribes, Deuteronomy 28, and call to subscribe
+- **Title:** "The 12 Tribes of Israel — Who They REALLY Are and Where They Went (FULL Breakdown)"
+- **Status:** Script ready, Tommy converting to video with biblical video conversion system
+- **Next:** Upload as unlisted, set as channel trailer for non-subscribers
 
 ---
 
 ## Upcoming Changes
 
+### Tomorrow (March 18) — Quota Reset
+- Finish remaining 12 tribe playlists
+- Add last video to Benjamin playlist
+
+### This Week
+- Upload channel trailer once video is ready
+- Establish posting schedule: 1 Short/day
+- First community post (tribe poll)
+
 ### Future — Content Strategy
-- Create channel trailer / hero video
 - Develop 4-6 long-form animated explainers (10-20 min)
-- Add bold text overlays to remaining thumbnails (batch 2+)
-- Establish consistent posting schedule (1 Short/day)
+- Add bold text overlays to remaining thumbnails (batch 3+)
 - Start community engagement (polls, questions)
 
 ---

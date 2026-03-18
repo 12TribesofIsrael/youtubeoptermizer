@@ -45,15 +45,27 @@ All visual assets must follow this style:
 - **Elements**: Parting clouds, light beams, ancient scrolls, stone tablets
 - Apply this to: thumbnails, banners, profile pics, video intros, any image generation prompts
 
-## Critical Optimization Priorities (from goal.md)
+## Optimization Progress
 
-1. **Titles**: Stop "Part X" numbering in titles — use standalone searchable titles, keep part numbers in descriptions only
-2. **Thumbnails**: Add bold 3–5 word text overlay on every thumbnail to improve CTR
-3. **Remove @AIBIBLEGOSPELS from titles** — it truncates titles in search results
-4. **Delete spam signals**: Duplicate part numbers, 7 near-identical Matthew 6 videos, sub-15-second videos, off-brand podcast episode
-5. **Posting cadence**: 1 solid Short/day beats flooding then silence
-6. **Long-form gap**: Need 4–6 animated explainer videos (10–20 min) for evergreen search traffic and ad revenue
-7. **Missing formats**: Channel trailer, community posts, sleep/ambient audio, standalone discovery videos
+| Phase | Status |
+|-------|--------|
+| Phase 1: Channel Cleanup | ✅ Done (30 deleted, 154 titles cleaned) |
+| Phase 2: Title Optimization | ✅ Done (84 Part titles renamed, 50 em dash fixes) |
+| Phase 3: Thumbnails | ✅ Done (20 custom thumbnails, brand guide applied) |
+| Phase 4A: Playlists + Trailer | In Progress (2/14 playlists, trailer script ready) |
+| Phase 4B: Long-form Content | Next |
+
+## Current Priorities
+
+1. **Finish tribe playlists** (12 remaining, needs quota reset)
+2. **Channel trailer** — script written, video in production
+3. **Posting cadence**: 1 solid Short/day beats flooding then silence
+4. **Long-form gap**: Need 4–6 animated explainer videos (10–20 min) for evergreen search traffic and ad revenue
+5. **Missing formats**: Community posts, sleep/ambient audio, standalone discovery videos
+
+## GitHub Repository
+
+https://github.com/12TribesofIsrael/youtubeoptermizer
 
 ## YouTube API Integration (from research.md)
 

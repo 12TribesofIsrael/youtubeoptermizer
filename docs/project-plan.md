@@ -64,33 +64,44 @@ All thumbnails, banners, profile images, and future visual assets must follow th
 - Plus lookups ~1,000 units
 - **Fits in 1 day** with room to spare (10,000 daily limit)
 
-## Phase 3: Thumbnail Optimization (March 19-25, 2026)
+## Phase 3: Thumbnail Optimization ✅ COMPLETE (March 17, 2026)
 
-- Add bold 3-5 word text overlay on every thumbnail
-- Match competitor style: bold close-up faces, high contrast, emotional expressions
+- 20 custom thumbnails uploaded (2 batches of 10)
+- 4 Short thumbnails reassigned to matching long-form videos
+- Bold 3-5 word gold text overlay on every thumbnail
+- Brand guide: dark navy/black, golden amber, cinematic chiaroscuro
 - Target: Move CTR from 4.06% → 6%+
-- Start with top 20 videos by impressions (highest traffic = highest impact)
 
-## Phase 4: Content Strategy (March 26 - June 2026)
+## Phase 4: Content Strategy (March 17 - June 2026)
 
-### Immediate (Week 1-2)
-- [ ] Create a channel trailer / "Start Here" video (under 10 min)
+### Phase 4A: Immediate — In Progress
+- [x] Reorganize playlists by tribe/topic (2/14 done, resume March 18)
+- [ ] Channel trailer — script ready, video in production
 - [ ] Establish posting schedule: 1 Short/day, no flooding
+- [ ] First community post (tribe poll)
+- [ ] Add channel keywords and updated description
+- [ ] Add end screens to top 5 videos
+- [ ] Add subscribe watermark
+- [ ] Check monetization eligibility
 
-### Short-term (Month 1-2)
-- [ ] Produce first long-form animated explainer (10-20 min) — "The Complete Story of the 12 Tribes"
-- [ ] Create 3 standalone discovery Shorts (not part of series)
-- [ ] Start community posts (questions, polls)
+### Phase 4B: Growth Unlock (Week 2-3)
+- [ ] First long-form pillar video (15-20 min) — "The Complete Story of the 12 Tribes of Israel: Where Are They Now?"
+- [ ] 3 standalone discovery Shorts (not part of series, designed to go viral)
 
-### Medium-term (Month 2-3)
-- [ ] Produce 3 more long-form explainers on evergreen topics
-- [ ] Test sleep/ambient Bible audio format (Psalms)
-- [ ] Reorganize playlists with topic-based names (not "Part 1-80")
+### Phase 4C: Scale (Month 2-3)
+- [ ] 4 more long-form pillar videos:
+  - "Deuteronomy 28: Every Curse That Came True"
+  - "The Tribe of Judah: From Kings to Slaves to Kings Again"
+  - "Hebrew Israelites in the Americas: The Evidence"
+  - "The Apocrypha: What They Removed and Why"
+- [ ] 2-3 sleep/ambient Bible audio videos (Psalms, 1-2 hours)
+- [ ] Community posts (questions, polls, engagement)
 
-### Long-term (Month 3-6)
-- [ ] Build to 4-6 pillar long-form videos ranking in search
-- [ ] Target 10K subscribers
-- [ ] Apply for YouTube Partner Program if not already monetized
+### Phase 4D: Monetization (Month 3-6)
+- [ ] Hit 10K subscribers
+- [ ] Build to 4,000 watch hours (long-form accelerates this)
+- [ ] YouTube Partner Program — first ad revenue
+- [ ] Target 50K subscribers
 
 ## Phase 5: Ongoing Optimization
 
