@@ -52,13 +52,13 @@ All visual assets must follow this style:
 | Phase 1: Channel Cleanup | ✅ Done (30 deleted, 154 titles cleaned) |
 | Phase 2: Title Optimization | ✅ Done (84 Part titles renamed, 50 em dash fixes) |
 | Phase 3: Thumbnails | ✅ Done (20 custom thumbnails, brand guide applied) |
-| Phase 4A: Playlists + Trailer | In Progress (2/14 playlists, trailer script ready) |
+| Phase 4A: Playlists + Trailer | ✅ Playlists done (14/14), trailer script ready |
 | Phase 4B: Long-form Content | Next |
 
 ## Current Priorities
 
-1. **Finish tribe playlists** (12 remaining, needs quota reset)
-2. **Channel trailer** — script written, video in production
+1. **Channel trailer** — script written, video in production
+2. **Manual tasks** — channel keywords, description, end screens, subscribe watermark
 3. **Posting cadence**: 1 solid Short/day beats flooding then silence
 4. **Long-form gap**: Need 4–6 animated explainer videos (10–20 min) for evergreen search traffic and ad revenue
 5. **Missing formats**: Community posts, sleep/ambient audio, standalone discovery videos
