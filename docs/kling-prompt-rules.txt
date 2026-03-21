@@ -1,0 +1,75 @@
+============================================================
+   KLING AI PROMPT RULES — AI BIBLE GOSPELS
+   Copy-paste these into EVERY Kling generation
+============================================================
+
+------------------------------------------------------------
+POSITIVE PROMPT — Paste at the START of every prompt
+------------------------------------------------------------
+
+A dark-brown skinned Black man, African American complexion, deep melanated skin, 4C tightly coiled hair, broad nose, full lips, strong jawline,
+
+(then add your scene description after the comma)
+
+
+------------------------------------------------------------
+NEGATIVE PROMPT — Paste in the Negative Prompt box EVERY TIME
+------------------------------------------------------------
+
+Caucasian, European, white skin, pale skin, light skin, light-skinned, mixed race, straight hair, wavy hair, fine hair, silky hair, narrow nose, thin lips, Middle Eastern, Indian, Asian, olive skin, tan skin, blonde hair, red hair, blue eyes, green eyes, gray eyes
+
+
+------------------------------------------------------------
+FOR WOMEN — Use this instead of the male version
+------------------------------------------------------------
+
+A dark-brown skinned Black woman, African American complexion, deep melanated skin, natural 4C tightly coiled hair, broad nose, full lips,
+
+
+------------------------------------------------------------
+FOR ELDER / WHITE HAIR CHARACTERS (Christ, Abraham, Noah)
+------------------------------------------------------------
+
+A dark-brown skinned Black man, African American complexion, deep melanated skin, white tightly coiled 4C hair, white coiled beard, broad nose, full lips, strong jawline,
+
+
+------------------------------------------------------------
+FOR WARRIOR / KING CHARACTERS (David, Judah, soldiers)
+------------------------------------------------------------
+
+A dark-brown skinned muscular Black man, African American complexion, deep melanated skin, short cropped 4C coiled hair, full dark beard, broad nose, full lips, strong jawline,
+
+
+------------------------------------------------------------
+ACTOR REFERENCES — Add if Kling still makes them too light
+------------------------------------------------------------
+
+Use any of these to lock the complexion:
+- "resembling Djimon Hounsou"
+- "resembling Idris Elba"
+- "resembling Yahya Abdul-Mateen II"
+- "resembling Michael B. Jordan"
+- "resembling Viola Davis" (for women)
+- "resembling Lupita Nyong'o" (for women)
+
+
+------------------------------------------------------------
+REFERENCE IMAGE TIP
+------------------------------------------------------------
+
+Upload one of your approved dark-skinned character images as a
+REFERENCE IMAGE in Kling. This forces Kling to match the skin
+tone and features. Use the warrior (crimson/gold) or the elder
+(white coiled beard) as your go-to reference images.
+
+
+------------------------------------------------------------
+REMEMBER
+------------------------------------------------------------
+
+1. ALWAYS lead with skin tone — first words of every prompt
+2. ALWAYS fill in the negative prompt box — every single time
+3. NEVER say just "biblical man" or "ancient Hebrew" alone
+4. NEVER use "bronze" for skin — Kling reads it as tan/olive
+5. NEVER use "curly" for hair — Kling makes it wavy. Say "4C coiled"
+6. If one generation comes out wrong, add an actor reference and re-run

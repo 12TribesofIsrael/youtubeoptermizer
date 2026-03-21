@@ -45,6 +45,18 @@ All visual assets must follow this style:
 - **Elements**: Parting clouds, light beams, ancient scrolls, stone tablets
 - Apply this to: thumbnails, banners, profile pics, video intros, any image generation prompts
 
+### Character Depiction Rule (MANDATORY)
+All Israelite characters, Christ/Yashua, prophets, kings, and biblical Hebrew figures MUST be depicted as **melanated Black/African American men and women**. This is non-negotiable for every visual prompt, thumbnail prompt, video generation prompt (Kling, Runway, Sora, DALL-E, Midjourney, etc.).
+
+**ALWAYS include in every AI image/video prompt:**
+- "dark-brown to deep-brown skinned man/woman"
+- "melanated African American complexion"
+- "wool-textured / coiled / tightly curled hair"
+- "NO Caucasian, European, or light-skinned depictions"
+- "NOT white, NOT pale, NOT light-skinned"
+
+**Why:** AI video generators (Kling, etc.) default to Caucasian features for biblical figures. You MUST explicitly override this in every prompt by specifying dark-brown/melanated skin, wool hair texture, and explicitly stating no Caucasian or European features. Without these negative prompts, the AI will insert white-presenting figures.
+
 ## Optimization Progress
 
 | Phase | Status |
