@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Audit Tool</title>
+    <style>
+        :root {
+            --navy: #0a0e1a;
+            --gold: #d4a843;
+            --gold-dim: #b8912e;
+            --dark: #111827;
+            --card: #1a1f2e;
+            --text: #e5e7eb;
+            --text-dim: #9ca3af;
+            --border: #2d3348;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .header h1 {
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            color: var(--text-dim);
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* ── Form ── */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group .hint {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #4b5563;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        /* ── Button ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--gold);
+            color: var(--navy);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn:hover { background: var(--gold-dim); }
+        .btn:active { transform: scale(0.98); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: var(--card);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            margin-top: 10px;
+        }
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* ── Progress ── */
+        .progress {
+            display: none;
+            margin-top: 30px;
+        }
+        .progress.active { display: block; }
+        .progress-bar {
+            background: var(--dark);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 8px;
+            margin-bottom: 12px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+            border-radius: 8px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        .progress-steps {
+            list-style: none;
+        }
+        .progress-steps li {
+            padding: 6px 0;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .progress-steps li.done { color: var(--success); }
+        .progress-steps li.active { color: var(--gold); }
+        .step-icon { width: 18px; text-align: center; }
+
+        /* ── Report ── */
+        .report-section {
+            display: none;
+            margin-top: 30px;
+        }
+        .report-section.active { display: block; }
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .report-actions .btn { width: auto; }
+        .report-content {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            line-height: 1.7;
+        }
+        .report-content h1 {
+            color: var(--gold);
+            font-size: 1.6rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .report-content h2 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+        .report-content h3 {
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        .report-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .report-content th {
+            background: var(--navy);
+            color: var(--gold);
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+        .report-content td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+        }
+        .report-content code {
+            background: var(--dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--gold);
+        }
+        .report-content pre {
+            background: var(--dark);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+        }
+        .report-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .report-content ul, .report-content ol {
+            padding-left: 24px;
+            margin: 8px 0;
+        }
+        .report-content li { margin: 4px 0; }
+        .report-content strong { color: var(--gold); }
+        .report-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 25px 0;
+        }
+        .report-content p { margin: 8px 0; }
+
+        /* ── Error ── */
+        .error-msg {
+            display: none;
+            background: #1a0a0a;
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .error-msg.active { display: block; }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Social Media Audit Tool</h1>
+    <p>Optimize your social profiles to drive maximum traffic to YouTube</p>
+</div>
+
+<div class="container">
+    <!-- Form -->
+    <div class="form-card" id="auditForm">
+        <form onsubmit="runAudit(event)">
+            <div class="form-group">
+                <label class="required">YouTube Channel</label>
+                <div class="hint">Your YouTube handle or channel URL</div>
+                <input type="text" name="youtube_handle" placeholder="@AIBIBLEGOSPELS" required>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Social Media URLs</label>
+                <div class="hint">Comma-separated links to your social profiles</div>
+                <textarea name="social_urls" placeholder="instagram.com/aibiblegospels, tiktok.com/@aibiblegospels, twitter.com/aibiblegospels, facebook.com/aibiblegospels" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Niche / Topic</label>
+                <div class="hint">What is your channel about? (auto-detected if left blank)</div>
+                <input type="text" name="niche" placeholder="Biblical content, fitness coaching, SaaS marketing...">
+            </div>
+
+            <div class="form-group">
+                <label>Competitor</label>
+                <div class="hint">A competitor doing well on social media (optional — we'll find one if blank)</div>
+                <input type="text" name="competitor" placeholder="@competitorhandle or URL">
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                Run Audit
+            </button>
+        </form>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress" id="progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <ul class="progress-steps">
+            <li id="step1"><span class="step-icon">&#9744;</span> Researching platform best practices...</li>
+            <li id="step2"><span class="step-icon">&#9744;</span> Auditing competitor profiles...</li>
+            <li id="step3"><span class="step-icon">&#9744;</span> Analyzing niche hashtags & trends...</li>
+            <li id="step4"><span class="step-icon">&#9744;</span> Generating full audit report...</li>
+        </ul>
+    </div>
+
+    <!-- Error -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Report -->
+    <div class="report-section" id="reportSection">
+        <div class="report-actions">
+            <button class="btn" onclick="downloadPDF()">Download PDF</button>
+            <button class="btn btn-secondary" onclick="copyMarkdown()">Copy Markdown</button>
+            <button class="btn btn-secondary" onclick="newAudit()">New Audit</button>
+        </div>
+        <div class="report-content" id="reportContent"></div>
+    </div>
+</div>
+
+<div class="footer">
+    Social Media Audit Tool &mdash; Powered by Claude AI
+</div>
+
+<script>
+let reportMarkdown = "";
+let reportHTML = "";
+
+async function runAudit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Show progress
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("progress").classList.add("active");
+    document.getElementById("errorMsg").classList.remove("active");
+    document.getElementById("reportSection").classList.remove("active");
+
+    // Animate progress steps
+    const steps = ["step1", "step2", "step3", "step4"];
+    const fill = document.getElementById("progressFill");
+
+    // Simulate progress while waiting
+    let currentStep = 0;
+    const progressInterval = setInterval(() => {
+        if (currentStep < 3) {
+            document.getElementById(steps[currentStep]).classList.add("done");
+            document.getElementById(steps[currentStep]).querySelector(".step-icon").innerHTML = "&#9745;";
+            currentStep++;
+            document.getElementById(steps[currentStep]).classList.add("active");
+            fill.style.width = (currentStep * 25) + "%";
+        }
+    }, 8000);
+
+    // Start step 1
+    document.getElementById(steps[0]).classList.add("active");
+    fill.style.width = "10%";
+
+    try {
+        const response = await fetch("/audit", {
+            method: "POST",
+            body: formData,
+        });
+
+        clearInterval(progressInterval);
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.detail || "Audit failed");
+        }
+
+        const data = await response.json();
+        reportMarkdown = data.markdown;
+        reportHTML = data.html;
+
+        // Complete all steps
+        steps.forEach(s => {
+            document.getElementById(s).classList.remove("active");
+            document.getElementById(s).classList.add("done");
+            document.getElementById(s).querySelector(".step-icon").innerHTML = "&#9745;";
+        });
+        fill.style.width = "100%";
+
+        // Show report after a brief pause
+        setTimeout(() => {
+            document.getElementById("progress").classList.remove("active");
+            document.getElementById("reportSection").classList.add("active");
+            document.getElementById("reportContent").innerHTML = reportHTML;
+        }, 1000);
+
+    } catch (err) {
+        clearInterval(progressInterval);
+        document.getElementById("progress").classList.remove("active");
+        document.getElementById("errorMsg").textContent = err.message;
+        document.getElementById("errorMsg").classList.add("active");
+    } finally {
+        document.getElementById("submitBtn").disabled = false;
+    }
+}
+
+async function downloadPDF() {
+    try {
+        const response = await fetch("/download-pdf", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ html: reportHTML }),
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            // Fallback: open print dialog
+            const printWindow = window.open("", "_blank");
+            printWindow.document.write(`
+                <html><head><title>Social Media Audit</title>
+                <style>
+                    body { font-family: 'Segoe UI', sans-serif; padding: 40px; line-height: 1.6; }
+                    h1 { border-bottom: 3px solid #d4a843; padding-bottom: 10px; }
+                    h2 { margin-top: 30px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+                    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+                    th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+                    th { background: #0a0e1a; color: #d4a843; }
+                    pre { background: #f4f4f4; padding: 15px; border-radius: 8px; }
+                    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+                </style></head><body>${reportHTML}</body></html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "social-media-audit.pdf";
+        a.click();
+        URL.revokeObjectURL(url);
+    } catch (err) {
+        alert("PDF download failed: " + err.message + "\nTry using the browser print dialog instead.");
+    }
+}
+
+function copyMarkdown() {
+    navigator.clipboard.writeText(reportMarkdown).then(() => {
+        const btn = event.target;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Copy Markdown"; }, 2000);
+    });
+}
+
+function newAudit() {
+    document.getElementById("reportSection").classList.remove("active");
+    document.getElementById("auditForm").scrollIntoView({ behavior: "smooth" });
+    reportMarkdown = "";
+    reportHTML = "";
+    // Reset progress steps
+    ["step1", "step2", "step3", "step4"].forEach(s => {
+        const el = document.getElementById(s);
+        el.classList.remove("done", "active");
+        el.querySelector(".step-icon").innerHTML = "&#9744;";
+    });
+    document.getElementById("progressFill").style.width = "0%";
+}
+</script>
+
+</body>
+</html>
