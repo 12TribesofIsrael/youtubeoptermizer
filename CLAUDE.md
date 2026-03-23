@@ -45,6 +45,13 @@ All visual assets must follow this style:
 - **Elements**: Parting clouds, light beams, ancient scrolls, stone tablets
 - Apply this to: thumbnails, banners, profile pics, video intros, any image generation prompts
 
+### Text Overlay Rule (MANDATORY)
+**NEVER include text in Kling AI prompts** — Kling cannot render text. Instead:
+- **Narration carries all scripture** — the viewer hears it, Kling shows the visual fulfillment
+- **Only generate text cards for:** title card, closing scripture cards (3 max), and channel logo
+- **Generate text cards in ChatGPT/DALL-E** using the gold-on-black template (gold serif, black bg, golden particles)
+- **Production workflow:** Kling (visuals) → ChatGPT (title + closing cards only) → CapCut (assembly)
+
 ### Character Depiction Rule (MANDATORY)
 All Israelite characters, Christ/Yashua, prophets, kings, and biblical Hebrew figures MUST be depicted as **melanated Black/African American men and women**. This is non-negotiable for every visual prompt, thumbnail prompt, video generation prompt (Kling, Runway, Sora, DALL-E, Midjourney, etc.).
 
