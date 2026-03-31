@@ -1,8 +1,10 @@
 # Social Media Audit — AI Bible Gospels
 
-**Date:** March 22, 2026
+**Date:** March 30, 2026
 **Goal:** Optimize all social profiles to funnel maximum traffic to YouTube (@AIBIBLEGOSPELS)
-**Accounts:** LinkedIn, Instagram, TikTok, X/Twitter, Facebook
+**Accounts:** Instagram (@aibiblegospels), TikTok (@aibiblegospels_), X/Twitter (@AIbiblegospels), Facebook (AI Bible Gospels)
+**Competitor Benchmark:** The Bible in Black (~47.5K YouTube subs)
+**Linktree:** https://linktr.ee/aibiblegospels
 
 ---
 
