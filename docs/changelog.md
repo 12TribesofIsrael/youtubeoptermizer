@@ -235,21 +235,118 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ---
 
+---
+
+### March 30, 2026 — Phase 4B + YouTube Title Rewrite
+
+#### 12. Rewrote 15 YouTube video titles for viral hooks
+- **Videos affected:** 15 (mix of long-form and Shorts)
+- **Method:** Analyzed top-performing title patterns from competitors (ForbiddenGospel, GodsWordUnmasked, The Bible in Black). Applied identity-driven, curiosity-gap, and prophecy-reveal formulas.
+- **Why:** Channel CTR at 4.06% vs target of 6-10%. Stronger title hooks = more clicks from impressions already being served.
+- **Expected impact:** +1-2% CTR improvement on rewritten videos
+
+#### 13. Phase 4B — Pillar video script written
+- **Script:** Long-form animated explainer (10-20 min) covering full 12 Tribes identity breakdown
+- **Status:** Script ready. Tommy converting to video with Kling AI + CapCut workflow.
+- **Why:** Channel needs 4-6 long-form videos for ad revenue eligibility and evergreen search traffic
+
+---
+
+### April 1-2, 2026 — Phase 5: Social Media Automation
+
+#### 14. Facebook — 8 viral posts live via API
+- **Script:** `scripts/facebook-post.py`
+- **Posts live:** identity, prophecy, identity_chart, suppressed_truth, awe, tribe_engagement, cinematic, current_events
+- **Method:** Meta Graph API v25.0. YouTube link posted as first comment (avoids Facebook reach penalty on link-in-body).
+- **App:** Meta developer app published (App ID: 1452257036358754)
+- **Expected impact:** Cross-platform reach, driving Facebook audience to YouTube
+
+#### 15. Repurpose.io — All 4 platform workflows configured
+- **Platforms:** Instagram, TikTok, X/Twitter, Facebook
+- **Caption templates:** Platform-specific viral templates added to each workflow (see `docs/repurpose-templates.md`)
+- **First comment (YouTube link):** Enabled on all 4 workflows
+- **AI auto-generate captions:** Enabled on all 4 workflows
+- **TikTok posting frequency:** Bumped to 3 posts/day
+- **Why:** 228-video Google Drive backlog needed automated distribution system. Repurpose handles all 4 platforms at 9am and 6pm daily.
+
+#### 16. All 4 platform bios updated
+- **Platforms:** Facebook, TikTok, Instagram, X/Twitter
+- **Copy:** Niche identity + YouTube funnel CTA on every bio. Character-counted templates in `docs/repurpose-templates.md`.
+
+#### 17. Meta App Review submitted
+- **Permissions requested:** instagram_business_basic, instagram_business_manage_comments
+- **Date submitted:** April 2, 2026
+- **Why:** Required to edit captions on existing 538 Instagram posts. App was in Development mode — could only manage own account. Business mode requires App Review.
+- **Status:** Pending approval (1-5 business days)
+- **Next action:** Once approved → run `python scripts/meta-update-posts.py instagram --live`
+
+#### 18. YouTube OAuth token refreshed
+- **Date:** April 1, 2026
+- **Method:** Deleted expired token.json → ran `python scripts/connect.py` → browser OAuth flow
+- **Why:** token.json had expired (invalid_grant error on channel-status.py)
+
+#### 19. X/Twitter API — blocked by Free tier
+- **Keys saved:** Consumer Key, Secret, Access Token, Access Secret (in .env)
+- **Script built:** `scripts/twitter-post.py` — 8 viral tweet templates ready
+- **Status:** X Free/Pay-per-use tier does NOT support OAuth 1.0a posting
+- **Workaround:** Repurpose.io handles X posting. Script ready for if/when upgraded to X Basic ($100/mo).
+
+#### Summary — April 1-2, 2026
+| Action | Result |
+|--------|--------|
+| Facebook posts live | 8/8 ✅ |
+| Repurpose workflows configured | 4/4 ✅ |
+| Platform bios updated | 4/4 ✅ |
+| YouTube titles rewritten | 15 ✅ |
+| Meta App Review submitted | ✅ (pending approval) |
+| Instagram caption updates (538 posts) | ⏳ Blocked — pending App Review |
+| X/Twitter API posting | ❌ Free tier limitation |
+
+---
+
+### April 2, 2026 — Long-Form Video Tag & Title Fixes
+
+#### 20. Fixed tags and titles on 5 long-form videos
+- **Problem:** 5 long-form videos had `shorts` in their tags + completely off-niche tags (healing music, psalm 91, soaking worship music). YouTube was mis-categorizing these and serving them to the wrong audience.
+- **Videos fixed:**
+  - `mAJS97kNC5E` — Title typo fixed: "Reveled" → "Revealed" + 23 niche tags applied
+  - `xL8v7eZ9mwc` — Replaced generic tags with 23 niche + audiobook-specific tags
+  - `dpERIR0YZZ8` — Replaced generic tags with 22 niche + Deut 28 discovery tags
+  - `DIvHY0Ic1Ac` — Removed @AIBIBLEGOSPELS from title + 22 niche tags
+  - `rKLtGlKw4ak` — Replaced generic tags with 22 niche + kingdom/commands tags
+- **New tag set (all 5):** 12 tribes of israel, hebrew israelites, black hebrew israelites, lost tribes of israel, israelite awakening, deuteronomy 28, bible prophecy, biblical truth, end times prophecy, bible study, king james bible, kjv 1611, ai bible gospels, israel identity, chosen people of god, gospel truth, hidden history + video-specific extras
+- **Expected impact:** Algorithm now properly categorizes these as long-form 12 Tribes content. Should start surfacing in search and suggested for the right audience within 1-2 weeks.
+- **Also done:** X profile name fixed — "Bible Gospels" → "AI Bible Gospels"
+
+#### 21. Channel About description rewritten
+- **Problem:** Old description was generic — first 150 chars said nothing niche-specific. No searchable keywords in the body. No CTA or links.
+- **Fix:** Rewrote to lead with "12 Tribes of Israel Revealed" in the first line (what shows in YouTube search). Added Hebrew Israelites, Deuteronomy 28, Black Hebrew Israelites, lost tribes, KJV naturally in the body. Added subscriber CTA with social proof (5,900+).
+- **Expected impact:** Better channel discovery when users search Hebrew Israelite / 12 Tribes terms. Higher subscribe conversion from channel page visits.
+
+---
+
 ## Upcoming Changes
 
-### Tomorrow (March 18) — Quota Reset
-- Finish remaining 12 tribe playlists
-- Add last video to Benjamin playlist
+### Pending Approval (1-5 business days)
+- Meta App Review → run `python scripts/meta-update-posts.py instagram --live` to fix all 538 Instagram post captions
 
-### This Week
-- Upload channel trailer once video is ready
-- Establish posting schedule: 1 Short/day
-- First community post (tribe poll)
+### Son's Task
+- Create `New-Shorts\` subfolder in `G:\My Drive\AI BIBLE GOSPELS\Videos\`
+- Create 4 new Repurpose workflows (IG, TikTok, X, FB) pointing to `New-Shorts\` folder
+- All new Shorts go into `New-Shorts\` going forward; existing 228-video backlog workflows run untouched
+
+### When TikTok hits 1,000 followers (currently 470)
+- Add YouTube channel link to TikTok bio
+
+### This Month
+- Apply for TikTok API at developers.tiktok.com
+- Refresh Meta token every 60 days (developers.facebook.com/tools/debug/accesstoken)
+- Fix X profile name: "Bible Gospels" → "AI Bible Gospels"
 
 ### Future — Content Strategy
-- Develop 4-6 long-form animated explainers (10-20 min)
-- Add bold text overlays to remaining thumbnails (batch 3+)
-- Start community engagement (polls, questions)
+- Develop 4-6 long-form animated explainers (10-20 min) for ad revenue + evergreen search
+- Apply for YouTube monetization once long-form content is live
+- Add optimized descriptions to all Shorts via API
 
 ---
 
