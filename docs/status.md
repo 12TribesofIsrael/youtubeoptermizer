@@ -112,13 +112,26 @@
 
 ---
 
+## What Was Done (April 1-2, 2026)
+
+- ✅ Facebook — 8 viral posts live via API
+- ✅ Repurpose captions set up on all 4 workflows (IG, TikTok, X, Facebook)
+- ✅ First comment (YouTube link) enabled on all 4 workflows
+- ✅ AI auto-generate captions enabled on all 4 workflows
+- ✅ TikTok bumped to 3 posts/day
+- ✅ All 4 platform bios updated (Facebook, TikTok, Instagram, X)
+- ✅ 15 YouTube video titles rewritten with viral hooks
+- ✅ Meta App Review submitted (instagram_business_basic + instagram_business_manage_comments)
+- ✅ YouTube token refreshed
+
 ## Immediate Next Steps (Priority Order)
 
-1. 🔲 **Submit Meta App Review** — unlocks Instagram caption editing for all 538 posts
-2. 🔲 **Set up Repurpose caption templates** — every new video auto-posts with correct captions
-3. 🔲 **Write optimized bios** for all platforms — paste once, done
+1. 🔲 **Meta App Review approval** — 1-5 business days — then run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions
+2. 🔲 **Fix X name** — currently shows "Bible Gospels" → change to "AI Bible Gospels" in X profile settings
+3. 🔲 **Hit 1,000 TikTok followers** — then add YouTube link to bio (currently at 470)
 4. 🔲 **Apply for TikTok API** at developers.tiktok.com
-5. 🔲 **Refresh Meta token regularly** — current tokens expire, need long-lived token setup
+5. 🔲 **Refresh Meta token** every 60 days — use developers.facebook.com/tools/explorer
+6. 🔲 **Long-form content** — need 4-6 animated explainer videos (10-20 min) for ad revenue
 
 ---
 
