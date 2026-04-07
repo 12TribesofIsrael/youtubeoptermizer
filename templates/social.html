@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %}Social Media{% endblock %}
+{% block page_title %}Social Media Hub{% endblock %}
+{% block page_subtitle %}Create posts, manage captions, and cross-post to all platforms{% endblock %}
+
+{% block content %}
+<div data-tab-group="social">
+    <div class="tabs">
+        <button class="tab active" data-tab="composer" onclick="switchTab('social','composer')">Post Composer</button>
+        <button class="tab" data-tab="captions" onclick="switchTab('social','captions')">Caption Manager</button>
+    </div>
+
+    <!-- Composer Tab -->
+    <div class="tab-content active" id="tab-composer">
+        <div class="two-col">
+            <!-- Left: Composer -->
+            <div>
+                <div class="card">
+                    <div class="form-group">
+                        <label>Platform</label>
+                        <select class="form-input" id="socialPlatform" onchange="loadTemplates()">
+                            <option value="facebook">Facebook</option>
+                            <option value="twitter">Twitter / X</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Template</label>
+                        <select class="form-input" id="socialTemplate" onchange="previewTemplate()">
+                            <option value="">-- Select a template --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Post Content</label>
+                        <textarea class="form-input" id="socialContent" rows="10" oninput="updatePreview()"></textarea>
+                        <div class="char-count" id="charCount">0 characters</div>
+                    </div>
+                    <div class="flex-between mb-4">
+                        <div class="toggle-group">
+                            <div class="toggle" id="liveToggle" onclick="toggleSwitch(this)"></div>
+                            <span class="toggle-label dry">DRY RUN</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-full" onclick="publishPost()">Post</button>
+                </div>
+            </div>
+            <!-- Right: Preview -->
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Preview</h3>
+                        <span class="badge badge-info" id="platformBadge">Facebook</span>
+                    </div>
+                    <div class="post-preview" id="postPreview">
+                        Select a template or type your post content to see a preview...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Caption Manager Tab -->
+    <div class="tab-content" id="tab-captions">
+        <div class="card">
+            <div class="card-header">
+                <h3>Existing Posts</h3>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-secondary" onclick="loadExistingPosts('facebook')">Load Facebook Posts</button>
+                    <button class="btn btn-sm btn-danger" onclick="cleanCaptions()">Clean Garbage Captions</button>
+                </div>
+            </div>
+            <div id="existingPosts">
+                <p class="text-dim">Click "Load Facebook Posts" to fetch existing posts</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadTemplates() {
+    const platform = document.getElementById('socialPlatform').value;
+    document.getElementById('platformBadge').textContent = platform === 'facebook' ? 'Facebook' : 'Twitter/X';
+    try {
+        const data = await apiFetch(`/api/social/templates/${platform}`);
+        const select = document.getElementById('socialTemplate');
+        select.innerHTML = '<option value="">-- Select a template --</option>';
+        (data.templates || []).forEach((t, i) => {
+            select.innerHTML += `<option value="${i}">${t.type}</option>`;
+        });
+    } catch {}
+}
+
+function previewTemplate() {
+    const platform = document.getElementById('socialPlatform').value;
+    const idx = document.getElementById('socialTemplate').value;
+    if (idx === '') return;
+
+    apiFetch(`/api/social/templates/${platform}`).then(data => {
+        const template = data.templates[parseInt(idx)];
+        if (template) {
+            document.getElementById('socialContent').value = template.preview;
+            updatePreview();
+        }
+    });
+}
+
+function updatePreview() {
+    const content = document.getElementById('socialContent').value;
+    document.getElementById('postPreview').textContent = content || 'Select a template...';
+    const count = content.length;
+    const platform = document.getElementById('socialPlatform').value;
+    const limit = platform === 'twitter' ? 280 : 63206;
+    const countEl = document.getElementById('charCount');
+    countEl.textContent = `${count} / ${limit} characters`;
+    countEl.className = count > limit ? 'char-count over' : 'char-count';
+}
+
+async function publishPost() {
+    const platform = document.getElementById('socialPlatform').value;
+    const content = document.getElementById('socialContent').value;
+    const isLive = document.getElementById('liveToggle').classList.contains('active');
+
+    if (!content) {
+        showToast('Write or select a post first', 'warning');
+        return;
+    }
+
+    if (isLive && !confirmAction(`Post LIVE to ${platform}? This will be visible to your audience.`)) return;
+
+    try {
+        const data = await apiFetch('/api/social/post', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ platform, content, live: isLive }),
+        });
+        showToast(data.message || 'Post successful', isLive ? 'success' : 'info');
+    } catch {}
+}
+
+async function loadExistingPosts(platform) {
+    const container = document.getElementById('existingPosts');
+    container.innerHTML = '<div class="skeleton" style="height:40px;margin:8px 0"></div>'.repeat(5);
+
+    try {
+        const data = await apiFetch(`/api/social/posts/${platform}`);
+        if (!data.posts || !data.posts.length) {
+            container.innerHTML = '<p class="text-dim">No posts found</p>';
+            return;
+        }
+        container.innerHTML = data.posts.map(p => `
+            <div class="card" style="margin-bottom:8px;padding:12px">
+                <div class="flex-between">
+                    <div>
+                        <span class="text-dim text-sm">${p.date}</span>
+                        <p style="margin-top:4px">${(p.message || '').substring(0, 120)}${(p.message || '').length > 120 ? '...' : ''}</p>
+                    </div>
+                    <button class="btn btn-sm btn-secondary" onclick="enhanceCaption('${p.id}')">Enhance</button>
+                </div>
+            </div>
+        `).join('');
+    } catch {}
+}
+
+async function enhanceCaption(postId) {
+    try {
+        const data = await apiFetch(`/api/social/posts/facebook/${postId}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ action: 'enhance' }),
+        });
+        showToast(data.message || 'Caption enhanced (dry run)', 'info');
+    } catch {}
+}
+
+async function cleanCaptions() {
+    if (!confirmAction('Clean Repurpose.io garbage from all Facebook captions? (Dry run first)')) return;
+    try {
+        const data = await apiFetch('/api/social/captions/clean', { method: 'POST' });
+        showToast(data.message || `Found ${data.dirty_count || 0} posts to clean`, 'info');
+    } catch {}
+}
+
+// Load templates on page load
+loadTemplates();
+</script>
+{% endblock %}

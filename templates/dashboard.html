@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Channel overview and quick actions{% endblock %}
+
+{% block content %}
+<!-- Stats Cards -->
+<div class="stats-grid" id="statsGrid">
+    <div class="stat-card">
+        <div class="label">Subscribers</div>
+        <div class="value" id="statSubs">--</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">Total Views</div>
+        <div class="value" id="statViews">--</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">Videos</div>
+        <div class="value" id="statVideos">--</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">API Quota Used</div>
+        <div class="value" id="statQuota">--</div>
+        <div class="progress-bar mt-4" style="height:6px">
+            <div class="progress-fill" id="quotaFill" style="width:0%"></div>
+        </div>
+        <div class="sub" id="quotaLabel">-- / 10,000 units</div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="card">
+    <div class="card-header">
+        <h3>Quick Actions</h3>
+    </div>
+    <div class="btn-group">
+        <a href="/audit" class="btn btn-primary">Run Audit</a>
+        <a href="/social" class="btn btn-secondary">Post to Social</a>
+        <a href="/videos" class="btn btn-secondary">Manage Videos</a>
+        <a href="/analytics" class="btn btn-secondary">View Analytics</a>
+    </div>
+</div>
+
+<!-- 28-Day Analytics Summary -->
+<div class="card">
+    <div class="card-header">
+        <h3>Last 28 Days</h3>
+    </div>
+    <div id="analyticsSummary">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Views</div>
+                <div class="value" id="stat28Views">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Watch Time (hrs)</div>
+                <div class="value" id="stat28WatchTime">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Subscribers Gained</div>
+                <div class="value" id="stat28Subs">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Avg View Duration</div>
+                <div class="value" id="stat28AvgDuration">--</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Uploads -->
+<div class="card">
+    <div class="card-header">
+        <h3>Recent Uploads</h3>
+        <a href="/videos" class="btn btn-sm btn-secondary">View All</a>
+    </div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Views</th>
+                <th>Likes</th>
+            </tr>
+        </thead>
+        <tbody id="recentUploads">
+            <tr><td colspan="4" class="text-dim" style="padding:20px;text-align:center">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadDashboard() {
+    // Load channel status
+    try {
+        const status = await apiFetch('/api/channel-status');
+        document.getElementById('statSubs').textContent = formatNumber(status.subscribers);
+        document.getElementById('statViews').textContent = formatNumber(status.views);
+        document.getElementById('statVideos').textContent = formatNumber(status.videos);
+    } catch {
+        document.getElementById('statSubs').textContent = 'N/A';
+    }
+
+    // Load recent uploads
+    try {
+        const data = await apiFetch('/api/recent-uploads');
+        const tbody = document.getElementById('recentUploads');
+        if (data.videos && data.videos.length) {
+            tbody.innerHTML = data.videos.map(v => `
+                <tr>
+                    <td>${v.published}</td>
+                    <td>${v.title}</td>
+                    <td>${formatNumber(v.views)}</td>
+                    <td>${formatNumber(v.likes)}</td>
+                </tr>
+            `).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="4" class="text-dim">No videos found</td></tr>';
+        }
+    } catch {}
+
+    // Load analytics summary
+    try {
+        const analytics = await apiFetch('/api/analytics-summary');
+        if (analytics.views !== undefined) {
+            document.getElementById('stat28Views').textContent = formatNumber(analytics.views);
+            document.getElementById('stat28WatchTime').textContent = formatNumber(Math.round(analytics.watch_time_minutes / 60));
+            document.getElementById('stat28Subs').textContent = formatNumber(analytics.subscribers_gained);
+            document.getElementById('stat28AvgDuration').textContent = analytics.avg_view_duration + 's';
+        }
+    } catch {}
+
+    // Load quota
+    try {
+        const quota = await apiFetch('/api/quota');
+        document.getElementById('statQuota').textContent = formatNumber(quota.used);
+        document.getElementById('quotaFill').style.width = (quota.used / 10000 * 100) + '%';
+        document.getElementById('quotaLabel').textContent = `${formatNumber(quota.used)} / 10,000 units`;
+    } catch {}
+}
+
+loadDashboard();
+</script>
+{% endblock %}

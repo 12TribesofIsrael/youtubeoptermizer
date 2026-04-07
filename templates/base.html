@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}YouTube Optimizer{% endblock %} — AI Bible Gospels</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+    <div class="sidebar-brand">
+        <img src="/static/img/logo.png" alt="BMB AI Automations" class="sidebar-logo">
+        <h2>YouTube Optimizer</h2>
+        <p>AI Bible Gospels</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="/" class="{% if page == 'dashboard' %}active{% endif %}">
+            <span class="icon">&#9634;</span> <span>Dashboard</span>
+        </a>
+        <a href="/videos" class="{% if page == 'videos' %}active{% endif %}">
+            <span class="icon">&#9654;</span> <span>Videos</span>
+        </a>
+        <a href="/playlists" class="{% if page == 'playlists' %}active{% endif %}">
+            <span class="icon">&#9776;</span> <span>Playlists</span>
+        </a>
+        <a href="/analytics" class="{% if page == 'analytics' %}active{% endif %}">
+            <span class="icon">&#9650;</span> <span>Analytics</span>
+        </a>
+        <a href="/audit" class="{% if page == 'audit' %}active{% endif %}">
+            <span class="icon">&#9998;</span> <span>Audit Tool</span>
+        </a>
+        <a href="/social" class="{% if page == 'social' %}active{% endif %}">
+            <span class="icon">&#8631;</span> <span>Social Media</span>
+        </a>
+        <a href="/tools" class="{% if page == 'tools' %}active{% endif %}">
+            <span class="icon">&#9881;</span> <span>Content Tools</span>
+        </a>
+        <a href="/settings" class="{% if page == 'settings' %}active{% endif %}">
+            <span class="icon">&#9881;</span> <span>Settings</span>
+        </a>
+        <div style="border-top:1px solid var(--border);margin:8px 0"></div>
+        <a href="/about" class="{% if page == 'about' %}active{% endif %}">
+            <span class="icon">&#9432;</span> <span>About</span>
+        </a>
+    </div>
+    <div class="sidebar-footer">
+        <img src="/static/img/logo.png" alt="" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;border-radius:3px">
+        BMB AI Automations
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+    <div class="page-header">
+        <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+        <p>{% block page_subtitle %}{% endblock %}</p>
+    </div>
+    <div class="page-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/static/js/app.js"></script>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

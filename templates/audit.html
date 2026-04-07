@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block title %}Audit Tool{% endblock %}
+{% block page_title %}Audit Tool{% endblock %}
+{% block page_subtitle %}Social media audit (Claude AI) and channel health check{% endblock %}
+
+{% block content %}
+<div data-tab-group="audit">
+    <div class="tabs">
+        <button class="tab active" data-tab="social" onclick="switchTab('audit','social')">Social Media Audit</button>
+        <button class="tab" data-tab="channel" onclick="switchTab('audit','channel')">Channel Audit</button>
+    </div>
+
+    <!-- Social Media Audit Tab -->
+    <div class="tab-content active" id="tab-social">
+        <div class="card">
+            <form onsubmit="runSocialAudit(event)">
+                <div class="form-group">
+                    <label class="required">YouTube Channel</label>
+                    <div class="hint">Your YouTube handle or channel URL</div>
+                    <input type="text" class="form-input" name="youtube_handle" placeholder="@AIBIBLEGOSPELS" required>
+                </div>
+                <div class="form-group">
+                    <label class="required">Social Media URLs</label>
+                    <div class="hint">Comma-separated links to your social profiles</div>
+                    <textarea class="form-input" name="social_urls" placeholder="instagram.com/aibiblegospels, tiktok.com/@aibiblegospels, twitter.com/aibiblegospels" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Niche / Topic</label>
+                    <input type="text" class="form-input" name="niche" placeholder="Biblical content, 12 Tribes of Israel...">
+                </div>
+                <div class="form-group">
+                    <label>Competitor</label>
+                    <input type="text" class="form-input" name="competitor" placeholder="@competitorhandle or URL">
+                </div>
+                <button type="submit" class="btn btn-primary w-full" id="auditSubmitBtn">Run Social Audit</button>
+            </form>
+        </div>
+
+        <!-- Progress -->
+        <div class="card hidden" id="auditProgress">
+            <div class="progress-bar" style="margin-bottom:12px">
+                <div class="progress-fill" id="auditProgressFill" style="width:0%"></div>
+            </div>
+            <ul style="list-style:none">
+                <li id="auditStep1" class="text-dim">Researching platform best practices...</li>
+                <li id="auditStep2" class="text-dim">Auditing competitor profiles...</li>
+                <li id="auditStep3" class="text-dim">Analyzing niche hashtags & trends...</li>
+                <li id="auditStep4" class="text-dim">Generating full audit report...</li>
+            </ul>
+        </div>
+
+        <!-- Report -->
+        <div class="card hidden" id="auditReport">
+            <div class="btn-group mb-4">
+                <button class="btn btn-primary" onclick="downloadAuditPDF()">Download PDF</button>
+                <button class="btn btn-secondary" onclick="copyAuditMarkdown()">Copy Markdown</button>
+                <button class="btn btn-secondary" onclick="newAudit()">New Audit</button>
+            </div>
+            <div class="report-content" id="auditReportContent"></div>
+        </div>
+    </div>
+
+    <!-- Channel Audit Tab -->
+    <div class="tab-content" id="tab-channel">
+        <div class="card">
+            <div class="card-header">
+                <h3>Channel Health Audit</h3>
+                <button class="btn btn-primary btn-sm" onclick="runChannelAudit()" id="channelAuditBtn">Run Channel Audit</button>
+            </div>
+            <p class="text-dim text-sm mb-4">Scans all videos for: handle in title, part-numbered titles, duplicates, very short (&lt;15s), low views (&lt;30), flooding</p>
+        </div>
+        <div id="channelAuditResults"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let auditMarkdown = '';
+let auditHTML = '';
+
+async function runSocialAudit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    document.getElementById('auditSubmitBtn').disabled = true;
+    document.getElementById('auditProgress').classList.remove('hidden');
+    document.getElementById('auditReport').classList.add('hidden');
+
+    const fill = document.getElementById('auditProgressFill');
+    let step = 0;
+    const interval = setInterval(() => {
+        if (step < 3) {
+            document.getElementById(`auditStep${step + 1}`).classList.remove('text-dim');
+            document.getElementById(`auditStep${step + 1}`).classList.add('text-success');
+            step++;
+            fill.style.width = (step * 25) + '%';
+        }
+    }, 8000);
+
+    fill.style.width = '10%';
+    document.getElementById('auditStep1').classList.add('text-gold');
+
+    try {
+        const resp = await fetch('/api/audit/social', { method: 'POST', body: formData });
+        clearInterval(interval);
+        if (!resp.ok) throw new Error((await resp.json()).detail || 'Audit failed');
+        const data = await resp.json();
+        auditMarkdown = data.markdown;
+        auditHTML = data.html;
+
+        fill.style.width = '100%';
+        [1,2,3,4].forEach(i => {
+            document.getElementById(`auditStep${i}`).classList.remove('text-dim', 'text-gold');
+            document.getElementById(`auditStep${i}`).classList.add('text-success');
+        });
+
+        setTimeout(() => {
+            document.getElementById('auditProgress').classList.add('hidden');
+            document.getElementById('auditReport').classList.remove('hidden');
+            document.getElementById('auditReportContent').innerHTML = auditHTML;
+        }, 1000);
+    } catch (err) {
+        clearInterval(interval);
+        document.getElementById('auditProgress').classList.add('hidden');
+        showToast(err.message, 'error');
+    } finally {
+        document.getElementById('auditSubmitBtn').disabled = false;
+    }
+}
+
+async function downloadAuditPDF() {
+    try {
+        const resp = await fetch('/api/audit/download-pdf', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ html: auditHTML }),
+        });
+        if (!resp.ok) throw new Error('PDF generation failed');
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'social-media-audit.pdf'; a.click();
+        URL.revokeObjectURL(url);
+    } catch (err) {
+        showToast(err.message, 'error');
+    }
+}
+
+function copyAuditMarkdown() {
+    navigator.clipboard.writeText(auditMarkdown).then(() => showToast('Markdown copied!', 'success'));
+}
+
+function newAudit() {
+    document.getElementById('auditReport').classList.add('hidden');
+    auditMarkdown = '';
+    auditHTML = '';
+    document.getElementById('auditProgressFill').style.width = '0%';
+    [1,2,3,4].forEach(i => {
+        const el = document.getElementById(`auditStep${i}`);
+        el.classList.remove('text-success', 'text-gold');
+        el.classList.add('text-dim');
+    });
+}
+
+async function runChannelAudit() {
+    const btn = document.getElementById('channelAuditBtn');
+    btn.disabled = true;
+    btn.textContent = 'Scanning...';
+    const container = document.getElementById('channelAuditResults');
+    container.innerHTML = '<div class="card"><div class="skeleton" style="height:30px;margin:8px 0"></div></div>'.repeat(4);
+
+    try {
+        const data = await apiFetch('/api/audit/channel');
+        let html = `
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Total Videos</div><div class="value">${data.total_videos}</div></div>
+                <div class="stat-card"><div class="label">Handle in Title</div><div class="value">${data.handle_in_title.length}</div></div>
+                <div class="stat-card"><div class="label">Part Numbered</div><div class="value">${data.part_numbered.length}</div></div>
+                <div class="stat-card"><div class="label">Low Views (&lt;30)</div><div class="value">${data.low_views.length}</div></div>
+            </div>
+        `;
+
+        const sections = [
+            { title: 'Handle in Title', items: data.handle_in_title, badge: 'warning' },
+            { title: 'Part-Numbered Titles', items: data.part_numbered, badge: 'warning' },
+            { title: 'Very Short (<15s)', items: data.very_short, badge: 'error' },
+            { title: 'Low Views (<30)', items: data.low_views, badge: 'info' },
+            { title: 'Matthew 6 Flood', items: data.matthew6_flood, badge: 'error' },
+        ];
+
+        for (const s of sections) {
+            if (s.items.length === 0) continue;
+            html += `<div class="card"><div class="card-header"><h3>${s.title} <span class="badge badge-${s.badge}">${s.items.length}</span></h3></div>`;
+            html += '<table class="data-table"><thead><tr><th>Video ID</th><th>Title</th><th>Views</th></tr></thead><tbody>';
+            for (const v of s.items.slice(0, 20)) {
+                html += `<tr><td>${v.id}</td><td>${v.title}</td><td>${formatNumber(v.views)}</td></tr>`;
+            }
+            if (s.items.length > 20) html += `<tr><td colspan="3" class="text-dim">... and ${s.items.length - 20} more</td></tr>`;
+            html += '</tbody></table></div>';
+        }
+
+        container.innerHTML = html;
+    } catch {
+        container.innerHTML = '<div class="card"><p class="text-error">Failed to run audit. Check YouTube API connection.</p></div>';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Run Channel Audit';
+    }
+}
+</script>
+{% endblock %}

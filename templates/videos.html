@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+{% block title %}Videos{% endblock %}
+{% block page_title %}Video Manager{% endblock %}
+{% block page_subtitle %}Search, edit, and manage all channel videos{% endblock %}
+
+{% block content %}
+<!-- Toolbar -->
+<div class="card">
+    <div class="flex-between">
+        <div class="btn-group">
+            <input type="text" class="form-input" id="videoSearch" placeholder="Search videos..."
+                   style="width:300px" oninput="searchVideos(this.value)">
+            <select class="form-input" id="videoSort" style="width:180px" onchange="loadVideos()">
+                <option value="date">Sort by Date</option>
+                <option value="views">Sort by Views</option>
+                <option value="title">Sort by Title</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-sm btn-secondary" onclick="switchTab('videos','table')">All Videos</button>
+            <button class="btn btn-sm btn-secondary" onclick="switchTab('videos','priorities');loadPriorities()">Thumbnail Priorities</button>
+            <button class="btn btn-sm btn-danger hidden" id="bulkDeleteBtn" onclick="bulkDelete()">Delete Selected</button>
+        </div>
+    </div>
+</div>
+
+<div data-tab-group="videos">
+    <div class="tab-content active" id="tab-table">
+        <div class="card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
+                        <th>Thumbnail</th>
+                        <th>Title</th>
+                        <th>Views</th>
+                        <th>Likes</th>
+                        <th>Duration</th>
+                        <th>Published</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="videoTable">
+                    <tr><td colspan="8" class="text-dim" style="padding:20px;text-align:center">Loading videos...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-priorities">
+        <div class="card">
+            <div class="card-header">
+                <h3>Thumbnail Upgrade Priorities</h3>
+                <p class="text-dim text-sm">Ranked by impressions x CTR gap — highest impact first</p>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Title</th>
+                        <th>Impressions</th>
+                        <th>Current CTR</th>
+                        <th>CTR Gap</th>
+                        <th>Impact Score</th>
+                    </tr>
+                </thead>
+                <tbody id="priorityTable">
+                    <tr><td colspan="6" class="text-dim" style="padding:20px;text-align:center">Click to load priorities</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Edit Video</h3>
+            <button class="modal-close" onclick="closeModal('editModal')">&times;</button>
+        </div>
+        <form onsubmit="saveVideo(event)">
+            <input type="hidden" id="editVideoId">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-input" id="editTitle" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-input" id="editDescription" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma-separated)</label>
+                <input type="text" class="form-input" id="editTags" placeholder="tag1, tag2, tag3">
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Thumbnail Upload Modal -->
+<div class="modal-overlay" id="thumbModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Upload Thumbnail</h3>
+            <button class="modal-close" onclick="closeModal('thumbModal')">&times;</button>
+        </div>
+        <form onsubmit="uploadThumbnail(event)">
+            <input type="hidden" id="thumbVideoId">
+            <div class="form-group">
+                <label>Select Image</label>
+                <input type="file" class="form-input" id="thumbFile" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <img id="thumbPreview" style="max-width:100%;border-radius:8px;display:none">
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Upload Thumbnail</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let allVideos = [];
+let selectedIds = new Set();
+
+async function loadVideos() {
+    const sort = document.getElementById('videoSort').value;
+    try {
+        const data = await apiFetch(`/api/videos?sort=${sort}`);
+        allVideos = data.videos || [];
+        renderVideos(allVideos);
+    } catch {}
+}
+
+function renderVideos(videos) {
+    const tbody = document.getElementById('videoTable');
+    if (!videos.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-dim">No videos found</td></tr>';
+        return;
+    }
+    tbody.innerHTML = videos.map(v => `
+        <tr>
+            <td><input type="checkbox" value="${v.id}" onchange="toggleSelect(this)"></td>
+            <td class="thumb-cell"><img src="${v.thumbnail}" alt="" loading="lazy"></td>
+            <td><strong>${escapeHtml(v.title)}</strong></td>
+            <td>${formatNumber(v.views)}</td>
+            <td>${formatNumber(v.likes)}</td>
+            <td>${v.duration}</td>
+            <td>${v.published}</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-secondary" onclick="editVideo('${v.id}')">Edit</button>
+                    <button class="btn btn-sm btn-secondary" onclick="openThumbUpload('${v.id}')">Thumb</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteVideo('${v.id}', '${escapeHtml(v.title)}')">Del</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function searchVideos(query) {
+    const q = query.toLowerCase();
+    const filtered = allVideos.filter(v => v.title.toLowerCase().includes(q));
+    renderVideos(filtered);
+}
+
+function toggleSelect(cb) {
+    if (cb.checked) selectedIds.add(cb.value);
+    else selectedIds.delete(cb.value);
+    document.getElementById('bulkDeleteBtn').classList.toggle('hidden', selectedIds.size === 0);
+}
+
+function toggleSelectAll(cb) {
+    document.querySelectorAll('#videoTable input[type="checkbox"]').forEach(c => {
+        c.checked = cb.checked;
+        if (cb.checked) selectedIds.add(c.value);
+        else selectedIds.delete(c.value);
+    });
+    document.getElementById('bulkDeleteBtn').classList.toggle('hidden', selectedIds.size === 0);
+}
+
+async function editVideo(id) {
+    const v = allVideos.find(v => v.id === id);
+    if (!v) return;
+    document.getElementById('editVideoId').value = id;
+    document.getElementById('editTitle').value = v.title;
+    document.getElementById('editDescription').value = v.description || '';
+    document.getElementById('editTags').value = (v.tags || []).join(', ');
+    openModal('editModal');
+}
+
+async function saveVideo(e) {
+    e.preventDefault();
+    const id = document.getElementById('editVideoId').value;
+    const body = {
+        title: document.getElementById('editTitle').value,
+        description: document.getElementById('editDescription').value,
+        tags: document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(Boolean),
+    };
+    try {
+        await apiFetch(`/api/videos/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
+        });
+        showToast('Video updated successfully', 'success');
+        closeModal('editModal');
+        loadVideos();
+    } catch {}
+}
+
+async function deleteVideo(id, title) {
+    if (!confirmAction(`Delete "${title}"? This is permanent and cannot be undone.`)) return;
+    try {
+        await apiFetch(`/api/videos/${id}`, { method: 'DELETE' });
+        showToast('Video deleted', 'success');
+        loadVideos();
+    } catch {}
+}
+
+async function bulkDelete() {
+    if (!confirmAction(`Delete ${selectedIds.size} selected videos? This is permanent.`)) return;
+    try {
+        await apiFetch('/api/videos/bulk-action', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ action: 'delete', video_ids: [...selectedIds] }),
+        });
+        showToast(`${selectedIds.size} videos deleted`, 'success');
+        selectedIds.clear();
+        loadVideos();
+    } catch {}
+}
+
+function openThumbUpload(id) {
+    document.getElementById('thumbVideoId').value = id;
+    document.getElementById('thumbPreview').style.display = 'none';
+    document.getElementById('thumbFile').value = '';
+    openModal('thumbModal');
+}
+
+document.getElementById('thumbFile')?.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = document.getElementById('thumbPreview');
+            img.src = e.target.result;
+            img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+async function uploadThumbnail(e) {
+    e.preventDefault();
+    const id = document.getElementById('thumbVideoId').value;
+    const file = document.getElementById('thumbFile').files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+        await apiFetch(`/api/videos/${id}/thumbnail`, { method: 'POST', body: formData });
+        showToast('Thumbnail uploaded', 'success');
+        closeModal('thumbModal');
+        loadVideos();
+    } catch {}
+}
+
+async function loadPriorities() {
+    try {
+        const data = await apiFetch('/api/videos/thumbnail-priorities');
+        const tbody = document.getElementById('priorityTable');
+        if (data.priorities && data.priorities.length) {
+            tbody.innerHTML = data.priorities.map((p, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${escapeHtml(p.title)}</td>
+                    <td>${formatNumber(p.impressions)}</td>
+                    <td>${p.ctr}%</td>
+                    <td>${p.ctr_gap}%</td>
+                    <td><strong class="text-gold">${p.impact_score}</strong></td>
+                </tr>
+            `).join('');
+        }
+    } catch {}
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+loadVideos();
+</script>
+{% endblock %}

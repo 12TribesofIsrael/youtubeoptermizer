@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Analytics{% endblock %}
+{% block page_title %}Analytics{% endblock %}
+{% block page_subtitle %}Channel performance, trends, and optimization impact{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Date Range -->
+<div class="card">
+    <div class="flex-between">
+        <div class="btn-group">
+            <input type="date" class="form-input" id="startDate" style="width:160px">
+            <span class="text-dim" style="padding:8px">to</span>
+            <input type="date" class="form-input" id="endDate" style="width:160px">
+            <button class="btn btn-primary btn-sm" onclick="loadAnalytics()">Refresh</button>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row 1 -->
+<div class="two-col">
+    <div class="card">
+        <div class="card-header"><h3>Views Over Time</h3></div>
+        <canvas id="viewsChart" height="200"></canvas>
+    </div>
+    <div class="card">
+        <div class="card-header"><h3>Watch Time (hours)</h3></div>
+        <canvas id="watchTimeChart" height="200"></canvas>
+    </div>
+</div>
+
+<!-- Top Videos -->
+<div class="card">
+    <div class="card-header"><h3>Top Performing Videos</h3></div>
+    <table class="data-table">
+        <thead>
+            <tr><th>#</th><th>Title</th><th>Views</th><th>Watch Time (min)</th><th>Avg Duration</th><th>Subs Gained</th></tr>
+        </thead>
+        <tbody id="topVideosTable">
+            <tr><td colspan="6" class="text-dim" style="padding:20px;text-align:center">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Pre vs Post Optimization -->
+<div class="card">
+    <div class="card-header"><h3>Pre vs Post Optimization Comparison</h3></div>
+    <div id="comparisonSection">
+        <table class="data-table">
+            <thead>
+                <tr><th>Metric</th><th>Pre-Optimization</th><th>Post-Optimization</th><th>Change</th></tr>
+            </thead>
+            <tbody id="comparisonTable">
+                <tr><td colspan="4" class="text-dim" style="padding:20px;text-align:center">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let viewsChartInstance = null;
+let watchTimeChartInstance = null;
+
+// Set default dates (last 28 days)
+const today = new Date();
+const d28ago = new Date(today);
+d28ago.setDate(d28ago.getDate() - 28);
+document.getElementById('endDate').value = today.toISOString().split('T')[0];
+document.getElementById('startDate').value = d28ago.toISOString().split('T')[0];
+
+async function loadAnalytics() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    // Load overview (time series)
+    try {
+        const data = await apiFetch(`/api/analytics/overview?start_date=${startDate}&end_date=${endDate}`);
+        if (data.days) {
+            renderViewsChart(data.days);
+            renderWatchTimeChart(data.days);
+        }
+    } catch {}
+
+    // Load top videos
+    try {
+        const data = await apiFetch(`/api/analytics/top-videos?start_date=${startDate}&end_date=${endDate}`);
+        const tbody = document.getElementById('topVideosTable');
+        if (data.videos && data.videos.length) {
+            tbody.innerHTML = data.videos.map((v, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${v.title || v.video_id}</td>
+                    <td>${formatNumber(v.views)}</td>
+                    <td>${formatNumber(v.watch_time_minutes)}</td>
+                    <td>${v.avg_view_duration}s</td>
+                    <td>${v.subscribers_gained}</td>
+                </tr>
+            `).join('');
+        }
+    } catch {}
+
+    // Load comparison
+    try {
+        const data = await apiFetch('/api/analytics/comparison');
+        const tbody = document.getElementById('comparisonTable');
+        if (data.metrics && data.metrics.length) {
+            tbody.innerHTML = data.metrics.map(m => {
+                const changeClass = m.change_pct > 0 ? 'text-success' : (m.change_pct < 0 ? 'text-error' : 'text-dim');
+                const arrow = m.change_pct > 0 ? '+' : '';
+                return `
+                    <tr>
+                        <td><strong>${m.metric}</strong></td>
+                        <td>${m.pre}</td>
+                        <td>${m.post}</td>
+                        <td class="${changeClass}">${arrow}${m.change_pct}%</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    } catch {}
+}
+
+function renderViewsChart(days) {
+    if (viewsChartInstance) viewsChartInstance.destroy();
+    const ctx = document.getElementById('viewsChart').getContext('2d');
+    viewsChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: days.map(d => d.date),
+            datasets: [{
+                label: 'Views',
+                data: days.map(d => d.views),
+                borderColor: '#d4a843',
+                backgroundColor: 'rgba(212,168,67,0.1)',
+                fill: true,
+                tension: 0.3,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#9ca3af' }, grid: { color: '#2d3348' } },
+                y: { ticks: { color: '#9ca3af' }, grid: { color: '#2d3348' } },
+            }
+        }
+    });
+}
+
+function renderWatchTimeChart(days) {
+    if (watchTimeChartInstance) watchTimeChartInstance.destroy();
+    const ctx = document.getElementById('watchTimeChart').getContext('2d');
+    watchTimeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: days.map(d => d.date),
+            datasets: [{
+                label: 'Watch Time (hrs)',
+                data: days.map(d => Math.round(d.watch_time_minutes / 60 * 10) / 10),
+                backgroundColor: 'rgba(212,168,67,0.6)',
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#9ca3af' }, grid: { color: '#2d3348' } },
+                y: { ticks: { color: '#9ca3af' }, grid: { color: '#2d3348' } },
+            }
+        }
+    });
+}
+
+loadAnalytics();
+</script>
+{% endblock %}

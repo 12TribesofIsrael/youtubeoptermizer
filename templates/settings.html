@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
+{% block page_subtitle %}API connections, OAuth status, and brand reference{% endblock %}
+
+{% block content %}
+<!-- Connections -->
+<div class="card">
+    <div class="card-header">
+        <h3>API Connections</h3>
+        <button class="btn btn-sm btn-secondary" onclick="checkConnections()">Refresh Status</button>
+    </div>
+    <div id="connectionsList">
+        <div class="skeleton" style="height:60px;margin:8px 0"></div>
+        <div class="skeleton" style="height:60px;margin:8px 0"></div>
+        <div class="skeleton" style="height:60px;margin:8px 0"></div>
+    </div>
+</div>
+
+<!-- Quota Reference -->
+<div class="card">
+    <div class="card-header"><h3>API Quota Reference</h3></div>
+    <table class="data-table">
+        <thead><tr><th>Operation</th><th>Cost (units)</th><th>Daily Limit</th></tr></thead>
+        <tbody>
+            <tr><td>videos.list</td><td>1</td><td rowspan="6">10,000 units/day</td></tr>
+            <tr><td>channels.list</td><td>1</td></tr>
+            <tr><td>search.list</td><td>100</td></tr>
+            <tr><td>videos.update</td><td>50</td></tr>
+            <tr><td>videos.delete</td><td>50</td></tr>
+            <tr><td>thumbnails.set</td><td>50</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Brand Reference -->
+<div class="card">
+    <div class="card-header"><h3>Brand Identity Reference</h3></div>
+    <div class="two-col">
+        <div>
+            <h4 class="text-gold mb-4">Color Palette</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div style="background:#0a0e1a;width:60px;height:60px;border-radius:8px;border:1px solid #2d3348" title="Navy #0a0e1a"></div>
+                <div style="background:#d4a843;width:60px;height:60px;border-radius:8px" title="Gold #d4a843"></div>
+                <div style="background:#1a1f2e;width:60px;height:60px;border-radius:8px;border:1px solid #2d3348" title="Card #1a1f2e"></div>
+                <div style="background:#111827;width:60px;height:60px;border-radius:8px;border:1px solid #2d3348" title="Dark #111827"></div>
+            </div>
+        </div>
+        <div>
+            <h4 class="text-gold mb-4">Visual Rules</h4>
+            <ul style="padding-left:20px;color:var(--text-dim);font-size:0.9rem">
+                <li>Deep navy/black backgrounds</li>
+                <li>Golden/amber light, dramatic chiaroscuro</li>
+                <li>Bold gold serif with subtle glow</li>
+                <li>Dark/brown-skinned biblical characters</li>
+                <li>Parting clouds, light beams, ancient scrolls</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Character Depiction -->
+<div class="card">
+    <div class="card-header"><h3>Character Depiction Rules (Mandatory)</h3></div>
+    <div style="background:var(--dark);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:0.9rem">
+        <p>All biblical figures MUST be depicted as <strong class="text-gold">melanated Black/African American</strong>.</p>
+        <ul style="padding-left:20px;margin-top:8px;color:var(--text-dim)">
+            <li>"dark-brown to deep-brown skinned man/woman"</li>
+            <li>"melanated African American complexion"</li>
+            <li>"wool-textured / coiled / tightly curled hair"</li>
+            <li>"NO Caucasian, European, or light-skinned depictions"</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function checkConnections() {
+    const container = document.getElementById('connectionsList');
+    container.innerHTML = '<div class="skeleton" style="height:60px;margin:8px 0"></div>'.repeat(3);
+
+    try {
+        const data = await apiFetch('/api/settings/connections');
+        container.innerHTML = (data.connections || []).map(c => `
+            <div class="connection-card">
+                <div class="connection-dot ${c.connected ? 'connected' : 'disconnected'}"></div>
+                <div style="flex:1">
+                    <strong>${c.name}</strong>
+                    <p class="text-dim text-sm">${c.status}</p>
+                </div>
+                ${!c.connected && c.action ? `<button class="btn btn-sm btn-secondary" onclick="${c.action}">${c.action_label}</button>` : ''}
+            </div>
+        `).join('');
+    } catch {}
+}
+
+checkConnections();
+</script>
+{% endblock %}

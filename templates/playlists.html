@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Playlists{% endblock %}
+{% block page_title %}Playlist Manager{% endblock %}
+{% block page_subtitle %}Create and organize channel playlists{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>All Playlists</h3>
+        <button class="btn btn-primary btn-sm" onclick="openModal('createPlaylistModal')">+ Create Playlist</button>
+    </div>
+    <div id="playlistList">
+        <div class="skeleton" style="height:60px;margin:8px 0"></div>
+        <div class="skeleton" style="height:60px;margin:8px 0"></div>
+    </div>
+</div>
+
+<!-- Create Playlist Modal -->
+<div class="modal-overlay" id="createPlaylistModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Create Playlist</h3>
+            <button class="modal-close" onclick="closeModal('createPlaylistModal')">&times;</button>
+        </div>
+        <form onsubmit="createPlaylist(event)">
+            <div class="form-group">
+                <label class="required">Title</label>
+                <input type="text" class="form-input" id="plTitle" required placeholder="e.g. The Tribe of Judah">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-input" id="plDescription" placeholder="Playlist description..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Privacy</label>
+                <select class="form-input" id="plPrivacy">
+                    <option value="public">Public</option>
+                    <option value="unlisted">Unlisted</option>
+                    <option value="private">Private</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Create Playlist</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Video to Playlist Modal -->
+<div class="modal-overlay" id="addVideoModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Add Video to Playlist</h3>
+            <button class="modal-close" onclick="closeModal('addVideoModal')">&times;</button>
+        </div>
+        <form onsubmit="addVideoToPlaylist(event)">
+            <input type="hidden" id="addVideoPlaylistId">
+            <div class="form-group">
+                <label class="required">Video ID</label>
+                <input type="text" class="form-input" id="addVideoId" required placeholder="e.g. dQw4w9WgXcQ">
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Add Video</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadPlaylists() {
+    try {
+        const data = await apiFetch('/api/playlists');
+        const container = document.getElementById('playlistList');
+        if (!data.playlists || !data.playlists.length) {
+            container.innerHTML = '<p class="text-dim">No playlists found</p>';
+            return;
+        }
+        container.innerHTML = data.playlists.map(pl => `
+            <div class="card" style="margin-bottom:12px">
+                <div class="flex-between">
+                    <div>
+                        <strong class="text-gold">${escapeHtml(pl.title)}</strong>
+                        <span class="badge badge-info">${pl.video_count} videos</span>
+                        <p class="text-dim text-sm">${escapeHtml(pl.description || '')}</p>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-secondary" onclick="openAddVideo('${pl.id}')">+ Add Video</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch {}
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
+async function createPlaylist(e) {
+    e.preventDefault();
+    try {
+        await apiFetch('/api/playlists', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                title: document.getElementById('plTitle').value,
+                description: document.getElementById('plDescription').value,
+                privacy: document.getElementById('plPrivacy').value,
+            }),
+        });
+        showToast('Playlist created', 'success');
+        closeModal('createPlaylistModal');
+        loadPlaylists();
+    } catch {}
+}
+
+function openAddVideo(playlistId) {
+    document.getElementById('addVideoPlaylistId').value = playlistId;
+    document.getElementById('addVideoId').value = '';
+    openModal('addVideoModal');
+}
+
+async function addVideoToPlaylist(e) {
+    e.preventDefault();
+    const playlistId = document.getElementById('addVideoPlaylistId').value;
+    const videoId = document.getElementById('addVideoId').value;
+    try {
+        await apiFetch(`/api/playlists/${playlistId}/videos`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ video_id: videoId }),
+        });
+        showToast('Video added to playlist', 'success');
+        closeModal('addVideoModal');
+        loadPlaylists();
+    } catch {}
+}
+
+loadPlaylists();
+</script>
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Content Tools{% endblock %}
+{% block page_title %}Content Tools{% endblock %}
+{% block page_subtitle %}Scripture cards, title generation, and transcript extraction{% endblock %}
+
+{% block content %}
+<div data-tab-group="tools">
+    <div class="tabs">
+        <button class="tab active" data-tab="titles" onclick="switchTab('tools','titles')">Title Generator</button>
+        <button class="tab" data-tab="transcripts" onclick="switchTab('tools','transcripts')">Transcript Extractor</button>
+        <button class="tab" data-tab="scripture" onclick="switchTab('tools','scripture')">Scripture Cards</button>
+        <button class="tab" data-tab="export" onclick="switchTab('tools','export')">Export Data</button>
+    </div>
+
+    <!-- Title Generator -->
+    <div class="tab-content active" id="tab-titles">
+        <div class="card">
+            <div class="card-header"><h3>AI Title Generator</h3></div>
+            <p class="text-dim text-sm mb-4">Enter a video ID to fetch its transcript and generate optimized standalone titles</p>
+            <div class="form-group">
+                <label>Video ID</label>
+                <input type="text" class="form-input" id="titleVideoId" placeholder="e.g. dQw4w9WgXcQ" style="max-width:400px">
+            </div>
+            <button class="btn btn-primary" onclick="generateTitles()">Generate Titles</button>
+            <div id="titleResults" class="mt-4"></div>
+        </div>
+    </div>
+
+    <!-- Transcript Extractor -->
+    <div class="tab-content" id="tab-transcripts">
+        <div class="card">
+            <div class="card-header"><h3>Transcript Extractor</h3></div>
+            <p class="text-dim text-sm mb-4">Extract the transcript/captions from any YouTube video</p>
+            <div class="form-group">
+                <label>Video ID</label>
+                <input type="text" class="form-input" id="transcriptVideoId" placeholder="e.g. dQw4w9WgXcQ" style="max-width:400px">
+            </div>
+            <button class="btn btn-primary" onclick="extractTranscript()">Extract Transcript</button>
+            <div id="transcriptResult" class="mt-4"></div>
+        </div>
+    </div>
+
+    <!-- Scripture Cards -->
+    <div class="tab-content" id="tab-scripture">
+        <div class="card">
+            <div class="card-header"><h3>Scripture Card Generator</h3></div>
+            <p class="text-dim text-sm mb-4">Generate DALL-E scripture card images for Deuteronomy 28 series</p>
+            <div class="form-group">
+                <label>Scripture Text</label>
+                <textarea class="form-input" id="scriptureText" rows="3" placeholder="Enter the scripture verse..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Card Type</label>
+                <select class="form-input" id="cardType" style="max-width:300px">
+                    <option value="title">Title Card</option>
+                    <option value="scripture">Scripture Quote</option>
+                    <option value="emphasis">Emphasis Overlay</option>
+                    <option value="verdict">Verdict Slide</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="generateScriptureCard()">Generate Card</button>
+            <div id="scriptureResult" class="mt-4"></div>
+        </div>
+    </div>
+
+    <!-- Export Data -->
+    <div class="tab-content" id="tab-export">
+        <div class="card">
+            <div class="card-header"><h3>Export Channel Data</h3></div>
+            <p class="text-dim text-sm mb-4">Export all video data to CSV for analysis</p>
+            <button class="btn btn-primary" onclick="exportCSV()">Export Videos CSV</button>
+            <div id="exportResult" class="mt-4"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function generateTitles() {
+    const videoId = document.getElementById('titleVideoId').value.trim();
+    if (!videoId) { showToast('Enter a video ID', 'warning'); return; }
+    const container = document.getElementById('titleResults');
+    container.innerHTML = '<div class="skeleton" style="height:30px;margin:8px 0"></div>'.repeat(3);
+
+    try {
+        const data = await apiFetch('/api/tools/generate-titles', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ video_id: videoId }),
+        });
+        if (data.titles && data.titles.length) {
+            container.innerHTML = '<h4 class="text-gold mb-4">Suggested Titles:</h4>' +
+                data.titles.map(t => `
+                    <div class="card" style="margin-bottom:8px;padding:12px">
+                        <strong>${t}</strong>
+                    </div>
+                `).join('');
+        } else {
+            container.innerHTML = '<p class="text-dim">No titles generated. Video may not have a transcript.</p>';
+        }
+    } catch {}
+}
+
+async function extractTranscript() {
+    const videoId = document.getElementById('transcriptVideoId').value.trim();
+    if (!videoId) { showToast('Enter a video ID', 'warning'); return; }
+    const container = document.getElementById('transcriptResult');
+    container.innerHTML = '<div class="skeleton" style="height:30px;margin:8px 0"></div>'.repeat(5);
+
+    try {
+        const data = await apiFetch(`/api/tools/transcripts/${videoId}`);
+        if (data.transcript) {
+            container.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Transcript</h3>
+                        <button class="btn btn-sm btn-secondary" onclick="navigator.clipboard.writeText(document.getElementById('transcriptText').textContent).then(()=>showToast('Copied!','success'))">Copy</button>
+                    </div>
+                    <div class="post-preview" id="transcriptText">${data.transcript}</div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = '<p class="text-dim">No transcript available for this video.</p>';
+        }
+    } catch {}
+}
+
+async function generateScriptureCard() {
+    const text = document.getElementById('scriptureText').value.trim();
+    const type = document.getElementById('cardType').value;
+    if (!text) { showToast('Enter scripture text', 'warning'); return; }
+    const container = document.getElementById('scriptureResult');
+    container.innerHTML = '<div class="skeleton" style="height:200px;margin:8px 0"></div>';
+
+    try {
+        const data = await apiFetch('/api/tools/scripture-card', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ text, card_type: type }),
+        });
+        if (data.image_url) {
+            container.innerHTML = `<img src="${data.image_url}" style="max-width:100%;border-radius:8px">`;
+        } else {
+            container.innerHTML = `<p class="text-dim">${data.message || 'Card generation requires OPENAI_API_KEY'}</p>`;
+        }
+    } catch {}
+}
+
+async function exportCSV() {
+    const container = document.getElementById('exportResult');
+    container.innerHTML = '<p class="text-dim">Exporting...</p>';
+    try {
+        const resp = await fetch('/api/tools/export-csv');
+        if (!resp.ok) throw new Error('Export failed');
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'channel-videos.csv'; a.click();
+        URL.revokeObjectURL(url);
+        container.innerHTML = '<p class="text-success">CSV downloaded successfully!</p>';
+    } catch (e) {
+        container.innerHTML = `<p class="text-error">${e.message}</p>`;
+    }
+}
+</script>
+{% endblock %}
