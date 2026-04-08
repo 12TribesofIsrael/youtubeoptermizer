@@ -20,6 +20,13 @@ class ScriptureCardRequest(BaseModel):
     card_type: str = "scripture"
 
 
+class ThumbnailRequest(BaseModel):
+    video_id: str = ""
+    title_text: str  # Bold text for the thumbnail (3-5 words)
+    scene: str = ""  # Optional scene description
+    apply_to_video: bool = False  # Upload to YouTube after generating
+
+
 @router.post("/api/tools/generate-titles")
 async def generate_titles(body: TitleRequest):
     """Generate AI-optimized titles from video transcript."""
@@ -80,6 +87,103 @@ async def generate_scripture_card(body: ScriptureCardRequest):
         return {"image_url": response.data[0].url}
     except Exception as e:
         return {"image_url": None, "message": str(e)}
+
+
+@router.post("/api/tools/generate-thumbnail")
+async def generate_thumbnail(body: ThumbnailRequest):
+    """Generate a YouTube thumbnail with DALL-E 3 and optionally upload to a video."""
+    import os
+    from pathlib import Path
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        return {"image_url": None, "message": "OPENAI_API_KEY not set. Add it to .env to generate thumbnails."}
+
+    # Build scene description
+    scene_desc = body.scene or "An ancient dark-brown to deep-brown skinned Israelite man with wool-textured coiled hair in dramatic biblical setting"
+
+    prompt = f"""Generate a YouTube thumbnail image (1280x720, landscape).
+
+Style: Cinematic, dramatic, dark navy/black background with golden amber light breaking through darkness. Chiaroscuro lighting. High contrast.
+
+Scene: {scene_desc}
+
+Text overlay: Bold gold serif font with subtle golden glow, large text reading "{body.title_text}" prominently across the image. Text must be clearly readable and eye-catching.
+
+MANDATORY: All human figures must be melanated African American complexion with deep-brown skin, wool-textured coiled hair. NOT white, NOT pale, NOT light-skinned, NOT Caucasian, NOT European features.
+
+No watermarks. Dramatic. YouTube thumbnail style — bold, eye-catching, would make someone click."""
+
+    try:
+        import openai
+        import urllib.request
+        from PIL import Image
+
+        client = openai.OpenAI(api_key=api_key)
+        response = await asyncio.to_thread(
+            lambda: client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                size="1792x1024",
+                quality="hd",
+                n=1,
+            )
+        )
+        image_url = response.data[0].url
+
+        # Download and compress to YouTube spec (2MB max, 1280x720, JPEG)
+        out_dir = Path("output/thumbnails")
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        filename = body.video_id or "thumbnail"
+        raw_path = out_dir / f"{filename}_raw.png"
+
+        await asyncio.to_thread(urllib.request.urlretrieve, image_url, str(raw_path))
+
+        img = Image.open(raw_path)
+        img = img.resize((1280, 720), Image.LANCZOS)
+        final_path = out_dir / f"{filename}.jpg"
+        img.save(str(final_path), "JPEG", quality=85)
+        size_kb = final_path.stat().st_size / 1024
+
+        result = {
+            "image_url": image_url,
+            "local_path": str(final_path),
+            "size_kb": round(size_kb),
+            "message": f"Thumbnail generated ({size_kb:.0f} KB)",
+        }
+
+        # Optionally upload to YouTube
+        if body.apply_to_video and body.video_id:
+            try:
+                from app import get_yt_client
+                yt = await asyncio.to_thread(get_yt_client)
+                await asyncio.to_thread(yt.set_thumbnail, body.video_id, str(final_path))
+                result["uploaded"] = True
+                result["message"] += f" and uploaded to video {body.video_id}"
+            except Exception as e:
+                result["uploaded"] = False
+                result["upload_error"] = str(e)
+
+        return result
+
+    except Exception as e:
+        return {"image_url": None, "message": str(e)}
+
+
+@router.post("/api/tools/upload-local-thumbnail")
+async def upload_local_thumbnail(video_id: str, path: str):
+    """Upload an already-generated local thumbnail to a YouTube video."""
+    from pathlib import Path
+    if not Path(path).exists():
+        return JSONResponse({"detail": f"File not found: {path}"}, status_code=404)
+    try:
+        from app import get_yt_client
+        yt = await asyncio.to_thread(get_yt_client)
+        await asyncio.to_thread(yt.set_thumbnail, video_id, path)
+        return {"message": f"Thumbnail uploaded to {video_id}"}
+    except Exception as e:
+        return JSONResponse({"detail": str(e)}, status_code=500)
 
 
 @router.get("/api/tools/export-csv")

@@ -112,30 +112,45 @@
 
 ---
 
+## What Was Done (April 3-4, 2026)
+
+- ✅ New PC set up — codebase built, .env repopulated with Meta credentials
+- ✅ Facebook Page ID (601690023018873) and Instagram Business ID (17841454335324028) retrieved via API
+- ✅ **Repurpose AI auto-generate captions DISABLED** on all 4 workflows — was appending generic garbage to every post
+- ✅ Facebook bad caption fixed via API (`scripts/fix-facebook-captions.py`) — 1 post cleaned
+- ✅ TikTok, X, Instagram bad captions fixed manually
+- ✅ Meta App Review re-submitted with expanded permissions:
+  - instagram_business_basic (required)
+  - instagram_business_manage_comments
+  - instagram_business_content_publish
+  - instagram_business_manage_messages
+  - Human Agent
+- ✅ API test calls made for all permissions via Graph API Explorer
+- ✅ Site URL fixed in App Review — was bornmadebossesapparel.com → now youtube.com/@AIBIBLEGOSPELS
+
 ## What Was Done (April 1-2, 2026)
 
 - ✅ Facebook — 8 viral posts live via API (`scripts/facebook-post.py`)
 - ✅ Repurpose.io — all 4 platform workflows configured (IG, TikTok, X, Facebook)
 - ✅ Caption templates added to all 4 workflows (see `docs/repurpose-templates.md`)
 - ✅ First comment (YouTube link) enabled on all 4 workflows
-- ✅ AI auto-generate captions enabled on all 4 workflows
 - ✅ TikTok bumped to 3 posts/day
 - ✅ All 4 platform bios updated (Facebook, TikTok, Instagram, X)
 - ✅ 15 YouTube video titles rewritten with viral hooks
-- ✅ Meta App Review submitted (instagram_business_basic + instagram_business_manage_comments)
 - ✅ YouTube OAuth token refreshed
 - ✅ X/Twitter API keys saved + `scripts/twitter-post.py` built (8 tweets ready)
 - ✅ Google Drive content workflow planned — son to create `New-Shorts\` subfolder + 4 new Repurpose workflows
 
 ## Immediate Next Steps (Priority Order)
 
-1. 🔲 **Meta App Review approval** — 1-5 business days — then run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions
+1. 🔲 **Meta App Review — check tomorrow morning** — API test calls need up to 24hrs to register (made April 4). Once both show 1/1, hit Submit. Approval: 1-5 business days. Then run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
 2. 🔲 **Son: Create New-Shorts\ subfolder** in `G:\My Drive\AI BIBLE GOSPELS\Videos\` and set up 4 new Repurpose workflows pointing to it (one per platform — IG, TikTok, X, FB)
 3. ✅ **Fix X profile name** — changed to "AI Bible Gospels" (April 2, 2026)
 4. 🔲 **Hit 1,000 TikTok followers** — then add YouTube link to bio (currently at 470)
 5. ~~**Apply for TikTok API**~~ — **DEPRIORITIZED**: Repurpose already handles posting. API only adds analytics/comment replies — not worth the effort until 10K+ followers.
-6. 🔲 **Refresh Meta token** every 60 days — use developers.facebook.com/tools/debug/accesstoken → Extend Token
+6. 🔲 **Refresh Meta token** every 60 days — next due ~June 1, 2026
 7. 🔲 **Long-form content** — need 4-6 animated explainer videos (10-20 min) for ad revenue
+8. 🔲 **April 7** — pull fresh YouTube Studio CSVs to measure CTR/impression changes from March optimization
 
 ---
 

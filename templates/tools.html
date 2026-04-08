@@ -1,19 +1,74 @@
 {% extends "base.html" %}
 {% block title %}Content Tools{% endblock %}
 {% block page_title %}Content Tools{% endblock %}
-{% block page_subtitle %}Scripture cards, title generation, and transcript extraction{% endblock %}
+{% block page_subtitle %}Thumbnail generation, title optimization, transcripts, scripture cards, and data export{% endblock %}
 
 {% block content %}
 <div data-tab-group="tools">
     <div class="tabs">
-        <button class="tab active" data-tab="titles" onclick="switchTab('tools','titles')">Title Generator</button>
+        <button class="tab active" data-tab="thumbnails" onclick="switchTab('tools','thumbnails')">Thumbnail Generator</button>
+        <button class="tab" data-tab="titles" onclick="switchTab('tools','titles')">Title Generator</button>
         <button class="tab" data-tab="transcripts" onclick="switchTab('tools','transcripts')">Transcript Extractor</button>
         <button class="tab" data-tab="scripture" onclick="switchTab('tools','scripture')">Scripture Cards</button>
         <button class="tab" data-tab="export" onclick="switchTab('tools','export')">Export Data</button>
     </div>
 
+    <!-- Thumbnail Generator -->
+    <div class="tab-content active" id="tab-thumbnails">
+        <div class="two-col">
+            <div>
+                <div class="card">
+                    <div class="card-header"><h3>AI Thumbnail Generator</h3></div>
+                    <p class="text-dim text-sm mb-4">Generate brand-consistent thumbnails with DALL-E 3. Gold text on cinematic biblical scenes.</p>
+                    <div class="form-group">
+                        <label class="required">Bold Text (3-5 words)</label>
+                        <div class="hint">This appears as large gold text on the thumbnail</div>
+                        <input type="text" class="form-input" id="thumbText" placeholder="e.g. REMOVED FROM YOUR BIBLE">
+                    </div>
+                    <div class="form-group">
+                        <label>Scene Description</label>
+                        <div class="hint">Describe the background scene (leave blank for default biblical warrior)</div>
+                        <textarea class="form-input" id="thumbScene" rows="3" placeholder="e.g. Ancient Israelite warrior in front of a burning temple, golden flames, smoke and embers"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Video ID (optional)</label>
+                        <div class="hint">If provided, the thumbnail can be uploaded directly to this video</div>
+                        <input type="text" class="form-input" id="thumbVideoId" placeholder="e.g. _GNOQBQgT28" style="max-width:300px">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                            <input type="checkbox" id="thumbApply"> Upload to video after generating
+                        </label>
+                    </div>
+                    <button class="btn btn-primary w-full" onclick="generateThumbnail()" id="thumbGenBtn">Generate Thumbnail</button>
+                </div>
+
+                <!-- Quick Presets -->
+                <div class="card">
+                    <div class="card-header"><h3>Quick Presets</h3></div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px">
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('THEY HID THIS','Ancient scrolls being burned in a dark temple, golden firelight')">They Hid This</button>
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('PROPHECY FULFILLED','Dramatic sky splitting open with golden divine light over ancient Jerusalem')">Prophecy Fulfilled</button>
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('WAKE UP ISRAEL','Dark-brown skinned Israelite king on a golden throne, dramatic lighting')">Wake Up Israel</button>
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('THE TRUTH REVEALED','Ancient stone tablets with Hebrew text glowing gold in dark cave')">Truth Revealed</button>
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('TRIBE OF JUDAH','Dark-brown skinned lion of Judah warrior with golden crown, dramatic')">Tribe of Judah</button>
+                        <button class="btn btn-sm btn-secondary" onclick="setThumbPreset('REMOVED FROM YOUR BIBLE','Ancient scroll being torn apart, burning temple background, golden flames')">Removed Books</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-header"><h3>Preview</h3></div>
+                    <div id="thumbResult" style="min-height:200px;display:flex;align-items:center;justify-content:center">
+                        <p class="text-dim">Generated thumbnail will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Title Generator -->
-    <div class="tab-content active" id="tab-titles">
+    <div class="tab-content" id="tab-titles">
         <div class="card">
             <div class="card-header"><h3>AI Title Generator</h3></div>
             <p class="text-dim text-sm mb-4">Enter a video ID to fetch its transcript and generate optimized standalone titles</p>
@@ -77,6 +132,87 @@
 
 {% block scripts %}
 <script>
+function setThumbPreset(text, scene) {
+    document.getElementById('thumbText').value = text;
+    document.getElementById('thumbScene').value = scene;
+}
+
+async function generateThumbnail() {
+    const text = document.getElementById('thumbText').value.trim();
+    if (!text) { showToast('Enter bold text for the thumbnail', 'warning'); return; }
+
+    const scene = document.getElementById('thumbScene').value.trim();
+    const videoId = document.getElementById('thumbVideoId').value.trim();
+    const apply = document.getElementById('thumbApply').checked;
+
+    const btn = document.getElementById('thumbGenBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generating... (30-60 seconds)';
+
+    const container = document.getElementById('thumbResult');
+    container.innerHTML = '<div class="skeleton" style="height:200px;width:100%"></div><p class="text-dim text-sm" style="text-align:center;margin-top:8px">DALL-E 3 is generating your thumbnail...</p>';
+
+    try {
+        const data = await apiFetch('/api/tools/generate-thumbnail', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                title_text: text,
+                scene: scene,
+                video_id: videoId,
+                apply_to_video: apply && !!videoId,
+            }),
+        });
+
+        if (data.image_url) {
+            let statusHtml = `<span class="badge badge-success">${data.size_kb} KB</span>`;
+            if (data.uploaded) {
+                statusHtml += ' <span class="badge badge-success">Uploaded to YouTube</span>';
+            } else if (data.upload_error) {
+                statusHtml += ` <span class="badge badge-error">Upload failed: ${data.upload_error}</span>`;
+            }
+
+            container.innerHTML = `
+                <div>
+                    <img src="${data.image_url}" style="width:100%;border-radius:8px;margin-bottom:8px" alt="Generated thumbnail">
+                    <div class="flex-between">
+                        ${statusHtml}
+                        <div class="btn-group">
+                            <a href="${data.image_url}" download="thumbnail.png" class="btn btn-sm btn-secondary" target="_blank">Download</a>
+                            ${videoId && !data.uploaded ? `<button class="btn btn-sm btn-primary" onclick="uploadThumbToVideo('${videoId}','${data.local_path.replace(/\\/g,'\\\\\\\\')}')">Upload to Video</button>` : ''}
+                        </div>
+                    </div>
+                    <p class="text-dim text-sm" style="margin-top:8px">${data.message}</p>
+                </div>
+            `;
+            showToast(data.message, 'success');
+        } else {
+            container.innerHTML = `<p class="text-error">${data.message || 'Generation failed'}</p>`;
+            showToast(data.message || 'Generation failed', 'error');
+        }
+    } catch {} finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Thumbnail';
+    }
+}
+
+async function uploadThumbToVideo(videoId, localPath) {
+    showToast('Uploading thumbnail to YouTube...', 'info');
+    try {
+        const formData = new FormData();
+        // Fetch the local file and upload
+        const resp = await fetch(`/api/tools/upload-local-thumbnail?video_id=${videoId}&path=${encodeURIComponent(localPath)}`, { method: 'POST' });
+        const data = await resp.json();
+        if (resp.ok) {
+            showToast('Thumbnail uploaded to YouTube!', 'success');
+        } else {
+            showToast(data.detail || 'Upload failed', 'error');
+        }
+    } catch (e) {
+        showToast('Upload failed: ' + e.message, 'error');
+    }
+}
+
 async function generateTitles() {
     const videoId = document.getElementById('titleVideoId').value.trim();
     if (!videoId) { showToast('Enter a video ID', 'warning'); return; }

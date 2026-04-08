@@ -235,6 +235,30 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ---
 
+### April 3-4, 2026 — New PC Setup + Meta App Review + Caption Fix
+
+#### New PC Migration
+- Rebuilt codebase on new Windows 11 PC
+- Repopulated .env with Meta credentials (retrieved Page ID + IG Business ID via API since they weren't on flash drive)
+- **Page ID:** 601690023018873 | **IG Business ID:** 17841454335324028
+
+#### Repurpose.io AI Caption Bug — Fixed Across All Platforms
+- **Root cause:** "AI auto-generate captions" was enabled on all 4 workflows during April 1 setup — appended generic off-brand AI text to every post
+- **Fix:** Disabled AI auto-generate on all 4 workflows
+- **Facebook:** 1 post fixed via API (`scripts/fix-facebook-captions.py`) — script scans all posts, strips garbage at known markers, updates via Graph API
+- **TikTok / X / Instagram:** Fixed manually
+- **New script created:** `scripts/fix-facebook-captions.py` — reusable for future garbage detection
+
+#### Meta App Review — Re-submitted with Expanded Permissions
+- **Previous submission:** instagram_business_basic + instagram_business_manage_comments only
+- **New submission:** Added instagram_business_content_publish, instagram_business_manage_messages, Human Agent
+- **Site URL fixed:** Was pointing to bornmadebossesapparel.com → corrected to youtube.com/@AIBIBLEGOSPELS
+- **API test calls made** via Graph API Explorer:
+  - `GET /17841454335324028/media` (registers instagram_manage_comments)
+  - `GET /17841454335324028/content_publishing_limit?fields=config,quota_usage` (registers instagram_content_publish)
+- **Status:** Waiting up to 24hrs for test calls to show as 1/1 → then Submit → 1-5 day review
+- **Once approved:** Run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions
+
 ---
 
 ### March 30, 2026 — Phase 4B + YouTube Title Rewrite
@@ -301,6 +325,23 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 | Meta App Review submitted | ✅ (pending approval) |
 | Instagram caption updates (538 posts) | ⏳ Blocked — pending App Review |
 | X/Twitter API posting | ❌ Free tier limitation |
+
+---
+
+### April 3, 2026 — Repurpose.io AI Caption Fix
+
+#### Fix: Disabled AI auto-generate captions on all 4 Repurpose workflows
+- **Problem:** Repurpose.io's "AI auto-generate captions" feature was appending generic AI-generated promotional text after every caption template on all platforms. Posts showed the correct branded caption followed by completely off-niche filler (travel content, wellness text, startup promotional copy, and literal LLM meta-responses like "Sure! Here's a TikTok-optimized version of your post:").
+- **Root cause:** Feature was enabled during April 1 workflow setup under the assumption it would enhance per-video captions. In practice, Repurpose's AI has no niche context and generates generic promotional content that has nothing to do with the channel.
+- **Fix:** Disabled "AI auto-generate captions" in all 4 Repurpose workflows (Instagram, TikTok, X/Twitter, Facebook)
+- **Platforms affected:** All 4 — confirmed live on Facebook, TikTok, X, and Instagram
+- **Fix applied per platform:**
+  - Facebook: 1 post fixed via API (`scripts/fix-facebook-captions.py`) — 39 other posts were already clean
+  - TikTok: Fixed manually
+  - X/Twitter: Fixed manually
+  - Instagram: Fixed manually
+- **Going forward:** Caption templates in `docs/repurpose-templates.md` are the sole caption source. No AI appending.
+- **Lesson:** Hand-written niche templates outperform generic AI. AI generate stays off permanently.
 
 ---
 
