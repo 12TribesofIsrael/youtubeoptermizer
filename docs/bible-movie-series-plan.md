@@ -64,25 +64,36 @@ Short goes viral → new viewer discovers channel
 
 ## Production Order
 
-### Phase 1: Finish 1 Maccabees (Current — April 2026)
+### Phase 1: Finish 1 Maccabees (Current — April/May 2026)
 
 Complete the series already in progress. This becomes the proof of concept.
 
-| Episode | Status | Title |
-|---|---|---|
-| Chapter 1 | Published | The Book They Removed From Your Bible — 1 Maccabees Chapter 1 |
-| Chapter 2 | Published | 1 Maccabees Chapter 2: When Faith Became an Act of War |
-| Chapter 3 | To produce | The Hammer of Israel — Judas Maccabeus Rises |
-| Chapter 4 | To produce | The Temple Reclaimed — Origin of Hanukkah |
-| Chapter 5 | To produce | Wars on Every Border — Israel Fights for Survival |
-| Chapter 6 | To produce | The Death of Antiochus — God's Judgment on the Oppressor |
-| Chapter 7 | To produce | Nicanor's Threat — The Enemy at the Gates |
-| Chapter 8 | To produce | The Roman Alliance — A Deal with the Devil? |
-| Chapter 9 | To produce | The Fall of Judas Maccabeus — A Hero's Death |
-| Chapter 10 | To produce | Jonathan Takes Command — A New Leader Rises |
-| Chapter 11-13 | To produce | The Maccabean Dynasty — Power, Betrayal, and Faith |
-| Chapter 14-16 | To produce | Simon's Reign — Israel Free at Last |
-| **COMPILATION** | After all chapters | **"The Full Book of 1 Maccabees" (Complete Movie ~2.5 hrs)** |
+**Drop schedule: Tuesday / Thursday / Saturday at 7:00 PM EST**
+- Each premiere gets 48 hours of algorithm push before the next
+- 7 PM EST = prime time for audience (people watch long-form in the evening)
+- Premieres with live chat boost engagement signals
+
+| Episode | Status | Title | Drop Date (7 PM EST) |
+|---|---|---|---|
+| Chapter 1 | Published Mar 28 | The Book They Removed From Your Bible — 1 Maccabees Chapter 1 | Live |
+| Chapter 2 | Published Apr 3 | When Faith Became an Act of War — 1 Maccabees Chapter 2 | Live |
+| Chapter 3 | Premiere ready | The Hammer of Israel Rises — 1 Maccabees Chapter 3 | **Wed Apr 9** |
+| Chapter 4 | Premiere ready | They Reclaimed the Holy Temple — 1 Maccabees Chapter 4 | **Fri Apr 11** |
+| Chapter 5 | To produce | Wars on Every Border — Israel Fights for Survival | **Sat Apr 12** |
+| Chapter 6 | To produce | The Death of Antiochus — God's Judgment on the Oppressor | **Tue Apr 15** |
+| Chapter 7 | To produce | Nicanor's Threat — The Enemy at the Gates | **Thu Apr 17** |
+| Chapter 8 | To produce | The Roman Alliance — A Deal with the Devil? | **Sat Apr 19** |
+| Chapter 9 | To produce | The Fall of Judas Maccabeus — A Hero's Death | **Tue Apr 22** |
+| Chapter 10 | To produce | Jonathan Takes Command — A New Leader Rises | **Thu Apr 24** |
+| Chapter 11 | To produce | The Maccabean Dynasty — Alliances and Betrayals | **Sat Apr 26** |
+| Chapter 12 | To produce | Letters to Sparta — Israel Reaches the World | **Tue Apr 29** |
+| Chapter 13 | To produce | Simon Liberates Israel — Freedom at Last | **Thu May 1** |
+| Chapter 14 | To produce | The Golden Age of Simon | **Sat May 3** |
+| Chapter 15 | To produce | Rome Turns Against Israel — The Threat Returns | **Tue May 6** |
+| Chapter 16 | To produce | Blood Betrayal — The Death of Simon | **Thu May 8** |
+| **COMPILATION** | After all chapters | **"The Full Book of 1 Maccabees" (Complete Movie ~2.5 hrs)** | **Sat May 10** |
+
+**17 videos total** (16 chapters + 1 compilation movie) finishing by May 10.
 
 **After 1 Maccabees:** This compilation becomes a flagship video — one of the only complete cinematic 1 Maccabees productions on YouTube.
 
