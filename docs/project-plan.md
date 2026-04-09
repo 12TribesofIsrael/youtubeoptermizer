@@ -92,48 +92,121 @@ All thumbnails, banners, profile images, and future visual assets must follow th
 - [x] Kling AI prompt guardrails documented (docs/kling-prompt-rules.txt)
 - [x] /movie-director skill created for ongoing script production
 
-### Phase 4C: Scale (Month 2-3)
-- [ ] 4 more long-form pillar videos:
-  - "Deuteronomy 28: Every Curse That Came True"
-  - "The Tribe of Judah: From Kings to Slaves to Kings Again"
-  - "Hebrew Israelites in the Americas: The Evidence"
-  - "The Apocrypha: What They Removed and Why"
-- [ ] 2-3 sleep/ambient Bible audio videos (Psalms, 1-2 hours)
-- [ ] Community posts (questions, polls, engagement)
+### Phase 4C: Scale — THE BIBLE MOVIE SERIES (April 2026 →)
+
+**The strategic shift.** The channel's unfair advantage is cinematic Hebrew Israelite Bible content — nobody else is doing the full 1611 KJV + Apocrypha with melanated characters. This becomes the defining project.
+
+#### The Bible Movie Series — 81 Books, 18 Seasons, ~200 Hours
+
+Complete chronological plan: [docs/seamlessbiblicaltimeline.md](seamlessbiblicaltimeline.md)
+Genealogy reference: [docs/Genealogy_of_Jesus_pictures2-locked.pdf](Genealogy_of_Jesus_pictures2-locked.pdf)
+
+| Season | Title | Books | Est. Runtime |
+|--------|-------|-------|---|
+| 1 | Creation & Early World | Genesis 1-11, Job | ~12 hrs |
+| 2 | Patriarchs | Genesis 12-50 | ~8 hrs |
+| 3 | Egypt & Exodus | Exodus–Deuteronomy | ~18 hrs |
+| 4 | Conquest & Judges | Joshua, Judges, Ruth | ~7 hrs |
+| 5 | Kingdom of Israel | 1-2 Samuel, Chronicles, Kings, Psalms | ~22 hrs |
+| 6 | Divided Kingdom | Kings, Chronicles | ~14 hrs |
+| 7 | Prophets | Joel–Jeremiah (11 prophets) | ~18 hrs |
+| 8 | Babylonian Exile | Lamentations, Ezekiel, Daniel + Apocrypha | ~14 hrs |
+| 9 | Exile Writings | Tobit, Baruch, Letter of Jeremiah | ~4 hrs |
+| 10 | Return from Exile | Ezra, Nehemiah, Haggai, Zechariah | ~8 hrs |
+| 11 | Persian Period | Esther, Judith | ~5 hrs |
+| 12 | Wisdom Literature | Proverbs–Wisdom of Solomon | ~12 hrs |
+| 13 | Greek Oppression | 1-2 Maccabees | ~8 hrs |
+| 14 | Final Prophet | Malachi | ~1 hr |
+| 15 | Bridge to NT | 2 Esdras | ~4 hrs |
+| 16 | The Messiah | Matthew, Mark, Luke, John | ~18 hrs |
+| 17 | Early Church | Acts, all Epistles (22 books) | ~18 hrs |
+| 18 | Final Prophecy | Revelation | ~5 hrs |
+
+#### Content Strategy: Shorts + Long-Form Together
+
+**Keep posting 1 Short/day** — Shorts are the discovery engine (how new viewers find the channel). But shift production energy toward long-form episodic content.
+
+| Content Type | Role | Frequency |
+|---|---|---|
+| **Shorts (30-60s)** | Discovery — algorithm serves these to new audiences | 1/day (continue) |
+| **Long-form episodes (10-20 min)** | Watch time — builds toward monetization | 2-3/week (NEW) |
+| **Standalone bangers** | Search traffic — evergreen content | 1-2/month |
+| **Genealogy/Timeline specials** | Community engagement — shareable | As produced |
+
+#### Immediate Production Queue
+
+1. [x] 1 Maccabees Chapter 1 (published, title optimized April 7)
+2. [x] 1 Maccabees Chapter 2 (published)
+3. [ ] 1 Maccabees Chapter 3-16 (continue series → completes Season 13)
+4. [ ] **"The Complete Bloodline from Adam to Jesus"** — standalone genealogy video using the genealogy chart
+5. [ ] **"Why Your Bible Timeline Is Broken"** — introduce the 81-book chronological plan
+6. [ ] **"The Book They Removed — Full 1 Maccabees Movie"** — compile all chapters into one long-form
+7. [ ] **Season 1: Creation** — Genesis 1-11 as cinematic episodes (start the main series)
+8. [ ] "Deuteronomy 28: Every Curse That Came True" (standalone pillar)
+9. [ ] "The Tribe of Judah: From Kings to Slaves to Kings Again" (standalone pillar)
+10. [ ] "The Apocrypha: What They Removed and Why" (standalone pillar)
+
+#### Genealogy Chart Integration
+
+Source: `docs/Genealogy_of_Jesus_pictures2-locked.pdf` — 1,441 names, Adam to Jesus, with scripture refs
+
+Uses:
+- [ ] Opening title sequence for each season (zoom through tree to current era)
+- [ ] Standalone video: "The Complete Bloodline from Adam to Jesus"
+- [ ] Interactive web timeline (future dashboard feature)
+- [ ] Instagram carousel: crop 12 Tribes section → "Which tribe are you?"
+- [ ] Print poster (19.5" x 47") as subscriber milestone reward
 
 ### Phase 4D: Monetization (Month 3-6)
-- [ ] Hit 10K subscribers
-- [ ] Build to 4,000 watch hours (long-form accelerates this)
+- [ ] Hit 10K subscribers (currently 5,900)
+- [ ] Build to 4,000 watch hours (long-form accelerates this — each 13-min episode = 2+ hours of watch time per 10 views)
 - [ ] YouTube Partner Program — first ad revenue
-- [ ] Target 50K subscribers
+- [ ] Target 50K subscribers with Bible Movie Series as the draw
+- [ ] Merch: genealogy poster, tribe identity cards
 
-## Phase 5: Ongoing Optimization
+## Phase 5: Social Media & Cross-Platform
+
+- [x] Facebook — 8 viral posts live, Repurpose.io configured
+- [x] Instagram — 829 followers, 640 posts, App Review pending for caption edits
+- [x] TikTok — posting 3x/day via Repurpose (470 followers, target 1K)
+- [x] Twitter/X — blocked on free tier, using Repurpose
+- [ ] Clip long-form episodes into Shorts for cross-platform distribution
+- [ ] Use each episode release as a social media event (teaser Short → full episode)
+
+## Phase 6: Ongoing Optimization
 
 - Weekly: Check analytics at checkpoints (see changelog.md)
 - Monthly: Re-audit titles and thumbnails on underperforming videos
 - Ongoing: A/B test titles on new uploads using analytics data
+- Monthly: Pull fresh analytics via `python scripts/export-fresh-analytics.py`
 
 ---
 
 ## Competitors to Monitor
 
-| Channel | Subs | What They Do Better |
-|---------|------|-------------------|
-| BibleProject | 5.3M | Long-form animated explainers, evergreen titles |
-| AI Bible Stories | 1.1M | Better thumbnails, faster hooks, daily posting |
-| AI Bible Sagas | 110K | Cinematic storytelling, movie trailer hooks |
-| AI Bible Music | 8.6K | Worship/music Shorts, high replay rates |
-| The Bible in Black | 47.5K | Long-form animated (20-40 min), question-hook titles, Black representation, daily uploads |
+| Channel | Subs | What They Do Better | Our Edge |
+|---------|------|-------------------|----------|
+| BibleProject | 5.3M | Long-form animated explainers, evergreen titles | We have Hebrew Israelite angle they don't touch |
+| AI Bible Stories | 1.1M | Better thumbnails, faster hooks, daily posting | We go deeper on identity/prophecy |
+| AI Bible Sagas | 110K | Cinematic storytelling, movie trailer hooks | We include Apocrypha (81 books vs 66) |
+| AI Bible Music | 8.6K | Worship/music Shorts, high replay rates | We have narrative content, not just music |
+| The Bible in Black | 47.5K | Long-form animated (20-40 min), Black representation | We have the full 200-hour series plan + better AI cinematics |
 
-**Full competitor profiles, tactics, and strategy:** See [docs/competitors.md](competitors.md)
+**Nobody is doing:** The full 1611 KJV + Apocrypha as a cinematic series with melanated characters. That's 81 books. Every other channel does fragments. We do the whole thing.
+
+**Full competitor profiles:** See [docs/competitors.md](competitors.md)
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
+| `docs/project-plan.md` | This file — the master roadmap |
+| `docs/seamlessbiblicaltimeline.md` | Complete 81-book chronological production bible |
+| `docs/Genealogy_of_Jesus_pictures2-locked.pdf` | Adam-to-Jesus genealogy chart (1,441 names) |
+| `docs/Chronological_Bible_Plan_with_Apocrypha.csv` | Book-by-book reading order with chapters |
+| `docs/1611KjvW_apocrypha - Copy.pdf` | Full 1611 KJV text (916 pages, 988K words) |
 | `docs/changelog.md` | Every change with dates, reasons, and measurement plan |
-| `docs/project-plan.md` | This file — the roadmap |
-| `analytics/Table data.csv` | Per-video analytics export |
-| `analytics/audit-results.json` | Full audit data from initial scan |
+| `analytics/post-optimization/` | Fresh analytics pulled April 7, 2026 |
 | `src/youtube/client.py` | API client for all channel operations |
+| `app.py` | Web dashboard (run with `python app.py`) |
 | `goal.md` | Original strategy report |
