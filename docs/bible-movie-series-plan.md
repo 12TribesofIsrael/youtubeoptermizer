@@ -262,6 +262,95 @@ Each season becomes a playlist. Plus compilation playlists for completed books.
 
 ---
 
+## Batch Automation System
+
+### The Problem
+At 1 video manually per session (~15-20 min + review time), 1,365 chapters = 5+ years. Unacceptable.
+
+### The Solution
+A **batch orchestrator** that calls the existing ai-bible-gospels pipeline APIs automatically. No pipeline rewrites — just automate what already works.
+
+### Architecture
+
+```
+batch-producer.py (this repo)
+    │
+    ├── Reads bible_chapters.json (81 books, 1,365 chapters, full KJV text)
+    ├── Reads batch-config.json (queue + status tracking)
+    │
+    └── For each chapter in queue:
+        │
+        ├── 1. POST /api/clean          → Clean KJV text
+        ├── 2. POST /v9/api/generate-scenes → Claude AI scenes (free, ~$0.03)
+        ├── 3. POST /v9/api/generate-video  → FLUX + Kling + JSON2Video (~$4-6)
+        ├── 4. GET  /v9/api/status       → Poll until done (10-20 min)
+        ├── 5. POST /api/render/start    → FFmpeg post-production (free)
+        ├── 6. POST /api/upload/start    → YouTube upload (free)
+        └── 7. Update batch-config.json  → Mark done, log cost
+```
+
+### Key Features
+- **Resume support** — skips chapters already marked "done"; restart anytime
+- **Cost tracking** — logs cost per chapter, running total, budget remaining
+- **Error handling** — marks failed chapters, continues to next, retry later
+- **Rate limiting** — configurable delay between videos (API throttle protection)
+- **Season filtering** — `--season 1` to produce only Genesis + Job
+- **Limit runs** — `--limit 5` to produce only 5 chapters per session
+- **Dashboard integration** — batch progress visible on web dashboard
+
+### Files
+
+| File | Repo | Purpose |
+|---|---|---|
+| `scripts/batch-producer.py` | youtubeoptermizer | Main orchestrator |
+| `scripts/generate-batch-config.py` | youtubeoptermizer | Generate queue from timeline |
+| `scripts/batch-config.json` | youtubeoptermizer | Queue + status (auto-generated) |
+| `bible_chapters.json` | ai-bible-gospels | Source text (81 books, 1,365 chapters) |
+| Pipeline API (localhost:8000) | ai-bible-gospels | Does all the actual rendering |
+
+### Cost & Timeline
+
+| Pace | Videos/Day | Total Cost | Time to Complete |
+|---|---|---|---|
+| Conservative | 1/day | ~$6,825 | 3.7 years |
+| **Moderate (recommended)** | **3/day** | **~$6,825** | **15 months** |
+| Aggressive | 5/day | ~$6,825 | 9 months |
+| Parallel (future) | 10/day | ~$6,825 | 4.5 months |
+
+Cost breakdown: 1,365 chapters × ~$5 avg = ~$6,825 total API costs
+
+### How to Run
+
+```bash
+# 1. Start the video pipeline (in another terminal)
+cd ai-bible-gospels/workflows/biblical-cinematic/server
+python app.py
+# Pipeline running at http://localhost:8000
+
+# 2. Generate the batch queue (first time only)
+cd youtubeoptermizer
+python scripts/generate-batch-config.py
+
+# 3. Run batch production
+python scripts/batch-producer.py                    # Process all pending
+python scripts/batch-producer.py --season 13        # Only 1 Maccabees
+python scripts/batch-producer.py --limit 5          # Only 5 chapters
+python scripts/batch-producer.py --book "Genesis"   # Only Genesis
+python scripts/batch-producer.py --retry             # Retry failed chapters
+```
+
+### Dashboard Integration
+
+New "Batch Producer" tab on the Content Tools page showing:
+- Queue table: book, chapter, status (pending/rendering/done/failed), cost, date
+- Start/Stop batch production button
+- Progress bar: X of 1,365 chapters complete
+- Cost tracker: $X spent / $6,825 budget
+- Estimated completion date at current pace
+- Filter by season/status
+
+---
+
 ## The Vision
 
 This is not just a YouTube channel. This is:
