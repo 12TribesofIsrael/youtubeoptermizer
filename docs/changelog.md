@@ -235,6 +235,45 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ---
 
+### April 17, 2026 — Meta App Review: Root Cause Found & Fixed
+
+#### Root cause of 0/1 test calls (2+ weeks stuck)
+Three separate bugs caused every previous attempt to fail:
+
+1. **Wrong API (April 2–13):** All test calls used `graph.facebook.com` with the Facebook app (`META_APP_ID: 1452257036358754`). The `instagram_business_*` permissions require `graph.instagram.com` with the Instagram app (`IG_APP_ID: 922450807234394`). Scripts affected: `meta-test-calls.py`, `meta-app-review.py`, Graph API Explorer calls.
+
+2. **Wrong content_publish call (April 15–17):** `meta-ig-business-review.py` (correct API) only called `GET /content_publishing_limit` — a read. Meta requires `POST /{ig-user-id}/media` (container creation) to count as a content_publish test call.
+
+3. **Wrong insights metric (April 15–17):** Script passed `impressions` as a metric to `GET /{ig-user-id}/insights`. The Instagram Business Login API does NOT support `impressions` at account level — valid metrics are: `reach`, `follower_count`, `website_clicks`, `profile_views`, `online_followers`. This call returned an error on every run. Meta can't count a failed call.
+
+#### Fixes applied
+- `meta-ig-business-review.py`: API version bumped v21.0 → v22.0
+- Added `POST /{ig-user-id}/media` for content_publish (creates container, never publishes)
+- Fixed insights metrics: `impressions,reach,profile_views` → `reach,follower_count,profile_views`
+- Added media-level insights: `reach,saved,likes,comments,shares`
+- Added comment replies endpoint as belt-and-suspenders for manage_comments
+- Added `--token` flag for dashboard-generated tokens
+
+#### Successful run — April 17, 2026 ~4:00 PM ET
+All 5/5 test calls returned OK for the first time:
+- `GET /me` → OK (@aibiblegospels, id=26231113889873297)
+- `POST /26231113889873297/media` → OK (container created)
+- `GET /17908663431203537/comments` → OK (1 comment)
+- `GET /26231113889873297/insights?metric=reach,follower_count,profile_views` → OK (real data returned)
+- `GET /26231113889873297/conversations` → OK (25 threads)
+
+#### Timeline
+- **April 17 ~4:00 PM ET** — All 5/5 test calls succeeded
+- **April 17 ~4:30 PM ET** — `content_publish` already showed "Completed" (green dot) in dashboard
+- **April 17 ~5:00 PM ET** — App Review SUBMITTED. All sections green. Status: "Review in progress"
+  - All 6 permissions submitted: Human Agent, instagram_business_basic, instagram_business_manage_messages, instagram_business_content_publish, instagram_business_manage_insights, instagram_business_manage_comments
+  - Meta says: "Most submissions are reviewed within 10 days"
+- **API access confirmed during review** — `GET /me/media` returns posts via graph.instagram.com with IG_BUSINESS_TOKEN
+- **Waiting for:** Approval (1-10 business days, expected by April 28)
+- **Once approved:** Run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions
+
+---
+
 ### April 3-4, 2026 — New PC Setup + Meta App Review + Caption Fix
 
 #### New PC Migration

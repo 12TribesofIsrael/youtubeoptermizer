@@ -9,7 +9,7 @@
 | Platform | API Keys | Script Built | Can Post New | Can Edit Existing | Status |
 |----------|----------|-------------|--------------|-------------------|--------|
 | Facebook | ✅ | ✅ | ✅ | ✅ | 🟢 LIVE |
-| Instagram | ✅ | ✅ | ✅ | ❌ | 🟡 Blocked — Meta App Review pending |
+| Instagram | ✅ | ✅ | ✅ | ❌ | 🟡 App Review SUBMITTED 4/17 — waiting for approval (1-10 business days) |
 | X/Twitter | ✅ | ✅ | ❌ | ❌ | 🔴 Free tier = no posting via API |
 | TikTok | ❌ | ❌ | ❌ | ❌ | ⬜ Not started |
 
@@ -143,7 +143,7 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. 🔲 **Meta App Review — check tomorrow morning** — API test calls need up to 24hrs to register (made April 4). Once both show 1/1, hit Submit. Approval: 1-5 business days. Then run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
+1. 🟡 **Meta App Review — SUBMITTED April 17** — Review in progress, expected approval by April 28. Once approved → run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
 2. 🔲 **Son: Create New-Shorts\ subfolder** in `G:\My Drive\AI BIBLE GOSPELS\Videos\` and set up 4 new Repurpose workflows pointing to it (one per platform — IG, TikTok, X, FB)
 3. ✅ **Fix X profile name** — changed to "AI Bible Gospels" (April 2, 2026)
 4. 🔲 **Hit 1,000 TikTok followers** — then add YouTube link to bio (currently at 470)

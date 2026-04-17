@@ -71,7 +71,7 @@ AUTHORIZE_URL = (
 
 IG_TOKEN_URL = "https://api.instagram.com/oauth/access_token"
 IG_LONG_LIVED_URL = "https://graph.instagram.com/access_token"
-IG_API = "https://graph.instagram.com/v21.0"
+IG_API = "https://graph.instagram.com/v22.0"
 
 CERT_DIR = Path.home() / ".meta-ig-review-cert"
 CERT_FILE = CERT_DIR / "localhost.pem"
@@ -269,7 +269,7 @@ def run_test_calls(token: str) -> None:
     # 1 — instagram_business_basic
     section("1/5  instagram_business_basic")
     r = http_get(
-        f"{IG_API}/me?fields=id,username,account_type,media_count"
+        f"{IG_API}/me?fields=id,username,account_type,media_count,profile_picture_url"
         f"&access_token={token}"
     )
     ig_id = r.get("id")
@@ -283,8 +283,22 @@ def run_test_calls(token: str) -> None:
         print("  Cannot continue without ig_user_id.")
         return
 
+    # Verify the token is tied to the correct app
+    section("Token verification")
+    r_debug = http_get(
+        f"{IG_API}/me?fields=id,username&access_token={token}"
+    )
+    if "error" in r_debug:
+        print(f"  WARNING: Token may be invalid or expired: {r_debug['error']}")
+    else:
+        print(f"  Token is valid for user: @{r_debug.get('username', '?')} (id={r_debug.get('id')})")
+
     # 2 — instagram_business_content_publish
+    # Meta requires seeing a POST /{ig-user-id}/media call to count this.
+    # A mere GET to content_publishing_limit does NOT register.
     section("2/5  instagram_business_content_publish")
+
+    # 2a: Check publishing limit (belt and suspenders)
     r = http_get(
         f"{IG_API}/{ig_id}/content_publishing_limit"
         f"?fields=config,quota_usage&access_token={token}"
@@ -294,6 +308,31 @@ def run_test_calls(token: str) -> None:
         "error" not in r,
         json.dumps(r.get("data", r))[:140],
     )
+
+    # 2b: Create a media container (the call Meta actually counts)
+    # Uses a public test image — container is never published, expires in 24h
+    test_image = (
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/"
+        "4/47/PNG_transparency_demonstration_1.png/"
+        "280px-PNG_transparency_demonstration_1.png"
+    )
+    r2 = http_post(
+        f"{IG_API}/{ig_id}/media",
+        {
+            "image_url": test_image,
+            "caption": "API test container - will not be published",
+            "access_token": token,
+        },
+    )
+    _ok(
+        f"POST /{ig_id}/media (container)",
+        "error" not in r2,
+        f"container_id={r2.get('id')}"
+        if "error" not in r2
+        else str(r2.get("error"))[:160],
+    )
+    if "error" in r2:
+        print("  (Permission error is expected — the API call itself still registers)")
 
     # 3 — instagram_business_manage_comments
     section("3/5  instagram_business_manage_comments")
@@ -305,6 +344,7 @@ def run_test_calls(token: str) -> None:
     _ok("GET /me/media", "error" not in r, f"{len(posts)} posts")
     if posts:
         media_id = posts[0]["id"]
+        # GET comments — the primary call Meta counts for manage_comments
         r2 = http_get(
             f"{IG_API}/{media_id}/comments"
             f"?fields=id,text,username,timestamp&limit=10&access_token={token}"
@@ -315,20 +355,52 @@ def run_test_calls(token: str) -> None:
             f"{len(r2.get('data', []))} comments"
             if "error" not in r2 else str(r2.get("error"))[:140],
         )
+        # Also try replies endpoint as a belt-and-suspenders call
+        comments = r2.get("data", []) if "error" not in r2 else []
+        if comments:
+            cid = comments[0]["id"]
+            r3 = http_get(
+                f"{IG_API}/{cid}/replies"
+                f"?fields=id,text,username,timestamp&access_token={token}"
+            )
+            _ok(
+                f"GET /{cid}/replies",
+                "error" not in r3,
+                f"{len(r3.get('data', []))} replies"
+                if "error" not in r3 else str(r3.get("error"))[:140],
+            )
     else:
         print("  (no media — skipping comments sub-call)")
 
     # 4 — instagram_business_manage_insights
     section("4/5  instagram_business_manage_insights")
+    # Valid account-level metrics for Instagram Business Login API:
+    # reach, follower_count, website_clicks, profile_views, online_followers
+    # NOTE: "impressions" is NOT valid at account level — causes silent failures
     r = http_get(
         f"{IG_API}/{ig_id}/insights"
-        f"?metric=reach&period=day&access_token={token}"
+        f"?metric=reach,follower_count,profile_views"
+        f"&period=day&access_token={token}"
     )
     _ok(
-        "GET /{ig-user-id}/insights?metric=reach",
+        "GET /{ig-user-id}/insights?metric=reach,follower_count,profile_views",
         "error" not in r,
         json.dumps(r.get("data", r))[:140],
     )
+    # Also try media-level insights if we have posts
+    if posts:
+        mid = posts[0]["id"]
+        # Valid media-level metrics: reach, saved, likes, comments, shares
+        # NOTE: "impressions" is NOT valid for all media types
+        r2 = http_get(
+            f"{IG_API}/{mid}/insights"
+            f"?metric=reach,saved,likes,comments,shares&access_token={token}"
+        )
+        _ok(
+            f"GET /{mid}/insights (media-level)",
+            "error" not in r2,
+            json.dumps(r2.get("data", r2))[:140],
+        )
 
     # 5 — instagram_business_manage_messages
     section("5/5  instagram_business_manage_messages")
@@ -377,6 +449,25 @@ def main() -> int:
 
     if not preflight():
         return 1
+
+    # --token shortcut: paste a token generated from the Meta Dashboard
+    # (API setup → Step 2 → Generate token). This is the most reliable
+    # way to get test calls to register for App Review.
+    token_from_cli = None
+    for i, a in enumerate(sys.argv):
+        if a == "--token" and i + 1 < len(sys.argv):
+            token_from_cli = sys.argv[i + 1]
+            break
+        if a.startswith("--token="):
+            token_from_cli = a.split("=", 1)[1].strip()
+            break
+
+    if token_from_cli:
+        section("Using dashboard-provided token")
+        print(f"  Token: {token_from_cli[:20]}...")
+        save_token(token_from_cli)
+        run_test_calls(token_from_cli)
+        return 0
 
     existing = os.getenv("IG_BUSINESS_TOKEN")
     if existing and "--reuse" in sys.argv:
