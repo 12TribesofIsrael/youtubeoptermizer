@@ -20,10 +20,10 @@ Update descriptions and add keywords and hash tags
 
 | Platform | API Keys | Script Built | Live |
 |----------|----------|-------------|------|
-| X/Twitter | ⬜ Not yet | ⬜ | ⬜ |
-| Facebook | ⬜ Not yet | ⬜ | ⬜ |
-| Instagram | ⬜ Not yet | ⬜ | ⬜ |
-| TikTok | ⬜ Not yet | ⬜ | ⬜ |
+| X/Twitter | ✅ | ✅ | ❌ Free tier blocks posting |
+| Facebook | ✅ | ✅ | ✅ Live |
+| Instagram | ✅ | ✅ | ⏳ Meta App Review submitted 2026-04-17 |
+| TikTok | ✅ | ✅ | ⏳ TikTok App Review pending demo video |
 
 ---
 

@@ -79,6 +79,12 @@
 |--------|-------------|
 | `scripts/twitter-post.py` | 8 viral tweet templates ready (blocked — Free tier can't post) |
 
+### TikTok
+
+| Script | What it does |
+|--------|-------------|
+| `scripts/tiktok-post.py` | OAuth flow (TikTok Login Kit) + video upload via Content Posting API. Supports inbox (drafts) and direct publish modes. Chunked upload, automatic token refresh, sandbox-friendly. |
+
 ### Content Generation
 
 | Script | What it does |
