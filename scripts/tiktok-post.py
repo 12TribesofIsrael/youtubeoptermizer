@@ -58,16 +58,22 @@ load_dotenv()
 CLIENT_KEY = os.getenv("TIKTOK_CLIENT_KEY", "")
 CLIENT_SECRET = os.getenv("TIKTOK_CLIENT_SECRET", "")
 
+# TikTok does NOT accept localhost as a redirect URI on the production
+# Developer Portal (unlike Meta). We use a publicly-hosted callback page
+# on our GitHub Pages site that captures ?code= and bounces it back to
+# our local callback server via window.location.replace().
 REDIRECT_HOST = "localhost"
 REDIRECT_PORT = 9876
-REDIRECT_URI = f"https://{REDIRECT_HOST}:{REDIRECT_PORT}/callback"
+LOCAL_CALLBACK_URL = f"https://{REDIRECT_HOST}:{REDIRECT_PORT}/callback"
+REDIRECT_URI = "https://12tribesofisrael.github.io/aibiblegospels-legal/callback.html"
 
 # Scopes requested at authorization time. Must match what's configured in
 # the TikTok Developer Portal for the app.
+# NOTE: video.publish is gated by TikTok — not available to new apps. Drafts
+# mode (video.upload) is what's approved for first-time submissions.
 SCOPES = [
     "user.info.basic",
     "video.upload",
-    "video.publish",
 ]
 
 AUTHORIZE_URL = (
