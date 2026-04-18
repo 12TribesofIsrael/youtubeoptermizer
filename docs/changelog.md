@@ -430,6 +430,23 @@ All 5/5 test calls returned OK for the first time:
 
 ---
 
+### April 18, 2026 — TikTok Content Posting API submitted for review
+
+- **App**: Ai-Bible-Gospels (Organization: Born Made Bosses LLC)
+- **Products**: Login Kit + Content Posting API (drafts/inbox mode; Direct Post OFF)
+- **Scopes**: `user.info.basic` + `video.upload`
+- **Target user (sandbox)**: `aibiblegospels_`
+- **Redirect URI**: `https://12tribesofisrael.github.io/aibiblegospels-legal/callback.html` (public forwarder — TikTok rejects localhost)
+- **Script**: [scripts/tiktok-post.py](../scripts/tiktok-post.py) — OAuth + chunked upload + status polling
+- **Proof**: 2 test uploads succeeded end-to-end (9.7MB video accepted, `publish_id` returned, status polling confirmed)
+- **Demo video**: recorded via OBS, uploaded to the form, submitted 2026-04-18
+- **Legal site**: live at `https://12tribesofisrael.github.io/aibiblegospels-legal/` (separate repo `12TribesofIsrael/aibiblegospels-legal` — ToS + Privacy + OAuth callback forwarder + TikTok URL verification file)
+- **Why**: Enables cross-posting Shorts from the content pipeline directly to TikTok without manual file transfer
+- **Gotchas documented**: TikTok rejects localhost redirects (unlike Meta); unreviewed production creds fail OAuth (use Sandbox + Target User first); save is blocked without a placeholder demo video
+- **Status**: Awaiting TikTok review verdict
+
+---
+
 ## Analytics Checkpoints
 
 Use these dates to measure impact in YouTube Studio:

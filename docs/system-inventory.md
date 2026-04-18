@@ -24,7 +24,7 @@
 | Facebook | Yes | Yes | Yes | Live — 8 posts published April 1 |
 | Instagram | Yes | Read only | No | App Review submitted 4/17 — waiting approval |
 | X/Twitter | Keys saved | No | No | Free tier blocks API posting |
-| TikTok | No | No | No | Using Repurpose.io instead |
+| TikTok | Yes | Yes (drafts) | Sandbox | App Review submitted 2026-04-18 — awaiting verdict |
 
 ---
 
