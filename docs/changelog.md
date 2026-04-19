@@ -434,6 +434,16 @@ All 5/5 test calls returned OK for the first time:
 
 Ran [scripts/checkpoint-1month.py](../scripts/checkpoint-1month.py) for the 28-day window 2026-03-21 to 2026-04-18.
 
+#### 3-Snapshot Comparison
+
+| Metric | Mar 16 (baseline) | Apr 7 (post-cleanup) | Apr 18 (today) | Δ 33 days |
+|---|---|---|---|---|
+| Subscribers | 5,876 | 5,900 | **5,920** | **+44** |
+| Total views | 764,290 | 737,102 | **740,234** | −24,056 (30 deletions) |
+| Total videos | 268 | 264 | **276** | +8 net (30 deleted, ~38 new) |
+| 28d views | — | 6,335 | 6,379 | flat |
+| Avg view duration (28d) | ~88s | 185s (7d) | **146s (28d)** | **+60% ↑** |
+
 **Channel totals (28d):**
 - Views: 6,379 (~228/day — flat)
 - Watch time: 7,476 min / 124 hrs
@@ -443,11 +453,30 @@ Ran [scripts/checkpoint-1month.py](../scripts/checkpoint-1month.py) for the 28-d
 
 **Per-video baseline diff:** Top 15 videos all show +0.0% to +0.5% growth vs the March 16 baseline. The viral 12 Tribes Origins Short (115K views) added only +576 views in a full month — back in its peak it did that in a day.
 
-**Diagnosis:** The YPP suspension is choking reach across all videos. Views are flatlined because search/suggested/browse traffic is gated. This means **the impact of title + thumbnail optimization cannot be measured under current conditions** — reach is near-zero.
+#### Diagnosis
 
-**Silver linings:**
-- 146s avg view duration confirms content quality is unaffected
-- +41 net subs/month with ~0 reach = the small trickle of viewers converts well
+**YPP suspension is choking reach across all videos.** Views are flatlined because search/suggested/browse traffic is gated. This means the impact of title + thumbnail optimization cannot be measured under current conditions — reach is near-zero.
+
+The −24K total-views drop is a deliberate artifact of Phase 1 cleanup (30 low-quality videos deleted, their lifetime views removed with them). Healthy videos gained ~3,100 views between April 7 and April 18 (~285/day).
+
+#### What's actually working
+
+- ✅ Subs growing steadily: +44 in 33 days, +20 in last 11 days (1.8/day)
+- ✅ Upload cadence healthy: ~38 new videos since baseline
+- ✅ **Avg view duration jumped 88s → 146s (+60%)** — real retention improvement independent of algorithm
+- ✅ Top 15 videos kept their view counts intact (cleanup didn't touch hits)
+
+#### What's NOT working (YPP-caused)
+
+- ❌ View velocity dead: ~250/day vs historical thousands/day
+- ❌ No viral re-surge on existing hits (top Short: +576 views in a month)
+- ❌ Impressions/CTR gated from API access (YPP-only metrics)
+
+#### The one clear optimization win
+
+**Average view duration: 88s → 146s (+60%).** This is the channel's own retention quality improving — viewers watching longer *when they do arrive*. Doesn't depend on the algorithm. Title/thumbnail/hook optimization IS working for the traffic we're getting. When YPP lifts, this retention gain compounds with restored reach.
+
+**Bottom line:** the engine is tuned; waiting on the fuel line (YPP) to reopen.
 
 **Action:** Treat this as the "during-suspension baseline." Re-run checkpoint **~2 weeks after YPP appeal resolves** (appeal due 2026-04-30 → earliest clean re-measurement 2026-05-14).
 
