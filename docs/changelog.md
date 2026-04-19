@@ -430,6 +430,28 @@ All 5/5 test calls returned OK for the first time:
 
 ---
 
+### April 19, 2026 — Viral formula identified: "Read [Scripture] Slowly"
+
+A TikTok post posted 24h ago hit 10% share rate on 2,700 views (8x normal) — algorithmic push tier achieved. The post cross-matches a YouTube viral on the identical scripture (Deuteronomy 28), confirming the hook pattern works on both platforms.
+
+- **TikTok**: [7629867741511486734](https://www.tiktok.com/@aibiblegospels_/video/7629867741511486734) — "They don't teach this in church. Read Deuteronomy 28 slowly. ☦️"
+  - 2,700 views / 349 likes / 270 shares / 133 saves / 26 comments / 1+ repost (vidIQ engagement: 24%)
+- **YouTube match**: `WpEsJWK1Awo` "The Slave Ships of Deuteronomy 28" — 60K views, 6.23% CTR
+
+**Documented the formula** in [docs/viral-formula-deuteronomy-28.md](viral-formula-deuteronomy-28.md):
+- Hook template: `"They don't teach this in church. Read [Scripture] slowly. ☦️"`
+- 5-post replication queue drawn from existing YouTube top-CTR library
+- Deuteronomy 28 mini-series plan (one post per curse verse)
+- YouTube title-flip candidates for A/B testing
+- Measurement thresholds for share rate / save rate / algorithmic push
+
+**Next actions:**
+1. Post 2-3 formula clones within 48h to ride algorithmic momentum
+2. Track day-1/3/7/30 metrics for each in the updates log
+3. Consider A/B title flip on `WpEsJWK1Awo` to match the TikTok hook
+
+---
+
 ### April 18, 2026 — 1-Month Checkpoint Run (during YPP suspension)
 
 Ran [scripts/checkpoint-1month.py](../scripts/checkpoint-1month.py) for the 28-day window 2026-03-21 to 2026-04-18.
