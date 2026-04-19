@@ -148,10 +148,21 @@ Test the TikTok formula on the YouTube library. Candidates for A/B title flip:
 
 _Append new viral hits using this formula here, with metrics at day 1 / 3 / 7 / 30._
 
-### 2026-04-19 — Deuteronomy 28 TikTok
+### 2026-04-19 — Deuteronomy 28 TikTok (SEED VIRAL)
 - URL: https://www.tiktok.com/@aibiblegospels_/video/7629867741511486734
 - Caption: "They don't teach this in church. Read Deuteronomy 28 slowly. ☦️"
 - Day 1: 2,700 views / 349 likes / 270 shares / 133 saves / 26 comments / 1+ repost
 - Share rate: 10% (8x normal)
 - Engagement rate: 24% (vidIQ)
 - Status: In algorithmic push tier — expect 20K-100K by day 7
+
+### 2026-04-19 — Script 1: Christ Will Destroy Edom (CLONE #1)
+- URL: https://www.tiktok.com/@aibiblegospels_/video/7630560963900558622
+- Caption: "They don't teach you who Edom really is. Read Genesis 49 slowly. ☦️"
+- Posted: 2026-04-19 (seed viral +36h window — algorithmic push still active on account)
+- Source YouTube match: rjtM2N5MIGM (7.84% CTR — channel's highest)
+- Pipeline: Modal custom-script → 6 scenes / ~90s
+- Manual edits applied: hook restored verbatim in Scene 1, CTA restored verbatim in Scene 6, Obadiah verse order flipped in Scene 4, KJV accuracy fix ("a fire" / "for stubble")
+- Day 1: _pending (check in ~24h)_
+- Share rate: _pending_
+- Status: _live, awaiting day-1 metrics_
