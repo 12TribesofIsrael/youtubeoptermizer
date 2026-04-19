@@ -430,6 +430,31 @@ All 5/5 test calls returned OK for the first time:
 
 ---
 
+### April 18, 2026 — 1-Month Checkpoint Run (during YPP suspension)
+
+Ran [scripts/checkpoint-1month.py](../scripts/checkpoint-1month.py) for the 28-day window 2026-03-21 to 2026-04-18.
+
+**Channel totals (28d):**
+- Views: 6,379 (~228/day — flat)
+- Watch time: 7,476 min / 124 hrs
+- Avg view duration: **146 sec (2:26)** — strong retention signal
+- Net subs: **+41** (53 gained, 12 lost)
+- Likes: 266 / Shares: 64 / Comments: 9
+
+**Per-video baseline diff:** Top 15 videos all show +0.0% to +0.5% growth vs the March 16 baseline. The viral 12 Tribes Origins Short (115K views) added only +576 views in a full month — back in its peak it did that in a day.
+
+**Diagnosis:** The YPP suspension is choking reach across all videos. Views are flatlined because search/suggested/browse traffic is gated. This means **the impact of title + thumbnail optimization cannot be measured under current conditions** — reach is near-zero.
+
+**Silver linings:**
+- 146s avg view duration confirms content quality is unaffected
+- +41 net subs/month with ~0 reach = the small trickle of viewers converts well
+
+**Action:** Treat this as the "during-suspension baseline." Re-run checkpoint **~2 weeks after YPP appeal resolves** (appeal due 2026-04-30 → earliest clean re-measurement 2026-05-14).
+
+**Snapshot saved to:** `analytics/checkpoint-2026-04-18/`
+
+---
+
 ### April 18, 2026 — TikTok Content Posting API submitted for review
 
 - **App**: Ai-Bible-Gospels (Organization: Born Made Bosses LLC)

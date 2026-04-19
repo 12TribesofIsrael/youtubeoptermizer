@@ -29,24 +29,29 @@ from src.youtube.client import YouTubeClient
 
 
 def section(title: str) -> None:
+    # Force ASCII output to avoid cp1252 encoding errors on Windows consoles
+    safe = title.encode("ascii", "replace").decode("ascii")
     print()
     print("=" * 64)
-    print(f"  {title}")
+    print(f"  {safe}")
     print("=" * 64)
 
 
 def load_baseline() -> dict:
-    """Load pre-optimization per-video metrics from analytics/Table data.csv."""
-    baseline_path = Path(__file__).resolve().parent.parent / "analytics" / "Table data.csv"
+    """Load pre-optimization per-video metrics."""
+    root = Path(__file__).resolve().parent.parent
+    baseline_path = root / "analytics" / "pre-optimization" / "Table data.csv"
+    if not baseline_path.exists():
+        baseline_path = root / "analytics" / "Table data.csv"
     if not baseline_path.exists():
         print(f"  WARN: baseline not found at {baseline_path}")
         return {}
     rows = {}
-    with open(baseline_path, encoding="utf-8") as f:
+    with open(baseline_path, encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for r in reader:
-            vid = r.get("Video") or r.get("Video ID")
-            if vid:
+            vid = r.get("Content") or r.get("Video") or r.get("Video ID")
+            if vid and vid != "Total":
                 rows[vid] = r
     return rows
 
@@ -108,31 +113,33 @@ def main() -> int:
     except Exception as e:
         print(f"  Card impressions unavailable: {e}")
 
-    # Real impressions+CTR (the YT Studio numbers) — dimension=video required
+    # Per-video views + avg view duration (top 50 by views). YouTube's v2
+    # Analytics API does NOT expose raw "impressions" and "impressions CTR"
+    # as metrics — those are Studio-only exports. We rely on cardImpressions
+    # above plus the YT Studio CSV for thumbnail-level CTR.
     try:
         vid_ctr = client.analytics.reports().query(
             ids=f"channel=={ch_id}",
             startDate=str(start),
             endDate=str(end),
-            metrics="views,impressions,impressionsClickThroughRate,averageViewDuration",
+            metrics="views,estimatedMinutesWatched,averageViewDuration,subscribersGained",
             dimensions="video",
-            sort="-impressions",
+            sort="-views",
             maxResults=50,
         ).execute()
 
         if vid_ctr.get("rows"):
-            total_imp = sum(r[1] for r in vid_ctr["rows"])
-            total_views = sum(r[0] for r in vid_ctr["rows"])
-            ctr_avg = (total_views / total_imp * 100) if total_imp else 0
-            print(f"  Total impressions (top 50): {total_imp:,}")
-            print(f"  Total views (top 50):       {total_views:,}")
-            print(f"  Effective CTR:              {ctr_avg:.2f}%")
+            # rows: [video_id, views, watch_min, avg_dur, subs_gained]
+            total_views = sum(int(r[1]) for r in vid_ctr["rows"])
+            total_watch = sum(int(r[2]) for r in vid_ctr["rows"])
+            print(f"  Top 50 videos views:        {total_views:,}")
+            print(f"  Top 50 videos watch (min):  {total_watch:,}")
     except Exception as e:
-        print(f"  Per-video impressions error: {e}")
+        print(f"  Per-video analytics error: {e}")
         vid_ctr = {"rows": []}
 
     # ── Baseline comparison ───────────────────────────────────
-    section("Baseline Comparison  (March 16, 2026 → today)")
+    section("Baseline Comparison  (March 16, 2026 -> today)")
     baseline = load_baseline()
     if not baseline:
         print("  No baseline file — skipping per-video comparison.")
@@ -140,25 +147,31 @@ def main() -> int:
 
     print(f"  Baseline entries: {len(baseline)}")
     print()
-    print(f"  {'Video':<12} {'Baseline V':>10} {'Now V':>10} {'Δ':>8}  Title")
-    print(f"  {'-'*12} {'-'*10} {'-'*10} {'-'*8}  {'-'*40}")
+    header = f"  {'Video':<12} {'Base Views':>10} {'Now Views':>10} {'Delta':>8}  {'Base CTR':>9}  Title"
+    print(header)
+    print(f"  {'-'*12} {'-'*10} {'-'*10} {'-'*8}  {'-'*9}  {'-'*40}")
 
     current_stats = {}
     videos = client.list_videos(max_results=300)
     for v in videos:
         current_stats[v["id"]] = int(v["statistics"].get("viewCount", 0))
 
+    def num(val):
+        try:
+            return int(str(val).replace(",", "") or 0)
+        except ValueError:
+            return 0
+
     # Show top 15 by current views
     top = sorted(current_stats.items(), key=lambda x: x[1], reverse=True)[:15]
     for vid_id, cur_views in top:
         base = baseline.get(vid_id, {})
         title = next((v["snippet"]["title"] for v in videos if v["id"] == vid_id), vid_id)
-        try:
-            base_views = int(str(base.get("Views", "0")).replace(",", "") or 0)
-        except ValueError:
-            base_views = 0
+        base_views = num(base.get("Views", 0))
+        base_ctr = base.get("Impressions click-through rate (%)", "")
+        base_ctr_str = f"{base_ctr}%" if base_ctr else "n/a"
         delta = pct_change(cur_views, base_views)
-        print(f"  {vid_id:<12} {base_views:>10,} {cur_views:>10,} {delta:>8}  {title[:50]}")
+        print(f"  {vid_id:<12} {base_views:>10,} {cur_views:>10,} {delta:>8}  {base_ctr_str:>9}  {title[:40]}")
 
     # ── Export fresh snapshot for this checkpoint ─────────────
     out_dir = Path(__file__).resolve().parent.parent / "analytics" / "checkpoint-2026-04-18"
@@ -180,15 +193,15 @@ def main() -> int:
             w.writerow(["Comments", r[6]])
             w.writerow(["Shares", r[7]])
 
-    vid_csv = out_dir / "per-video-impressions.csv"
+    vid_csv = out_dir / "per-video-top50.csv"
     with open(vid_csv, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["Video ID", "Views", "Impressions", "CTR %", "Avg view duration"])
+        w.writerow(["Video ID", "Views", "Watch time min", "Avg view duration", "Subs gained"])
         for r in vid_ctr.get("rows", []):
             w.writerow(r)
 
-    print(f"\n  Saved snapshot → {snapshot}")
-    print(f"  Saved per-video → {vid_csv}")
+    print(f"\n  Saved snapshot -> {snapshot}")
+    print(f"  Saved per-video -> {vid_csv}")
     print("\n  Next step: open docs/changelog.md and add impact notes for the 4/16-4/17 checkpoints.")
     return 0
 
