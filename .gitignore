@@ -9,3 +9,19 @@ thumbnails/
 *.jpg
 *.jpeg
 *.png
+
+# Scratch files from browser-pilot / ad-hoc tests
+tmp_*.json
+tmp_*.png
+
+# Rendered clone videos — too big for git, stored locally only
+clonevideos/
+
+# Claude Code local state — ignore everything in .claude/ EXCEPT the
+# memory subfolder (which is synced cross-machine via `npm run memory:push`).
+.claude/*
+!.claude/memory/
+!.claude/memory/**
+
+# Node modules (in case npm install ever runs for the memory-sync script)
+node_modules/

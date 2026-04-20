@@ -1,0 +1,10 @@
+{
+  "name": "youtubeoptermizer-memory-sync",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal npm wrapper so Claude Code's /session-end skill can auto-sync memory to git. This repo is primarily Python — see requirements.txt.",
+  "scripts": {
+    "memory:push": "node scripts/memory-sync.js push",
+    "memory:pull": "node scripts/memory-sync.js pull"
+  }
+}

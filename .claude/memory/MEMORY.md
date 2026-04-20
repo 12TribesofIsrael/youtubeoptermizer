@@ -1,0 +1,12 @@
+- [YPP suspension April 2026](project_ypp_suspension_2026.md) — channel hit with "inauthentic content" finding; appeal due 2026-04-30, do NOT delete videos until resolved
+- [Meta token keeps expiring](feedback_meta_token_recurring.md) — recurring blocker (~6 times); need automated refresh, not manual regen
+- [Meta IG App Review OAuth](feedback_meta_ig_app_review_setup.md) — instagram_business_* test calls need separate IG app + graph.instagram.com, not FB app; see scripts/meta-ig-business-review.py
+- [Meta App Review status](project_meta_app_review_status.md) — 5/5 test calls succeeded 2026-04-15; waiting for dashboard to register, then submit
+- [IG Business API metrics](feedback_ig_insights_metrics.md) — graph.instagram.com does NOT support "impressions" metric; use reach, follower_count, profile_views instead
+- [Meta App Review wrong API](feedback_meta_app_review_wrong_api.md) — first ~10 attempts failed using graph.facebook.com; only graph.instagram.com with IG_APP_ID works for instagram_business_* permissions
+- [TikTok App Review status](project_tiktok_app_review.md) — Content Posting API submitted 2026-04-18 for @aibiblegospels_; sandbox proven working, awaiting verdict
+- [TikTok OAuth quirks](feedback_tiktok_oauth_quirks.md) — localhost redirects rejected, prod creds fail pre-review; use public callback forwarder + sandbox mode
+- [Repo scope rule](feedback_repo_scope.md) — from this session, only edit files in youtubeoptermizer; ai-bible-gospels and other repos are READ-ONLY (separate Claude instance owns them)
+- [Daniel voice ID](reference_daniel_voice.md) — `onwK4e9ZLuTAKqWW03F9` (Daniel - Steady Broadcaster) is the channel's viral-proven voice; never substitute
+- [Aspect ratios](reference_aspect_ratios.md) — 9:16 vertical (1080×1920, `instagram-story`) = SHORT (TikTok/Reels/Shorts); 16:9 (`full-hd`) = LONG (never for TikTok)
+- [TikTok AI-label review](feedback_tiktok_ai_label_review.md) — first post with the AI-content label triggers TikTok review + auto sets privacy to Only me; wait for clearance, don't manually flip
