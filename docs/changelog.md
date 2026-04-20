@@ -523,6 +523,20 @@ The −24K total-views drop is a deliberate artifact of Phase 1 cleanup (30 low-
 
 ---
 
+### April 20, 2026 — TikTok app review: rejected + resubmitted
+
+- **Rejection note** (via dashboard "See why"): "Changes to your app were not approved for production. Update the following fields and resubmit: App name. Note from reviewer: App name different from website. Your Privacy Policy does not mention your app by name. Your Terms of Service does not mention your app by name."
+- **Root cause**: TikTok app name was `Ai-Bible-Gospels` (hyphens), but the website (YouTube @AIBIBLEGOSPELS → "AI Bible Gospels"), Privacy Policy, and Terms of Service all used `AI Bible Gospels` (spaces). Reviewer searched legal pages for the app name verbatim and got zero hits. All three rejection reasons collapsed into one naming mismatch.
+- **Fix**: Renamed the TikTok app `Ai-Bible-Gospels` → `AI Bible Gospels` in Dev Portal → Basic Information. No legal-repo edits needed (the legal pages already use the new name).
+- **Resubmission reason text (120 char limit)**: `Renamed app to 'AI Bible Gospels' to match website + Privacy Policy + ToS per prior rejection.`
+- **Status**: Resubmitted 2026-04-20, awaiting second verdict
+- **Learnings**:
+  - `client_credentials` grant + authorize URL redirect both succeeded pre-approval — **false positives** for app-approval checks. Only the post-login consent step shows the real `client_key` error when an app is unapproved.
+  - TikTok enforces a strict verbatim match on the app name across website, Privacy Policy, and ToS. Hyphen-vs-space counts as a mismatch.
+  - When an app is in a "Not approved" state, all fields are locked — must click `Return to Draft` first before editing.
+
+---
+
 ## Analytics Checkpoints
 
 Use these dates to measure impact in YouTube Studio:

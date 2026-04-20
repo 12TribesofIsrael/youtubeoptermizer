@@ -1,10 +1,14 @@
 ---
 name: TikTok App Review status
-description: Content Posting API submitted for review 2026-04-18; sandbox working, demo recorded, awaiting TikTok verdict
+description: First submission 2026-04-18 rejected for name mismatch; resubmitted 2026-04-20 as "AI Bible Gospels" — awaiting verdict
 type: project
 originSessionId: 3f97120f-9e3e-4e35-89e8-cf5aa8126068
 ---
-TikTok Content Posting API app review submitted 2026-04-18 for @aibiblegospels_.
+TikTok Content Posting API app review — **resubmitted 2026-04-20** after first-round rejection. App name is now **"AI Bible Gospels"** (spaces, no hyphens) — previously "Ai-Bible-Gospels".
+
+**Rejection (2026-04-20)**: reviewer flagged (1) app name different from website, (2) Privacy Policy does not mention app by name, (3) Terms of Service does not mention app by name. Root cause was a single naming mismatch: TikTok app was "Ai-Bible-Gospels" but the website (YouTube @AIBIBLEGOSPELS → "AI Bible Gospels"), Privacy Policy, and ToS all used "AI Bible Gospels". Fixed by renaming the TikTok app to match — no legal-page edits needed.
+
+**Original submission:** 2026-04-18 for @aibiblegospels_.
 
 **Why:** Enables automated video draft uploads from the content pipeline to TikTok. Required for cross-posting the Shorts we already publish on YouTube + Meta.
 
@@ -12,7 +16,7 @@ TikTok Content Posting API app review submitted 2026-04-18 for @aibiblegospels_.
 
 ## Key facts
 
-- **App**: Ai-Bible-Gospels (Organization: Born Made Bosses LLC), submitted 2026-04-18
+- **App**: "AI Bible Gospels" (Organization: Born Made Bosses LLC) — originally "Ai-Bible-Gospels", renamed 2026-04-20 to match website + legal pages
 - **Target user** (sandbox tester): aibiblegospels_ (added 2026-04-18 3:08 PM)
 - **Active credentials in .env**: SANDBOX (sbawswnygychzo38lw) — production creds preserved as comments
 - **Scopes requested**: user.info.basic + video.upload (no video.publish — requires extra approval)
