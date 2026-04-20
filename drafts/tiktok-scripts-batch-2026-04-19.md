@@ -130,17 +130,21 @@ Full breakdown on YouTube → @AIBIBLEGOSPELS link in bio
 
 - **Scripture focus:** Deuteronomy 28:64-68
 - **YouTube match:** `hNt6alQiIVE` — "The Tribe of Judah in North America" (33K views, 5.79% CTR)
-- **Target length:** ~65 seconds (4 scenes)
+- **Target length:** ~90 seconds (6 scenes) — pre-split into 6 paragraphs so Modal Claude maps 1:1 to scenes
 
 ### SCRIPT START
 
-They don't teach this in American history. Read Deuteronomy 28:68 slowly. One verse, written over three thousand years ago, predicted an entire transatlantic event nobody was supposed to survive.
+They don't teach this in American history. Read Deuteronomy 28:68 slowly. One verse, written three thousand years ago, predicted an event nobody was supposed to survive.
 
-Listen to Moses. "The Lord shall scatter thee among all people, from the one end of the earth even unto the other." Not exiled to Babylon. Not marched to Assyria. Scattered. To every end of the earth. Only one group fits that description.
+Listen to Moses. "The Lord shall scatter thee among all people, from the one end of the earth even unto the other."
 
-Then verse sixty-eight. "The Lord shall bring thee into Egypt again with ships. And there ye shall be sold unto your enemies for bondmen and for bondwomen. And no man shall buy you." Ships. Sold. No buyer at the end. That is the slave trade, written in advance.
+Not exiled to Babylon. Not marched to Assyria. Scattered. To every end of the earth. Only one group fits that description.
 
-Full breakdown on YouTube. Link in bio. At AIBIBLEGOSPELS. Read it slowly — and ask yourself why this was hidden.
+Then verse sixty-eight. "The Lord shall bring thee into Egypt again with ships. And there ye shall be sold unto your enemies for bondmen and for bondwomen. And no man shall buy you."
+
+Ships. Sold. No buyer at the end. That is the slave trade, written in advance.
+
+Full breakdown on YouTube. Link in bio. At AI BIBLE GOSPELS. Read it slowly — and ask yourself why this was hidden.
 
 ### SCRIPT END
 
