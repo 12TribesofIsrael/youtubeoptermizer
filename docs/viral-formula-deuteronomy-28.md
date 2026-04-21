@@ -12,17 +12,30 @@ The channel's breakout hook pattern, validated on both YouTube and TikTok.
 ## THE HOOK TEMPLATE
 
 ```
-"They don't teach this in church. Read [Scripture] slowly. ☦️"
+"They don't teach this in church. Read [Chapter] slowly. ☦️"
 ```
 
 ### Four compounding psychological triggers
 
 1. **"They don't teach this in church"** → identity-building. Creates "us vs. institutional church" frame. Viewer is elevated to secret-keeper status alongside the creator.
 2. **"Read"** → explicit command. Viewer can act on it immediately. Low friction.
-3. **"[Scripture]"** → specific, testable, shareable. A named chapter is a unit of content a viewer can literally DM to a friend.
+3. **"[Chapter]"** → specific, testable, shareable. A named chapter is a unit of content a viewer can literally DM to a friend.
 4. **"slowly"** → implies hidden meaning to catch. Builds suspense. Increases watch time by priming viewers to watch for "the thing they might miss."
 
 **Why it's engineered for shares:** "Read X slowly" is share bait because viewers feel compelled to make someone ELSE verify what they just learned. Share rate is the single biggest algorithmic lever on both TikTok and YouTube Shorts.
+
+---
+
+## HARD RULES — LOCKED (do not deviate)
+
+These rules were derived from the 2026-04-21 clone failure analysis. Clone #1 and Clone #2 both broke the formula and both flopped (share rate 2.35% and 0.57% vs. seed's 10%).
+
+1. **Enemy phrase is LOCKED as "in church".** Do not substitute "in school", "in history", "in American history", or "who X really is". The institutional-church frame is what activates the "secret-keeper" identity reflex. Swapping it out kills shares.
+2. **Scripture citation must be a CHAPTER, never a verse.** Use "Deuteronomy 28", not "Deuteronomy 28:68". Chapter = broad, memorable, share-easy. Verse = narrow, feels like homework, viewers don't forward a verse number.
+3. **Duration ≤ 55 seconds.** Past 60s, TikTok disables Duet and Stitch — two of the platform's strongest distribution levers. Clone #2 was 1:13 and got 1 share total. Always cut to ≤55s, even if it means trimming content.
+4. **Each clone must cite a DIFFERENT chapter than the seed and previous clones.** A feed full of "Read Deuteronomy 28" duplicates cannibalizes the seed. Vary the chapter; keep everything else identical.
+5. **Daniel voice (ElevenLabs ID `onwK4e9ZLuTAKqWW03F9`) is non-substitutable** — per `reference_daniel_voice.md`.
+6. **Aspect ratio 9:16 (1080×1920) only** — per `reference_aspect_ratios.md`. 16:9 gets pillar-boxed on TikTok and loses viewport real estate.
 
 ---
 
@@ -87,13 +100,15 @@ Per CLAUDE.md brand identity (locked 2026-03-17):
 
 Use the exact template. Post 2-3 within 48 hours of the current viral to feed algorithmic momentum.
 
+**All hooks below keep "in church" verbatim and cite a chapter (not a verse). Revised 2026-04-21 after Clone #1 and Clone #2 flopped for breaking this rule.**
+
 | Priority | Source YouTube video | TikTok caption to write |
 |---|---|---|
-| **1** | Christ Will Destroy Edom (7.84% CTR) | "They don't teach you who Edom really is. Read Genesis 49 slowly. ☦️" |
-| **2** | Tribe of Judah in North America | "They don't teach this in American history. Read Deuteronomy 28:68 slowly. ☦️" |
-| **3** | Why God Chose The Smallest Nation | "They don't teach this about Israel's origin. Read Deuteronomy 7 slowly. ☦️" |
-| **4** | Seminole Indians Were Israelites | "They don't teach this in school. Read Joel 3 slowly. ☦️" |
-| **5** | 12 Tribes Origins (115K viral) | "They don't teach you where you really come from. Read Genesis 49 slowly. ☦️" |
+| **1** | Christ Will Destroy Edom (7.84% CTR) | "They don't teach this in church. Read Genesis 49 slowly. ☦️" |
+| **2** | Tribe of Judah in North America | "They don't teach this in church. Read Joel 3 slowly. ☦️" |
+| **3** | Why God Chose The Smallest Nation | "They don't teach this in church. Read Deuteronomy 7 slowly. ☦️" |
+| **4** | Seminole Indians Were Israelites | "They don't teach this in church. Read Jeremiah 16 slowly. ☦️" |
+| **5** | 12 Tribes Origins (115K viral) | "They don't teach this in church. Read Deuteronomy 33 slowly. ☦️" |
 
 ---
 
@@ -152,17 +167,34 @@ _Append new viral hits using this formula here, with metrics at day 1 / 3 / 7 / 
 - URL: https://www.tiktok.com/@aibiblegospels_/video/7629867741511486734
 - Caption: "They don't teach this in church. Read Deuteronomy 28 slowly. ☦️"
 - Day 1: 2,700 views / 349 likes / 270 shares / 133 saves / 26 comments / 1+ repost
-- Share rate: 10% (8x normal)
-- Engagement rate: 24% (vidIQ)
-- Status: In algorithmic push tier — expect 20K-100K by day 7
+- Share rate day 1: 10% (8x normal) — qualified for algorithmic push tier
+- **Day ~3 (2026-04-21): 3,999 views / 511 likes / 403 shares / 181 saves / 34 comments**
+- **Share rate day 3: 10.08%** — sustained, but growth is cooling (+1,300 views in ~24h; won't hit the 20K–100K day-7 projection)
+- Status: Cooling — still in share-tier but exiting push
 
-### 2026-04-19 — Script 1: Christ Will Destroy Edom (CLONE #1)
+### 2026-04-19 — Script 1: Christ Will Destroy Edom (CLONE #1) — **FLOPPED**
 - URL: https://www.tiktok.com/@aibiblegospels_/video/7630560963900558622
-- Caption: "They don't teach you who Edom really is. Read Genesis 49 slowly. ☦️"
-- Posted: 2026-04-19 (seed viral +36h window — algorithmic push still active on account)
-- Source YouTube match: rjtM2N5MIGM (7.84% CTR — channel's highest)
+- Caption used: "They don't teach you who Edom really is. Read Genesis 49 slowly. ☦️" ❌ broke enemy-phrase rule
+- Posted: 2026-04-19
+- Source YouTube match: rjtM2N5MIGM (7.84% CTR)
 - Pipeline: Modal custom-script → 6 scenes / ~90s
-- Manual edits applied: hook restored verbatim in Scene 1, CTA restored verbatim in Scene 6, Obadiah verse order flipped in Scene 4, KJV accuracy fix ("a fire" / "for stubble")
-- Day 1: _pending (check in ~24h)_
-- Share rate: _pending_
-- Status: _live, awaiting day-1 metrics_
+- **Day ~2 (2026-04-21): 255 views / 18 likes / 6 shares / 7 saves / 2 comments**
+- **Share rate: 2.35%** — below the 5% viability floor
+- **Why it flopped:** (1) wrong voice (pre-fix), (2) 16:9 pillar-boxed on TikTok, (3) hook abandoned "in church" in favor of "who Edom really is" — weaker identity frame
+- Status: Dead. Consider cleanup (but cross-check YPP appeal memory before deleting any video).
+
+### 2026-04-20 — Script 2: Tribe of Judah in N America (CLONE #2) — **FLOPPED**
+- URL: https://www.tiktok.com/@aibiblegospels_/video/7630868334774390047
+- Caption used: "They don't teach this in American history. Read Deuteronomy 28:68 slowly. ☦️" ❌ broke enemy-phrase rule AND used a verse instead of a chapter
+- Posted: 2026-04-20
+- Source YouTube match: hNt6alQiIVE (5.79% CTR)
+- Pipeline: Modal custom-script → Daniel voice ✓, 1080×1920 ✓, face-forward thumbnail ✓ — technical fixes applied
+- Duration: **1:13** ❌ — over 60s threshold; Duet/Stitch disabled
+- **Day 1 (2026-04-21, ~24h): 176 views / 17 likes / 1 share / 4 saves / 1 comment**
+- **Share rate: 0.57%** — 18× below viability floor, 17× below the seed
+- **Why it flopped:** Technical fixes were correct, but three formula-breaking choices overrode them: (1) hook swapped "in church" for "in American history" (weaker identity frame), (2) scripture citation was verse-level ("28:68") instead of chapter ("28"), (3) duration >60s disabled Duet/Stitch.
+- Status: Dead. Confirms hook wording and duration cap are the dominant factors, not just voice/aspect ratio.
+
+### Meta-lesson from CLONE #1 + CLONE #2
+
+Two clones flopped with different technical setups but the **same caption-formula violations**. The seed's performance was not about voice, aspect ratio, or thumbnail alone — those are table stakes. The winning phrase structure is **"They don't teach this in church. Read [Chapter] slowly."** — this is now locked (see HARD RULES above). Script 3 must comply before posting.
