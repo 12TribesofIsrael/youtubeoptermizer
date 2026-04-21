@@ -1,31 +1,46 @@
 ---
-ended: 2026-04-21T00:00:00Z
+ended: 2026-04-21T22:00:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: d6d44c50-a641-4f85-b422-6b0200ea977c
+originSessionId: 5618946d-736d-4ccd-ab23-199943513a3f
 ---
 # Last Session — 2026-04-21
 
 ## What the user wanted
-Status check on the three in-flight platform reviews/actions: Meta App Review, TikTok App Review, and the YouTube YPP suspension appeal. Also a brief detour at the start about copying session-end/session-start skills to a claude-skills repo (paused — path was a placeholder).
+Diagnose why the TikTok viral-formula replication was failing: Clone #2 (Tribe of Judah) had just landed and was flat like Clone #1. User wanted real numbers and the viral-formula doc updated with whatever rule was broken, so Script 3 doesn't repeat the mistake.
 
 ## What we did
-- Probed Meta access token via `debug_token` — token is **INVALID** (recurring expiry issue) and still carries the old `graph.facebook.com` IG permissions, not the new `instagram_business_*` perms submitted 2026-04-17. Can't infer approval status until token is refreshed. Review window: day 4 of 10, expect decision by ~2026-04-28.
-- Probed TikTok `/v2/user/info/` — 401 `access_token_invalid`; token expired 2026-04-19. Still on SANDBOX creds (`sbawswnygychzo38lw`).
-- User pasted screenshot: **TikTok App Review REJECTED 2026-04-21** (2nd rejection). Reviewer cited (1) Website URL cannot be a login/landing page — needs a real externally-facing site, (2) demo video unclear + must show all scopes/products end-to-end in sandbox, (3) trim unused products/scopes before resubmit.
-- Updated `project_tiktok_app_review.md` with 2nd rejection. Merge conflict on session-end auto-sync revealed another Claude instance on a different machine had already logged a **1st rejection on 2026-04-20** (name mismatch — app "Ai-Bible-Gospels" vs website/legal-pages "AI Bible Gospels"; fixed by renaming the app). Resolved the conflict into a single timeline memory showing both rejections.
-- Recapped YPP suspension state from memory: appeal submitted 2026-04-10, 14-day review window closes ~2026-04-24 (3 days away), hard appeal deadline 2026-04-30. Reaffirmed do-not-touch rule on video/title/thumbnail changes and keep 1 Maccabees upload cadence going.
-- Pushed rebased main (`f607a47`) to origin after conflict resolution. Pulled memory back into auto-memory dir so both sides are in sync.
+- **Scraped live TikTok metrics** for all 3 posts via the `browser` skill (no login needed). Numbers at ~24–60h:
+  - SEED (Deut 28) — 3,999 v / 511 l / **403 sh** / 181 sv / 34 c → share rate **10.08%** (seed still working but cooling).
+  - CLONE #1 (Edom) — 255 v / 18 l / 6 sh → **2.35%** share rate. Dead.
+  - CLONE #2 (Judah) — 176 v / 17 l / **1 sh** / 4 sv → **0.57%** share rate. Dead.
+- **Diagnosed the failure mode** — both clones broke the hook formula, not the pipeline. Clone #1 dropped "in church" for "who Edom really is". Clone #2 dropped "in church" for "in American history" AND used a verse citation ("28:68") instead of a chapter AND ran 1:13 (>60s disables Duet/Stitch). Technical fixes in Clone #2 (Daniel voice ✓, 9:16 ✓, face thumbnail ✓) were correct but couldn't save the caption/duration mistakes.
+- **Updated [docs/viral-formula-deuteronomy-28.md](../../../../Users/Claude/youtubeoptermizer/docs/viral-formula-deuteronomy-28.md)** — added a new "HARD RULES — LOCKED" section (6 non-negotiables: "in church" verbatim, chapter-not-verse, ≤55s, different chapter per clone, Daniel voice, 9:16). Rewrote the replication queue so priorities 1–5 all use compliant hooks (Genesis 49, Joel 3, Deut 7, Jeremiah 16, Deut 33). Logged day-2/day-3 actuals for seed + both clones in the Updates log. Meta-lesson added at bottom. Committed as `1e660e7` and pushed.
+- **Enhanced the global `browser` SKILL.md** ([~/.claude/skills/browser/SKILL.md](~/.claude/skills/browser/SKILL.md)) with a new "`evaluate` action — critical gotchas" section. Pilot wraps scripts as `() => { <script> }` so you MUST use `return` (not IIFE). Added 5 concrete rules with before/after examples. This is in the GLOBAL skill dir, not in the repo.
+- **Saved a project reference memory** `reference_tiktok_scraping_selectors.md` — `data-e2e` selectors for likes/comments/shares/saves (saves = the `undefined-count` quirk), view counts live only on profile grid not watch page, ready-to-paste action template. Committed as `371963d` and pushed.
+- **Saved a feedback memory** `feedback_save_skill_learnings.md` — durable rule that skill gotchas go in the skill's SKILL.md, not session logs.
 
 ## Decisions worth remembering
-- Did NOT open either dev dashboard via Playwright — user volunteered the TikTok rejection screenshot directly, so the browser drive wasn't needed. Meta status still undetermined; dashboard check deferred until after 2026-04-24 (first natural checkpoint for both Meta decision and YPP decision).
-- When merging divergent memory edits from two machines, reconstruct a single timeline rather than pick one winner. Both rejection events are historically true and both matter for future resubmissions.
+- **Hook wording > pipeline technicals.** Clone #2 had every technical fix from LAST_SESSION 2026-04-20 (Daniel voice, 9:16, face thumbnail) and still flopped at 0.57% share rate. The winning lever is the literal phrase "They don't teach this in church. Read [Chapter] slowly." Voice/aspect/thumbnail are table stakes.
+- **Cite chapter, not verse.** "Read Deuteronomy 28" is share-bait; "Read Deuteronomy 28:68" feels like a homework assignment and kills the share instinct.
+- **Duration hard cap 55s.** Past 60s TikTok disables Duet/Stitch. Clone #2 at 1:13 proves the cost.
+- **Don't use IIFEs with browser skill's evaluate.** The pilot already wraps your script in an arrow function; an inner IIFE becomes `() => { (()=>{...})() }` whose outer function doesn't return. Use a bare `return` at the end of a multi-statement script.
 
 ## Open threads / next session starts here
-- **TikTok resubmit #3** — three blockers: (1) stand up a real content/marketing website separate from the `aibiblegospels-legal` GH Pages repo (About / What we do / Contact), (2) re-record sandbox demo narrating each scope, (3) trim products/scopes to what's demoed. User was offered scaffolding help but didn't answer — pick up by asking again.
-- **Meta App Review** — refresh the expired `META_ACCESS_TOKEN` (recurring blocker), then re-run `debug_token` to verify new `instagram_business_*` scopes are granted. Decision expected ~2026-04-28.
-- **YPP suspension decision** — ~2026-04-24. Until then: no video/metadata/thumbnail changes. Keep 1 Maccabees uploads flowing.
-- **Skills repo copy (paused)** — user started a snippet to copy session-end/session-start skills from `C:/Users/Deskt/.claude/skills/` into a local claude-skills repo and push. Actual repo path was never provided. Resume: ask for the repo path before running.
+- **Script 3 (Smallest Nation) is not yet shipped.** The replication queue's priority-3 hook is now compliant: "They don't teach this in church. Read Deuteronomy 7 slowly. ☦️". Before posting: verify duration ≤55s, Daniel voice, 9:16, face-forward Scene 1 thumbnail. Do not deviate from the HARD RULES in [docs/viral-formula-deuteronomy-28.md](../../../../Users/Claude/youtubeoptermizer/docs/viral-formula-deuteronomy-28.md).
+- **Clone #1 + Clone #2 cleanup decision is still open.** Both are dead on TikTok. User hasn't decided whether to delete. ⚠ The [YPP suspension memory](project_ypp_suspension_2026.md) says "do NOT delete videos until appeal resolves 2026-04-30" — that's YouTube-specific but flag the question explicitly before any TikTok delete.
+- **Seed is cooling.** 2,700 → 3,999 views in ~48h (+1,300/day), won't hit the 20K–100K day-7 projection. Decision needed on whether to pin a fresh viral-formula-compliant clone to reactivate the algorithm push, or accept the cool-down.
+- **Browser skill SKILL.md edit is not pushed anywhere.** The file lives in `~/.claude/skills/browser/SKILL.md`, which isn't in this repo. If the user wants it synced across machines, we need to find what git repo tracks `~/.claude/` (if any) or copy manually.
+- **Untracked scratch files** — `scripts/tiktok-dashboard-check.json`, `scripts/tiktok-prod-authorize-check.json`, `scripts/tiktok-prod-consent-check.json`, `scripts/tiktok-rename-app.json` — pre-existing TikTok approval probes from an earlier session. Still safe to delete or leave.
 
 ## Uncommitted work
-Clean working tree. `main` pushed to origin through `f607a47 Memory: session-end auto-sync 2026-04-21`.
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+Untracked files:
+  scripts/tiktok-dashboard-check.json
+  scripts/tiktok-prod-authorize-check.json
+  scripts/tiktok-prod-consent-check.json
+  scripts/tiktok-rename-app.json
+```
+No modified tracked files. Session work landed in commits `1e660e7` and `371963d`, both pushed to origin/main.

@@ -12,3 +12,4 @@
 - [TikTok AI-label review](feedback_tiktok_ai_label_review.md) — first post with the AI-content label triggers TikTok review + auto sets privacy to Only me; wait for clearance, don't manually flip
 - [TikTok approval probes](feedback_tiktok_approval_probes.md) — client_credentials + authorize URL are false positives; only post-login consent step reveals the real client_key gate
 - [TikTok scraping selectors](reference_tiktok_scraping_selectors.md) — `data-e2e="like-count|comment-count|share-count|undefined-count"` on watch page; views ONLY on profile grid `<strong>`; use with browser skill's evaluate action
+- [Save skill gotchas to SKILL.md](feedback_save_skill_learnings.md) — when you find out something about how a skill works, edit that skill's SKILL.md (or a project reference_*.md); don't bury it in session logs
