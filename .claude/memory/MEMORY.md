@@ -11,3 +11,4 @@
 - [Aspect ratios](reference_aspect_ratios.md) — 9:16 vertical (1080×1920, `instagram-story`) = SHORT (TikTok/Reels/Shorts); 16:9 (`full-hd`) = LONG (never for TikTok)
 - [TikTok AI-label review](feedback_tiktok_ai_label_review.md) — first post with the AI-content label triggers TikTok review + auto sets privacy to Only me; wait for clearance, don't manually flip
 - [TikTok approval probes](feedback_tiktok_approval_probes.md) — client_credentials + authorize URL are false positives; only post-login consent step reveals the real client_key gate
+- [TikTok scraping selectors](reference_tiktok_scraping_selectors.md) — `data-e2e="like-count|comment-count|share-count|undefined-count"` on watch page; views ONLY on profile grid `<strong>`; use with browser skill's evaluate action
