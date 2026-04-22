@@ -1,0 +1,6 @@
+[
+  {"action": "goto", "url": "https://developers.tiktok.com/apps"},
+  {"action": "wait", "seconds": 5},
+  {"action": "get_url"},
+  {"action": "screenshot", "path": "scripts/tiktok-dashboard-1.png"}
+]

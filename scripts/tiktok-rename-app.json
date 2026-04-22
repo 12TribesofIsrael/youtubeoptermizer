@@ -1,0 +1,6 @@
+[
+  {"action": "goto", "url": "https://developers.tiktok.com/apps"},
+  {"action": "wait_for_user", "message": "STEP 1: Log in if prompted (same TikTok account you use for @aibiblegospels_).\n\nSTEP 2: Click into the 'Ai-Bible-Gospels' app.\n\nSTEP 3: Find the 'App info' / 'Basic information' section (usually the first tab / top of the page).\n\nSTEP 4: Change the App name from 'Ai-Bible-Gospels' to exactly: AI Bible Gospels  (with spaces, no hyphens)\n\nSTEP 5: Save changes. Then click 'Submit for review' (or 'Resubmit').\n\nClose this prompt once you've submitted (or if you hit a snag and want help).", "timeout": 900},
+  {"action": "get_url"},
+  {"action": "screenshot", "path": "scripts/tiktok-rename-result.png"}
+]

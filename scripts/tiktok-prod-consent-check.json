@@ -1,0 +1,7 @@
+[
+  {"action": "goto", "url": "https://www.tiktok.com/v2/auth/authorize/?client_key=awhtm3emzgjcvin6&response_type=code&scope=user.info.basic%2Cvideo.upload&redirect_uri=https%3A%2F%2F12tribesofisrael.github.io%2Faibiblegospels-legal%2Fcallback.html&state=probe"},
+  {"action": "wait_for_user", "message": "Log in to TikTok (pick any method — phone/email, QR, Google, etc.). After login, TikTok should either (a) show a consent screen with 'Ai-Bible-Gospels' app name + scopes (=APPROVED), or (b) redirect to the GitHub Pages callback (=APPROVED), or (c) show an error page (=NOT approved). You DON'T need to click Approve. Once you see any of those three outcomes, the URL bar should change — this script will auto-detect and continue. Timeout: 10 min.", "timeout": 600},
+  {"action": "wait", "seconds": 2},
+  {"action": "get_url"},
+  {"action": "screenshot", "path": "scripts/tiktok-prod-consent.png"}
+]

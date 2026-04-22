@@ -14,6 +14,10 @@ thumbnails/
 tmp_*.json
 tmp_*.png
 
+# Gmail PDFs — personal correspondence, repo is public on GitHub
+Gmail*.pdf
+docs/Gmail*.pdf
+
 # Rendered clone videos — too big for git, stored locally only
 clonevideos/
 
