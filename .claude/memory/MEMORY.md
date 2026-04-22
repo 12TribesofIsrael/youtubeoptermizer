@@ -1,4 +1,4 @@
-- [YPP suspension April 2026](project_ypp_suspension_2026.md) — channel hit with "inauthentic content" finding; appeal due 2026-04-30, do NOT delete videos until resolved
+- [YPP suspension April 2026](project_ypp_suspension_2026.md) — "inauthentic content" finding; appeal submitted 2026-04-22, decision ~2026-05-06, do NOT delete/modify videos
 - [Meta token keeps expiring](feedback_meta_token_recurring.md) — recurring blocker (~6 times); need automated refresh, not manual regen
 - [Meta IG App Review OAuth](feedback_meta_ig_app_review_setup.md) — instagram_business_* test calls need separate IG app + graph.instagram.com, not FB app; see scripts/meta-ig-business-review.py
 - [Meta App Review status](project_meta_app_review_status.md) — 5/5 test calls succeeded 2026-04-15; waiting for dashboard to register, then submit
@@ -12,3 +12,5 @@
 - [TikTok AI-label review](feedback_tiktok_ai_label_review.md) — first post with the AI-content label triggers TikTok review + auto sets privacy to Only me; wait for clearance, don't manually flip
 - [TikTok approval probes](feedback_tiktok_approval_probes.md) — client_credentials + authorize URL are false positives; only post-login consent step reveals the real client_key gate
 - [Read files, not MEMORY.md index](feedback_read_files_not_index.md) — index lines can drift from file bodies; paraphrasing the index gave stale TikTok info on 2026-04-21
+- [User profile — Thomas Lee](user_thomas_profile.md) — full legal name "Thomas Lee"; use for formal sign-offs; solo operator; prefers ready-to-use output over templates
+- [Scrub public-repo commits](feedback_public_repo_scrub.md) — youtubeoptermizer repo is public on GitHub; strip emails/personal info from docs before commit

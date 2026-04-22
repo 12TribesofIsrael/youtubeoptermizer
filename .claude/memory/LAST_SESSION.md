@@ -1,43 +1,43 @@
 ---
-ended: 2026-04-21T16:30:00Z
-project: youtubeoptermizer (AI Bible Gospels)
+ended: 2026-04-22T23:59:00Z
+project: youtubeoptermizer
 branch: main
-originSessionId: 7836331d-eb91-4748-8dac-bbe96c586b92
+originSessionId: e01c4309-a261-40e2-8977-ae82d2e592ab
 ---
-# Last Session — 2026-04-21
+# Last Session — 2026-04-22
 
 ## What the user wanted
-Get back up to speed on the TikTok app submission and verify that this laptop has a complete, current picture of everything from prior sessions (especially any work done on the desktop). The underlying ask was trust: "how do I know you're not missing stuff, and how do we prevent this going forward?"
+Check the YouTube API status (credentials were missing), then draft a YPP "inauthentic content" suspension appeal in Thomas's voice — ending up filing it live through YouTube's Contact Support form before the April 30 deadline.
 
 ## What we did
-- **Diagnosed the staleness the user noticed.** I initially reported the TikTok app status as "awaiting verdict after 1st rejection" — but the actual file `project_tiktok_app_review.md` had been updated 2026-04-21 to reflect a **2nd rejection** (website URL, demo video, unused scopes). Root cause: the MEMORY.md index line wasn't updated when the file body was. I paraphrased the index instead of reading the file.
-- **Audited all 15 memory files against MEMORY.md.** Found a second stale index line: Meta App Review said "waiting to submit" but the file said SUBMITTED 2026-04-17, review in progress (expect 2026-04-28). Fixed both index lines with Edit.
-- **Traced the sync architecture.** `scripts/memory-sync.js` mirrors USER (`~/.claude/projects/<slug>/memory/`) ↔ REPO (`<repo>/.claude/memory/`) ↔ GitHub. Detected that my edits had only touched the USER copy — REPO was still stale, so GitHub was still stale.
-- **Fixed the drift end-to-end:** `node scripts/memory-sync.js push` (copied 17 files), committed as `7dd6c06 "Memory: fix stale MEMORY.md index lines"`, pushed to origin/main.
-- **Agreed on two prevention rules going forward:** (1) Whenever I update a memory file body, update its MEMORY.md index line in the same edit. (2) When the user asks "what do you know about X", read the files, not just the index.
+- Ran `scripts/channel-status.py` and confirmed YouTube API is currently broken: both `credentials.json` and `token.json` are missing from the repo root. Flagged that every script importing `YouTubeClient` will fail until OAuth creds are restored from Google Cloud Console. Did NOT restore them — user pivoted to the appeal.
+- Corrected a stale project memory: previous entry claimed "appeal submitted 2026-04-10" but the live YouTube dashboard was still showing "Start appeal" as active, and the notification email the user pasted is actually dated 2026-04-15. The 2026-04-10 "submission" never happened (or was a different form). Treated the live dashboard as source of truth.
+- Pulled real top-video data from [analytics/pre-optimization/Table data.csv](analytics/pre-optimization/Table%20data.csv): UObM30FGdSs (115,217 views, 70.6% retention, 4.52% CTR — the 12 Tribes Origins Short), rjtM2N5MIGM (27,022 views, 79.17% retention, 7.84% CTR — Part 33, best engagement metrics), mAJS97kNC5E (17-min Official Movie, 9,338 engaged views — long-form proof).
+- Drafted the appeal in Thomas's voice (direct, data-first, no hedging) and wrote it to [docs/ypp-appeal-2026-04.md](docs/ypp-appeal-2026-04.md). Initial version was ~5,800 chars assuming the 10K Studio-video-appeal limit; rewrote to 936 chars when user clarified the Contact Support form has a 1,000-char cap.
+- Tightened version kept: retention numbers (core anti-"mass-produced" argument), proactive cleanup (30 deleted / 84 renamed / 20 thumbnails / 14 playlists — done BEFORE the notice), long-form pipeline (1 Maccabees + 81-book Bible Movie Series), three video URLs via `youtu.be/` short form to save chars. Cut: brand-identity paragraph, competitor comparison, melanated-representation mission — retention data carries the argument in fewer words.
+- **User submitted the appeal successfully** via YouTube Help → Contact Us → "Appealing YPP suspension or rejection" (not Studio video appeal). Confirmation page shown: "Your email has been sent."
+- Updated [project_ypp_suspension_2026.md](project_ypp_suspension_2026.md) with the real submission timeline, the exact appeal content summary, and corrected the 2026-04-10 error. Updated the MEMORY.md index line accordingly.
+- Committed & pushed the appeal draft as `7db9733` ("Add YPP appeal draft submitted 2026-04-22"). Scrubbed `aibiblegospels444@gmail.com` from the doc before committing — repo is public on GitHub.
 
 ## Decisions worth remembering
-- **MEMORY.md is an index, not the truth.** It gets pre-loaded into context and is tempting to paraphrase, but it can drift from file contents. Read the file when accuracy matters.
-- **Sync has three locations, not two.** USER ↔ REPO ↔ GitHub. Editing USER alone doesn't propagate. The `memory-sync.js push` + git commit + git push chain is what gets to GitHub.
-- **Desktop ↔ laptop trust model:** git is the only real cross-machine ledger. Anything that's in GitHub is guaranteed here after `git pull`. Anything local-only on the desktop is invisible to this laptop until it's pushed.
+- Trusted the live YouTube dashboard over the prior memory claim about a 2026-04-10 submission. The feedback memory [feedback_read_files_not_index.md](feedback_read_files_not_index.md) warns that memory can drift from reality; this is a concrete instance where verifying current state was the right call.
+- Did NOT auto-commit the 4 untracked `scripts/tiktok-*.json` files sitting in the working tree — they predate this session and belong to the TikTok app review work a different Claude instance was doing. Left them alone; user can decide.
+- Used `youtu.be/` short URLs instead of `youtube.com/watch?v=` in the 1,000-char appeal — saved ~60 chars, fully valid.
 
 ## Open threads / next session starts here
-- **TikTok 3rd submission is the blocking action item.** Three fixes needed: (1) stand up a real marketing website separate from the GH-Pages legal/callback repo — About, What we do, Contact; (2) re-record sandbox demo video narrating each scope end-to-end (login → upload draft → confirm in inbox); (3) trim products/scopes to exactly what's demoed (`user.info.basic` + `video.upload`, Login Kit + Content Posting API only). Integration itself is proven working — don't touch.
-- **YPP appeal decision is imminent** — expected ~2026-04-24 (3 days from today). Hard freeze still applies: do NOT delete videos, rename titles, swap thumbnails, or bulk-modify metadata until it resolves. Keep 1 Maccabees upload cadence.
-- **Meta App Review decision expected by 2026-04-28.** If approved, the immediate action is `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
-- **Script 3 (Smallest Nation, Deut 7) still not shipped.** Hook is viral-formula-compliant ("They don't teach this in church. Read Deuteronomy 7 slowly. ☦️"). Before posting: verify ≤55s, Daniel voice, 9:16, face thumbnail.
-- **Clone #1 + #2 TikTok cleanup decision still open.** Both are dead (2.35% + 0.57% share rates). User hasn't decided whether to delete. Flag before acting — YPP freeze is YouTube-specific but the question is still live.
-- **4 untracked `scripts/tiktok-*.json` probe files** are carried over from prior sessions (dashboard-check, prod-authorize-check, prod-consent-check, rename-app). Not mine. Leave or delete — user's call.
+- **YPP decision watch (~May 6, 2026)** — 14-day review window from 2026-04-22. User should watch aibiblegospels444@gmail.com inbox. If granted, resume Phase 4B long-form work. If denied, Option 2 (reapply July 8, 2026) opens and user's other channels are flagged as at-risk per the notice.
+- **DO NOT delete/rename/bulk-edit any videos until the decision lands.** The channel has to stay in the reviewed state, and any deletion invalidates the Option 1 appeal path precondition.
+- **Keep 1 Maccabees uploads going** — pausing would look suspicious and the in-progress cinematic series is the live evidence of original long-form work the appeal cites.
+- **YouTube API is still broken.** If any scripts are needed post-decision, user must download the OAuth 2.0 client JSON from Google Cloud Console and save it as `credentials.json` in the repo root. First run will open a browser for OAuth and create `token.json`. See [src/youtube/auth.py:22-47](src/youtube/auth.py#L22-L47).
+- **Untracked tiktok JSON files** — [scripts/tiktok-dashboard-check.json](scripts/tiktok-dashboard-check.json), [scripts/tiktok-prod-authorize-check.json](scripts/tiktok-prod-authorize-check.json), [scripts/tiktok-prod-consent-check.json](scripts/tiktok-prod-consent-check.json), [scripts/tiktok-rename-app.json](scripts/tiktok-rename-app.json). These carried over from before this session started and were deliberately not committed. User or the TikTok-owning Claude instance should decide their fate.
+- **User confirmed no videos deleted since 2026-04-15** (Option 1 precondition held — that's why the appeal was even eligible).
 
 ## Uncommitted work
 ```
-On branch main
-Your branch is up to date with 'origin/main'.
-
-Untracked files:
+Untracked:
   scripts/tiktok-dashboard-check.json
   scripts/tiktok-prod-authorize-check.json
   scripts/tiktok-prod-consent-check.json
   scripts/tiktok-rename-app.json
 ```
-No modified tracked files. Session work landed in commit `7dd6c06` and pushed to origin/main.
+Working tree otherwise clean. HEAD at 7db9733 (pushed).
