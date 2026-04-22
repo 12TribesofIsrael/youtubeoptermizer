@@ -1,43 +1,39 @@
 ---
-ended: 2026-04-22T23:59:00Z
-project: youtubeoptermizer
+ended: 2026-04-22T18:00:00Z
+project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: e01c4309-a261-40e2-8977-ae82d2e592ab
+originSessionId: 1574d6db-3dfe-4e8a-9ae5-3385a50918a8
 ---
 # Last Session — 2026-04-22
 
 ## What the user wanted
-Check the YouTube API status (credentials were missing), then draft a YPP "inauthentic content" suspension appeal in Thomas's voice — ending up filing it live through YouTube's Contact Support form before the April 30 deadline.
+Mid-YPP-appeal strategy session: vetting ideas (bulk description edits for SEO, whether draft uploads hurt the appeal), restoring YouTube API access, and getting an honest read on what actually happened with the "first appeal + second chance" sequence after Thomas found the real emails.
 
 ## What we did
-- Ran `scripts/channel-status.py` and confirmed YouTube API is currently broken: both `credentials.json` and `token.json` are missing from the repo root. Flagged that every script importing `YouTubeClient` will fail until OAuth creds are restored from Google Cloud Console. Did NOT restore them — user pivoted to the appeal.
-- Corrected a stale project memory: previous entry claimed "appeal submitted 2026-04-10" but the live YouTube dashboard was still showing "Start appeal" as active, and the notification email the user pasted is actually dated 2026-04-15. The 2026-04-10 "submission" never happened (or was a different form). Treated the live dashboard as source of truth.
-- Pulled real top-video data from [analytics/pre-optimization/Table data.csv](analytics/pre-optimization/Table%20data.csv): UObM30FGdSs (115,217 views, 70.6% retention, 4.52% CTR — the 12 Tribes Origins Short), rjtM2N5MIGM (27,022 views, 79.17% retention, 7.84% CTR — Part 33, best engagement metrics), mAJS97kNC5E (17-min Official Movie, 9,338 engaged views — long-form proof).
-- Drafted the appeal in Thomas's voice (direct, data-first, no hedging) and wrote it to [docs/ypp-appeal-2026-04.md](docs/ypp-appeal-2026-04.md). Initial version was ~5,800 chars assuming the 10K Studio-video-appeal limit; rewrote to 936 chars when user clarified the Contact Support form has a 1,000-char cap.
-- Tightened version kept: retention numbers (core anti-"mass-produced" argument), proactive cleanup (30 deleted / 84 renamed / 20 thumbnails / 14 playlists — done BEFORE the notice), long-form pipeline (1 Maccabees + 81-book Bible Movie Series), three video URLs via `youtu.be/` short form to save chars. Cut: brand-identity paragraph, competitor comparison, melanated-representation mission — retention data carries the argument in fewer words.
-- **User submitted the appeal successfully** via YouTube Help → Contact Us → "Appealing YPP suspension or rejection" (not Studio video appeal). Confirmation page shown: "Your email has been sent."
-- Updated [project_ypp_suspension_2026.md](project_ypp_suspension_2026.md) with the real submission timeline, the exact appeal content summary, and corrected the 2026-04-10 error. Updated the MEMORY.md index line accordingly.
-- Committed & pushed the appeal draft as `7db9733` ("Add YPP appeal draft submitted 2026-04-22"). Scrubbed `aibiblegospels444@gmail.com` from the doc before committing — repo is public on GitHub.
+- **Talked Thomas out of bulk-editing descriptions** to inject an SEO URL across his library. Rationale: mid-appeal mass-edits of 280+ videos reinforces the exact "inauthentic / templated" finding and triggers YouTube's spam heuristics. Hold until ~May 6 at minimum.
+- **Restored YouTube API access.** Old `credentials.json` was missing and old Desktop client had two leftover secrets (downloads are no longer offered for legacy clients per Google's new policy). Thomas created a new Desktop OAuth client, downloaded fresh `credentials.json`, added himself as test user. Token flow failed on port 8080 (in use) — ran inline with port=8765 instead. `token.json` minted at repo root, both files gitignored. Pulled live channel stats: 5,920 subs, 280 videos, 740,755 views, `UCq6hz1xEEd9kL95Kcuof2wQ`, handle `@aibiblegospels`.
+- **Thomas shared the Apr 9 / Apr 14-15 / Apr 16 email PDFs** from the YPP support ticket `[5-2371000041100]`. This corrected the memory timeline significantly. Real timeline: Apr 9 suspension → Thomas contacted support ~Apr 9-13 (first appeal) → Apr 14 acknowledgment → Apr 15 1:22 AM **auto-rejection** (~25 hrs, ML-driven) citing "inauthentic content" / "mass-produced" / "template" / "image slideshows" → Apr 16 CSAT survey (not a second chance, just a satisfaction rating) → Apr 22 Thomas filed second appeal via the Help form (the `docs/ypp-appeal-2026-04.md` draft). Updated `project_ypp_suspension_2026.md` with the full corrected timeline and verbatim rejection language.
+- **Walked Thomas through what a "second chance" email actually was.** The Apr 16 "Re: [ticket]" was a customer-satisfaction survey. There's no fresh appeal review — the Apr 22 submission is a second attempt inside the original 21-day window, which may be auto-closed as duplicate, accepted as fresh by the different form path, or re-rejected by ML. Real shot is probably the July 8 reapply after substantial channel transformation.
+- **API-audited the channel state.** Found 15 private drafts from Apr 9 (all titled "AI Voice of the Gospel | Who Are the 12 Tribes of Israel?" — uploaded the same day as the suspension email) plus 11 private drafts from Apr 19 (timestamp-named segment cuts: "short 1 00 51 to 02 02"). Leaving all untouched per the "don't delete/modify during appeal" rule.
+- **Discovered 15 scheduled Shorts** (Apr 22 → May 6, daily, all on "12 Tribes of Israel"). Initially recommended trimming; Thomas pushed back — pre-scheduling 1-2 weeks out is his normal workflow. Walked back, saved `feedback_shorts_prescheduling.md`.
+- **Thomas then asked for honest opinion** based on Reddit/creator consensus + ROI. Gave a real recommendation: pause the queue, because the current appeal is probably lost regardless, and the real strategic target is July 8 reapply with a transformed channel — cinematic long-form, not more Shorts in the flagged pattern. Thomas agreed.
+- **Unscheduled all 15 via API** (`videos.update` with `status.privacyStatus='private'` and no `publishAt`). All succeeded. Channel queue now empty. Saved `project_scheduled_shorts_paused_2026_04_22.md` with video IDs for future restoration.
+- **Saved channel email preference** — `aibiblegospels444@gmail.com` is the preferred identity for all AI Bible Gospels work (OAuth, contact, sign-offs); `technologygurusllc@gmail.com` only for non-channel / general dev work. `reference_channel_email.md`.
+- **Committed & pushed** `a7e5aaa`: added 4 TikTok probe scripts (carried over from prior session) + gitignored `Gmail*.pdf` / `docs/Gmail*.pdf` to keep email archive local-only on this public repo.
 
 ## Decisions worth remembering
-- Trusted the live YouTube dashboard over the prior memory claim about a 2026-04-10 submission. The feedback memory [feedback_read_files_not_index.md](feedback_read_files_not_index.md) warns that memory can drift from reality; this is a concrete instance where verifying current state was the right call.
-- Did NOT auto-commit the 4 untracked `scripts/tiktok-*.json` files sitting in the working tree — they predate this session and belong to the TikTok app review work a different Claude instance was doing. Left them alone; user can decide.
-- Used `youtu.be/` short URLs instead of `youtube.com/watch?v=` in the 1,000-char appeal — saved ~60 chars, fully valid.
+- **Appeal is likely already lost** — second submission goes into the same 21-day window that the first failed in. Strategic focus shifts to July 8 reapply (90-day reset).
+- **Pause scheduled Shorts during appeal window** was a one-time strategic call, NOT a general rule. Normal pre-scheduling resumes after appeal resolves. When the 15 paused drafts get released, drip them (3/week max), don't daily-publish back to the same pattern.
+- **Gmail PDFs stay local-only** via gitignore (public repo). Thomas has them on his machine for reference.
+- **OAuth consent screen still in Testing mode** — refresh tokens expire every 7 days. If Claude loses access again in a week, Thomas should publish the app (unverified is fine) for permanent fix.
 
 ## Open threads / next session starts here
-- **YPP decision watch (~May 6, 2026)** — 14-day review window from 2026-04-22. User should watch aibiblegospels444@gmail.com inbox. If granted, resume Phase 4B long-form work. If denied, Option 2 (reapply July 8, 2026) opens and user's other channels are flagged as at-risk per the notice.
-- **DO NOT delete/rename/bulk-edit any videos until the decision lands.** The channel has to stay in the reviewed state, and any deletion invalidates the Option 1 appeal path precondition.
-- **Keep 1 Maccabees uploads going** — pausing would look suspicious and the in-progress cinematic series is the live evidence of original long-form work the appeal cites.
-- **YouTube API is still broken.** If any scripts are needed post-decision, user must download the OAuth 2.0 client JSON from Google Cloud Console and save it as `credentials.json` in the repo root. First run will open a browser for OAuth and create `token.json`. See [src/youtube/auth.py:22-47](src/youtube/auth.py#L22-L47).
-- **Untracked tiktok JSON files** — [scripts/tiktok-dashboard-check.json](scripts/tiktok-dashboard-check.json), [scripts/tiktok-prod-authorize-check.json](scripts/tiktok-prod-authorize-check.json), [scripts/tiktok-prod-consent-check.json](scripts/tiktok-prod-consent-check.json), [scripts/tiktok-rename-app.json](scripts/tiktok-rename-app.json). These carried over from before this session started and were deliberately not committed. User or the TikTok-owning Claude instance should decide their fate.
-- **User confirmed no videos deleted since 2026-04-15** (Option 1 precondition held — that's why the appeal was even eligible).
+- **Watch for appeal reply on `yt-partner-support@google.com`**. If ML auto-rejection → arrives within 24-48 hrs of Apr 22. If human review → closer to May 6.
+- **Long-form production is now the priority** for the next 2 weeks. The 15 scheduled Shorts were paused specifically to free production time for 1 Maccabees cinematic episodes / Bible Movie Series. First long-form episode during this window is the highest-ROI activity for the July 8 reapply case.
+- **`credentials.json` + `token.json` live locally at repo root** (gitignored). If another machine needs API access, Thomas either copies the files or re-runs the browser flow. Token refresh happens automatically until Testing mode expires it in 7 days.
+- **Publishing the OAuth app** (to prevent 7-day token expiry) is still open. Thomas should go to Google Cloud → OAuth consent screen → Publish app. Only needed if API access matters beyond one week.
+- **The 33 private drafts are untouched** (15 scheduled now → drafts + 11 Apr 9 "AI Voice" duplicates + 11 Apr 19 timestamp-cut segments + others). Do not delete while YPP appeal is active.
+- If user asks to edit, bulk-update, or delete ANY video during the appeal window — **flag the `project_ypp_suspension_2026.md` guidance first.**
 
 ## Uncommitted work
-```
-Untracked:
-  scripts/tiktok-dashboard-check.json
-  scripts/tiktok-prod-authorize-check.json
-  scripts/tiktok-prod-consent-check.json
-  scripts/tiktok-rename-app.json
-```
-Working tree otherwise clean. HEAD at 7db9733 (pushed).
+Clean working tree. Last commit `a7e5aaa` pushed to origin/main.
