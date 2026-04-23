@@ -4,7 +4,7 @@
 - [Meta App Review status](project_meta_app_review_status.md) — 5/5 test calls succeeded 2026-04-15; waiting for dashboard to register, then submit
 - [IG Business API metrics](feedback_ig_insights_metrics.md) — graph.instagram.com does NOT support "impressions" metric; use reach, follower_count, profile_views instead
 - [Meta App Review wrong API](feedback_meta_app_review_wrong_api.md) — first ~10 attempts failed using graph.facebook.com; only graph.instagram.com with IG_APP_ID works for instagram_business_* permissions
-- [TikTok App Review status](project_tiktok_app_review.md) — first submission rejected 2026-04-20 for name mismatch; resubmitted same day as "AI Bible Gospels" (spaces); awaiting verdict
+- [TikTok App Review status](project_tiktok_app_review.md) — 3rd submit live 2026-04-22 after 2 rejections; all fixes applied (apex-primary, DNS verify, aibiblegospels.com URL, new sandbox demo)
 - [TikTok OAuth quirks](feedback_tiktok_oauth_quirks.md) — localhost redirects rejected, prod creds fail pre-review; use public callback forwarder + sandbox mode
 - [Repo scope rule](feedback_repo_scope.md) — from this session, only edit files in youtubeoptermizer; ai-bible-gospels and other repos are READ-ONLY (separate Claude instance owns them)
 - [Daniel voice ID](reference_daniel_voice.md) — `onwK4e9ZLuTAKqWW03F9` (Daniel - Steady Broadcaster) is the channel's viral-proven voice; never substitute
@@ -14,6 +14,7 @@
 - [Read files, not MEMORY.md index](feedback_read_files_not_index.md) — index lines can drift from file bodies; paraphrasing the index gave stale TikTok info on 2026-04-21
 - [User profile — Thomas Lee](user_thomas_profile.md) — full legal name "Thomas Lee"; use for formal sign-offs; solo operator; prefers ready-to-use output over templates
 - [Channel email](reference_channel_email.md) — use `aibiblegospels444@gmail.com` (NOT technologygurusllc@gmail.com) for all AI Bible Gospels OAuth, contact info, sign-offs
+- [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY
 - [Shorts pre-scheduling](feedback_shorts_prescheduling.md) — 10-15 Shorts scheduled 1-2 weeks out is Thomas's normal workflow, not panic behavior; don't flag or recommend trimming
 - [Scheduled Shorts paused 2026-04-22](project_scheduled_shorts_paused_2026_04_22.md) — 15 "12 Tribes" Shorts (Apr 22–May 6) unscheduled to private drafts during YPP appeal; drip-release post-resolution, don't daily-publish
 - [Scrub public-repo commits](feedback_public_repo_scrub.md) — youtubeoptermizer repo is public on GitHub; strip emails/personal info from docs before commit
