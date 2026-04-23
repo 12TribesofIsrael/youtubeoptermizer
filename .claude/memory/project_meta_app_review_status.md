@@ -6,7 +6,7 @@ originSessionId: bcd90f81-62ce-4cfd-9853-eea2d174964b
 ---
 Meta App Review for Instagram Business Login was **SUBMITTED on 2026-04-17**.
 
-**Status:** Review in progress. Meta says "most submissions reviewed within 10 days" — expect by 2026-04-28.
+**Status:** Review still in progress as of 2026-04-22 (day 5 of 10). Meta's 10-day window closes 2026-04-28. API probe on 2026-04-22 confirmed the Meta app `/permissions` only shows `email`+`public_profile` as live (consistent with pending review — submission tracked via IG app `922450807234394`, not Meta app `1452257036358754`).
 
 **Permissions submitted:** Human Agent, instagram_business_basic, instagram_business_manage_messages, instagram_business_content_publish, instagram_business_manage_insights, instagram_business_manage_comments
 

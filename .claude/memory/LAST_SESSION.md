@@ -1,40 +1,31 @@
 ---
-ended: 2026-04-22T22:00:00Z
+ended: 2026-04-22T23:59:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: d8307714-5c23-44bb-8e54-674ae9da6aae
+originSessionId: 9ae7e17c-6ea6-40e7-8793-0bfa250ef5cf
 ---
-# Last Session — 2026-04-22 (evening)
+# Last Session — 2026-04-22 (late)
 
 ## What the user wanted
-Verify whether TikTok had rejected the app a 2nd time, diagnose why, and get the Content Posting API app through a 3rd submission. Thomas came in frustrated ("i'm confuted") — needed a single linear path to passing review, not more options.
+Check the status of the Meta App Review (Instagram Business Login, submitted 2026-04-17) and resolve the recurring META_ACCESS_TOKEN expiration blocker so it stops derailing automation.
 
 ## What we did
-- **Confirmed 2nd rejection via Gmail MCP.** Two rejection emails from `noreply@dev.tiktok.com` subject "Your app status update": Apr 20 02:18 UTC (name mismatch) and Apr 21 08:57 UTC (new). Email body is useless — real reason only visible in Dev Portal.
-- **Parsed the Apr 21 rejection from a Thomas screenshot**: Website URL flagged (not a "fully developed website") + Demo video flagged (didn't show end-to-end flow, scopes not clearly demonstrated, must use sandbox).
-- **Picked `aibiblegospels.com` as the canonical Website URL.** Thomas owns it (repo at `C:\Users\Owner\repos\aibiblegospelscom`, read-only to this instance). Confirmed it's live via curl (Windows schannel needs `--ssl-no-revoke` flag due to CRYPT_E_NO_REVOCATION_CHECK quirk — site is NOT actually broken).
-- **Confirmed existing privacy/terms are already adequate** (fetched live pages from 12tribesofisrael.github.io/aibiblegospels-legal/). They name "AI Bible Gospels" by name and explicitly list TikTok in Sections 2 & 4. Talked Thomas out of writing new tiktok-privacy.html / tiktok-terms.html that the other Claude instance had suggested — would've been duplicated source of truth.
-- **Had Thomas add Privacy + Terms footer links** to aibiblegospels.com via the other Claude instance owning the aibiblegospelscom repo. Verified live via curl HTML grep.
-- **Chased the DNS TXT verification failure** through multiple rounds:
-  1. First attempt: Thomas split `tiktok-developers-site-verification=<token>` at the `=` sign — put prefix as Name (subdomain) and token as Value. Wrong format. Fixed by putting entire string in Value at root (`@`).
-  2. After fix, TikTok still rejected verification — error showed `www.aibiblegospels.com`. Root cause: Vercel had `www` as primary and apex 308'd to www. TikTok followed the redirect to www, but www is a CNAME to Vercel, which blocks TXT records per DNS spec.
-  3. Final fix: flipped Vercel domain config — `aibiblegospels.com` set as primary (Connect to environment → Production), `www.aibiblegospels.com` set to 308 redirect → apex. Verified with curl: apex returns 200 with 0 redirects.
-- **Updated TikTok Dev Portal** for 3rd submission: new sandbox demo video (replacing "Untitled design.mp4"), rewritten scope explanations (video.upload was 7 words — now specific), Website URL → aibiblegospels.com verified.
-- **Thomas clicked Submit** on the 3rd submission late evening Apr 22 with the 101-char reason: "Fixed Website URL to aibiblegospels.com; new sandbox demo covers full OAuth + upload for both scopes."
-- **Committed memory** (`e97cc4f`): updated `project_tiktok_app_review.md` with full timeline and gotchas, new `reference_aibiblegospels_site.md`, updated MEMORY.md index lines. Pushed to origin/main.
+- Built `scripts/meta-status-probe.py` — live read-only probe: debug_token, IG /me, recent media, app `/permissions` review state for both Meta app and IG app.
+- First probe confirmed `META_ACCESS_TOKEN` was DEAD (error 190/subcode 460 — session invalidated). `IG_BUSINESS_TOKEN` still healthy (read access unaffected).
+- Walked user through regenerating a short-lived user token in Graph API Explorer (Live app `1452257036358754`, 6 IG scopes). User pasted token; written to `.env`.
+- Built `scripts/meta-token-refresh.py` — exchanges short-lived → long-lived (60d) user token, derives Page token, writes both back to `.env` as `META_ACCESS_TOKEN` + `META_PAGE_TOKEN`. Idempotent, re-runnable.
+- Ran refresh: both tokens valid for **~59d** (expires ~2026-06-20). Discovered Page tokens under Business Manager do NOT become truly non-expiring — Meta caps them at user-token lifetime. Updated memory `feedback_meta_token_recurring.md` with this caveat + new usage instructions.
+- Committed + pushed as `6cb21b8` to origin/main (2 files, 166 insertions).
 
 ## Decisions worth remembering
-- **Vercel apex-primary, www-redirect** is now the permanent rule for aibiblegospels.com. Locked because of the TXT-verification bug — don't flip back unless there's a strong reason. Documented in `reference_aibiblegospels_site.md`.
-- **Don't write dedicated TikTok privacy/terms pages.** The existing generic-but-TikTok-aware pages at 12tribesofisrael.github.io/aibiblegospels-legal/ already pass the reviewer's "mention app by name + describe data" bar. Duplicating would create divergent sources of truth.
-- **TikTok rejection emails are useless.** Subject "Your app status update" from `noreply@dev.tiktok.com` always has the same generic body. Always check the Dev Portal directly for the actual reason.
-- **Memory edits can get silently reverted.** Near end-of-session, discovered my early memory writes (project_tiktok_app_review update, reference_aibiblegospels_site creation) had been overwritten — probably by the central memory backup sync picking up the stale version. Re-applied them before the final commit. If memory edits seem to disappear mid-session, just redo + commit.
+- Accepted 59d Page token expiry as the ceiling (not a bug) — truly non-expiring Page tokens only exist for personal/non-BM Pages. The refresh script is the permanent fix; user re-runs every ~50d.
+- App Review submission state can't be cleanly introspected via API — `/permissions` on the Meta app shows only `email`+`public_profile` as live (baseline); the IG app `/permissions` endpoint rejects app-token auth. Dashboard is source of truth.
 
 ## Open threads / next session starts here
-- **Watch Gmail for 3rd TikTok verdict** on `aibiblegospels444@gmail.com`. Based on prior turnarounds (~24-30 hrs), expect the `noreply@dev.tiktok.com` "Your app status update" email by midday Apr 23 → early Apr 24. Claude can pull it via Gmail MCP (authenticated this session, persists).
-- **If approved** → wire production client_key + client_secret into `scripts/tiktok-post.py` (currently using sandbox `sbawswnygychzo38lw`). Production creds are preserved as comments in .env.
-- **If rejected AGAIN** → the rejection reason is ONLY in the Dev Portal, not email. Have Thomas screenshot the "See why" expansion on the rejection banner. Likely remaining risk areas: demo video quality (was recorded under time pressure), or some detail in the Apply Reason text.
-- **YPP appeal still open** (from earlier this same calendar day's session) — watch for `yt-partner-support@google.com` reply. See `project_ypp_suspension_2026.md`.
-- **TikTok Dev Portal Gmail MCP is now connected** — don't need to re-auth. Useful for polling any future platform-review emails (Meta, Google, etc.) without asking Thomas to screenshot.
+- **App Review decision expected by 2026-04-28** (Meta's 10-day window). If approved, run `python scripts/meta-update-posts.py instagram --live` to fix 538 IG captions. If rejected or no decision, check dashboard screenshot + resubmit.
+- Scheduled Shorts still paused (15 "12 Tribes" drafts unscheduled 2026-04-22 during YPP appeal) — drip-release post-YPP resolution.
+- YPP second appeal filed 2026-04-22; window closes 2026-04-30.
+- TikTok 3rd app review submission live since 2026-04-22.
 
 ## Uncommitted work
-Clean working tree. Last commit `e97cc4f` pushed to origin/main.
+Clean working tree.

@@ -9,6 +9,7 @@ Meta access token keeps expiring and blocking all Instagram API work. User has r
 **Why:** Short-lived tokens expire in 1-2 hours, long-lived tokens in 60 days. Each time it expires, all Instagram API calls fail silently, App Review test calls don't register, and work stalls until the user manually regenerates in Graph API Explorer.
 
 **How to apply:** Next time this comes up, do NOT just tell the user to regenerate the token. Instead:
-1. Build an automated token refresh flow (exchange short-lived → long-lived, and auto-refresh before expiry)
-2. Investigate if there's a way to get a non-expiring Page Token (Page tokens derived from long-lived user tokens don't expire)
-3. Also: user has TWO apps both named "AI Bible Gospels" — the Dev one (1505156764454804) and Live one (1452257036358754). Must always use the Live one. Dev app was renamed to "AI Bible Gospels (Dev)" on 2026-04-12.
+1. Have them regen the short-lived user token in Graph API Explorer (Live app 1452257036358754, 6 IG scopes)
+2. Run `python scripts/meta-token-refresh.py` — exchanges short-lived → long-lived (60d) user token AND derives a Page token, writes both to .env as META_ACCESS_TOKEN and META_PAGE_TOKEN
+3. Caveat: Page tokens are NOT truly non-expiring when the Page is under Business Manager — Meta caps them at user-token lifetime (~59d). So user still needs to regen every ~50d. A non-expiring Page token only works for personal (non-BM) Pages.
+4. Also: user has TWO apps both named "AI Bible Gospels" — Dev (1505156764454804) and Live (1452257036358754). Must always use the Live one. Dev was renamed "AI Bible Gospels (Dev)" on 2026-04-12.
