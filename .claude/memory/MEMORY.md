@@ -1,4 +1,4 @@
-- [YPP suspension April 2026](project_ypp_suspension_2026.md) — suspended Apr 9; first appeal auto-rejected Apr 15 for "inauthentic content"; SECOND appeal filed Apr 22 (window closes Apr 30); do NOT delete/modify videos or bulk-edit metadata
+- [YPP suspension April 2026](project_ypp_suspension_2026.md) — BOTH appeals REJECTED (Apr 15 + Apr 23) for "inauthentic content"; no appeal path left; 90-day reapply opens 2026-07-08; do NOT delete/modify videos or bulk-edit metadata during wait
 - [Meta token keeps expiring](feedback_meta_token_recurring.md) — recurring blocker (~6 times); need automated refresh, not manual regen
 - [Meta IG App Review OAuth](feedback_meta_ig_app_review_setup.md) — instagram_business_* test calls need separate IG app + graph.instagram.com, not FB app; see scripts/meta-ig-business-review.py
 - [Meta App Review status](project_meta_app_review_status.md) — 5/5 test calls succeeded 2026-04-15; waiting for dashboard to register, then submit
@@ -14,6 +14,7 @@
 - [Read files, not MEMORY.md index](feedback_read_files_not_index.md) — index lines can drift from file bodies; paraphrasing the index gave stale TikTok info on 2026-04-21
 - [User profile — Thomas Lee](user_thomas_profile.md) — full legal name "Thomas Lee"; use for formal sign-offs; solo operator; prefers ready-to-use output over templates
 - [Channel email](reference_channel_email.md) — use `aibiblegospels444@gmail.com` (NOT technologygurusllc@gmail.com) for all AI Bible Gospels OAuth, contact info, sign-offs
+- [Gmail API wired](reference_gmail_access.md) — aibiblegospels444@gmail.com Gmail is authenticated; token + registry at `~/.claude/skills/gmail-inbox/`; use `/gmail-inbox` skill or `gmail_unified.py`
 - [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY
 - [Shorts pre-scheduling](feedback_shorts_prescheduling.md) — 10-15 Shorts scheduled 1-2 weeks out is Thomas's normal workflow, not panic behavior; don't flag or recommend trimming
 - [Scheduled Shorts paused 2026-04-22](project_scheduled_shorts_paused_2026_04_22.md) — 15 "12 Tribes" Shorts (Apr 22–May 6) unscheduled to private drafts during YPP appeal; drip-release post-resolution, don't daily-publish
