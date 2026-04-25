@@ -188,3 +188,28 @@ class YouTubeClient:
             .execute()
         )
         return resp["items"][0] if resp.get("items") else None
+
+    def get_branding_settings(self):
+        """Fetch current channel brandingSettings (About description, keywords, etc)."""
+        resp = (
+            self.youtube.channels()
+            .list(part="brandingSettings", mine=True)
+            .execute()
+        )
+        return resp["items"][0] if resp.get("items") else None
+
+    def update_channel_description(self, description):
+        """Replace the About-page description. Preserves other brandingSettings fields."""
+        current = self.get_branding_settings()
+        if not current:
+            raise ValueError("Could not fetch current brandingSettings")
+        branding = current["brandingSettings"]
+        branding.setdefault("channel", {})["description"] = description
+        return (
+            self.youtube.channels()
+            .update(
+                part="brandingSettings",
+                body={"id": current["id"], "brandingSettings": branding},
+            )
+            .execute()
+        )

@@ -20,6 +20,50 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ## Changes Log
 
+### April 24, 2026 — YPP-prep cull + AEO description rollout (Phase A)
+
+Context: Both YPP appeals rejected (Apr 15 + Apr 23, "inauthentic content"). Reapply window opens 2026-07-08. Old "do not delete / do not bulk-edit during wait" caution rules retired — this batch is the cleanup pass to improve channel state for the reapply.
+
+#### 1. Deleted 23 Shorts (Tier A/B/C cull)
+- **Time:** ~30 seconds (API batch)
+- **Tiers:**
+  - Tier A (15) — Shorts, >90d old, <200 views (dead weight)
+  - Tier B (4) — tribe-series tail (Naphtali, Ephraim, Judah x2)
+  - Tier C (4) — generic hype titles, no scripture anchor
+- **Why:** Targets the exact patterns YouTube cited — "template across multiple videos," "minimal variation," "low narrative." Top performers per tribe and all long-form preserved.
+- **Catalog impact:** 238 → 215 public videos. Long-form share 29% → 32%.
+- **Full kill list:** [docs/kill-list.md](docs/kill-list.md)
+- **Script:** [scripts/delete-cull.py](scripts/delete-cull.py)
+- **Quota cost:** ~1,173 units
+
+#### 2. Channel About-page rewrite
+- **Time:** seconds (single API call)
+- **What changed:** Replaced the old "AI BIBLE GOSPELS — The 12 Tribes of Israel..." About description (895 chars) with the AEO-spec text (495 chars) — entity-resolution-first, leads with founder/brand identity, includes canonical URLs (aibiblegospels.com apex, faithwalklive.com, LinkedIn) and aibiblegospels444@gmail.com contact.
+- **Why:** Highest-leverage AEO move. Answer engines (AI Overviews, ChatGPT, Perplexity, Gemini, Copilot) resolve entities by string-matching across surfaces. The channel About now matches the JSON-LD on the websites word-for-word.
+- **Script:** [scripts/update-about-page.py](scripts/update-about-page.py)
+- **Quota cost:** ~50 units
+
+#### 3. AEO description bulk-update — Phase A skeleton (167 of 215)
+- **Time:** ~3 minutes for 167 videos before quota exhaustion
+- **What was applied:** Each public video description had:
+  - "Q: Who made this video? A: AI Bible Gospels..." Q&A appended (single highest-value AEO line on the channel — teaches answer engines to cite by name)
+  - "ABOUT AI BIBLE GOSPELS" block with all canonical URLs (aibiblegospels.com, faithwalklive.com, LinkedIn, channel email)
+  - `#AIBibleGospels` hashtag
+  - Dissolved-entity references (old LLC name + old contact email) scrubbed in-line during the description rewrite
+- **Idempotency:** Script checks for `— ABOUT AI BIBLE GOSPELS —` marker; re-running won't double-apply.
+- **Resumability:** Checkpoint at [output/aeo-checkpoint.json](output/aeo-checkpoint.json). 47 videos remain — quota resets at PT midnight; resume tomorrow.
+- **Verification:** 5-sample probe ([scripts/verify-aeo-sample.py](scripts/verify-aeo-sample.py)) — all required strings present, all forbidden strings absent on every sample.
+- **Script:** [scripts/aeo-bulk-update.py](scripts/aeo-bulk-update.py)
+- **Quota cost:** ~8,517 units (drove the day to ~9,742 / 10,000)
+
+#### 4. Phase B follow-up (planned, ramped up over wait window)
+- **What:** Per-video AEO content layer — `one_sentence_answer` (≤35 words), `expansion`, `timestamps`, `qa` array, `bible_refs`. The constants block from Phase A is the floor; Phase B is the rich answer-engine optimization on top.
+- **Approach:** LLM-generate from existing transcript cache; prioritize by traffic; review before pushing.
+- **Pace:** 2–3 days per batch, several batches across the 75-day wait window.
+- **Spec source:** Thomas's AEO YouTube Description Spec (provided 2026-04-24).
+
+---
+
 ### March 16, 2026 — Initial Cleanup
 
 #### 1. Removed @AIBIBLEGOSPELS from 154 titles
