@@ -20,6 +20,38 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ## Changes Log
 
+### April 26, 2026 — Phase A complete + manual cleanup captured + Maccabees playlist
+
+#### 1. AEO description bulk-update — Phase A finished
+- **What:** Resumed `scripts/aeo-bulk-update.py` on the remaining 47 videos. 46 OK, 1 not-found (already deleted). **213/215 candidates** now carry the constants block (the 2 skips are videos no longer on the channel).
+- **Verification:** Kill-list of 23 confirmed gone via `videos.list` (0 survivors). Updated [docs/kill-list.md](docs/kill-list.md) status to EXECUTED.
+- **Quota cost:** ~2,400 units
+
+#### 2. Manual Shorts cull — captured retroactively
+- **Context:** User removed videos manually in YouTube Studio across multiple sessions following the rule: **"remove all Shorts under 500 views."** Not previously logged.
+- **Method:** Diffed the snapshot in commit `f41d1fa` (262 videos) against today's fresh export (187 videos) — 79 total removals; 22 are the documented kill-list, **57 are these manual removals**.
+- **Sub-60s Shorts removed (36):** `5PkQelhrXaM`, `Dlh4Tfvh11Y`, `Psd0BoCOnKU`, `QIwAL9K-bVI`, `fsP_XHaUYjk`, `VA-JokBOVQY`, `tCnIonOtxbE`, `kPUWXf-9xfo`, `q9W387FmpGE`, `Vy4JoUHl8uI`, `L-tShzw6ONg`, `aIg7RtTMTeI`, `s_BujKy3mjs`, `NbxKHpWaJwY`, `l0aQ6HURuS8`, `_Ylc1IR0qTc`, `ccPTvavU5uU`, `TMSy1bkK2tQ`, `q91VkMp8tY8`, `n7bbRBUSXfY`, `IDe8Ig3Rw1g`, `8RmiO6jT-Co`, `ggEaJVWsYMs`, `5clbXshp6Ic`, `i8WDWCNarRE`, `95TP7Geht98`, `FfnfxlX1hmU`, `zyS-Q2F_Hps`, `sgLo5OdT06k`, `V-VSf1C2aTw`, `09RCHU1MW9Q`, `uCGVZVqgZTw`, `m2yANlfK0Io`, `g713EId0x3U`, `IqcXS2Xd290`, `NLjHNAFh2Ho`. All <500 views, ages varied.
+- **60-90s "borderline Shorts" removed (21):** `iMNr2Xilz8c`, `nm19eSpWeeU`, `rk5McSnjVzM`, `rGOlcOqpPOI`, `o55RyJe0Lu4`, `mYbLS7to7iM`, `zHxAuCh4v-Y`, `ZyVNYgM4aqo`, `O9tVwtgerjQ`, `Z8z2MM1e2L8`, `0nM51QdNWLU`, `Iu-MTsWUKFI`, `2jY6JD1f3Ak`, `eVm9_23Ngkk`, `jky3Ju8SM3Y`, `7PkG1upR3lM`, `2oP2-iyMf20`, `2mruvqERKQs`, `QMIYjjqLa6c`, `x-Dyek2bN98`, `Ef_0BOSXpIA`. All <500 views.
+- **Why this matches the YPP framing:** Targets the same "template / minimal variation / low narrative" patterns YouTube cited. Combined with the Apr 24 kill-list, the channel has shed 80 underperforming Shorts since the suspension — moving the long-form share well above its prior 32%.
+
+#### 3. New playlist: "1 Maccabees — The Maccabean Revolt"
+- **Playlist ID:** `PLFyw-nH_HYIuLPzsdgT0NXzavsSnYASaY` ([link](https://www.youtube.com/playlist?list=PLFyw-nH_HYIuLPzsdgT0NXzavsSnYASaY))
+- **Contents:** 6 chapters in publish order (Ch 1 → Ch 6). All long-form 7–13 minutes.
+- **Action:** Created the playlist, added all 6 in chapter order, removed the same 6 from the Apocrypha playlist (curated series gets its own home).
+- **Why:** Strong "long-form chapter series" signal for YPP review. The 1 Maccabees series is the channel's most narratively-rich content cluster.
+
+#### 4. Apocrypha playlist cleanup
+- Removed dead "Deleted video" entry (`Xx5JdwR8uMA`).
+- Apocrypha now contains 2 standalone Apocryphal pieces (Letter of Jeremiah, Prayer of Manasses) — clean and accurate.
+
+#### 5. Fresh analytics snapshot
+- **Channel state (2026-04-26):** 5,920 subs / 723,873 views / **187 videos**.
+- **28-day window:** 5,124 views, 5,534 watch-minutes, 131s avg view duration, +23 net subs, 216 likes.
+- **Top 28-day performer (long-form):** "The Prophecy Revealed: Chosen 12 Tribes of Israel" — 187 views but **803s avg duration / 2,504 watch-minutes**. Long-form retention is elite — exactly what the YPP reviewer wants to see.
+- **Files:** `analytics/post-optimization/Table data.csv`, `Chart data.csv`, `Totals.csv`.
+
+---
+
 ### April 24, 2026 — YPP-prep cull + AEO description rollout (Phase A)
 
 Context: Both YPP appeals rejected (Apr 15 + Apr 23, "inauthentic content"). Reapply window opens 2026-07-08. Old "do not delete / do not bulk-edit during wait" caution rules retired — this batch is the cleanup pass to improve channel state for the reapply.
