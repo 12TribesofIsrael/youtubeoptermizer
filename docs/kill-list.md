@@ -4,7 +4,7 @@
 **Target reapply date:** 2026-07-08 (YPP 90-day window opens)
 **Action:** DELETE (permanent) — chosen over unlist because YPP reviewers see internal upload history, not just public feed
 **Total proposed:** 23 Shorts
-**Status:** APPROVED 2026-04-24 — execution pending
+**Status:** EXECUTED 2026-04-24 — all 23 confirmed gone (verified 2026-04-26 via videos.list, 0 survivors)
 
 ## Why these 23
 
@@ -86,9 +86,10 @@ The ratio shift is small but meaningful: every percentage point away from "domin
 ## Execution plan
 
 1. ✅ Approved 2026-04-24.
-2. Run `scripts/delete-cull.py` — single pass, all 23 deletions, 0.5s pause between calls.
-3. Log results to `docs/changelog.md` with the kill list + date.
-4. Leave catalog alone for 60+ days before the 2026-07-08 reapply so the change settles.
+2. ✅ Ran `scripts/delete-cull.py` 2026-04-24 — single pass, all 23 deletions, 0.5s pause between calls.
+3. ✅ Verified 2026-04-26 — all 23 IDs return 0 results from videos.list.
+4. Log results to `docs/changelog.md` with the kill list + date.
+5. Leave catalog alone for 60+ days before the 2026-07-08 reapply so the change settles.
 
 ## Why delete (not unlist)
 
