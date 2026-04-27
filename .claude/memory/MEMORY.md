@@ -3,10 +3,11 @@
 - [Capture manual actions via CSV diff](feedback_capture_manual_actions_via_csv_diff.md) — when catalog state diverges from prior session's log, don't ask Thomas to recall — diff the analytics Table data.csv against its prior committed version in git to reconstruct what changed
 - [Meta token keeps expiring](feedback_meta_token_recurring.md) — recurring blocker (~6 times); need automated refresh, not manual regen
 - [Meta IG App Review OAuth](feedback_meta_ig_app_review_setup.md) — instagram_business_* test calls need separate IG app + graph.instagram.com, not FB app; see scripts/meta-ig-business-review.py
-- [Meta App Review status](project_meta_app_review_status.md) — 5/5 test calls succeeded 2026-04-15; waiting for dashboard to register, then submit
+- [Meta App Review status](project_meta_app_review_status.md) — APPROVED & LIVE 2026-04-27; all 5 IG Business scopes pass production probes; caption writes confirmed; bulk IG caption rollout (538 posts) unlocked
 - [IG Business API metrics](feedback_ig_insights_metrics.md) — graph.instagram.com does NOT support "impressions" metric; use reach, follower_count, profile_views instead
+- [IG caption update requires comment_enabled](feedback_ig_caption_update_comment_enabled.md) — POST /{media_id} for caption update fails with IGApiException code 100 unless comment_enabled is passed alongside caption
 - [Meta App Review wrong API](feedback_meta_app_review_wrong_api.md) — first ~10 attempts failed using graph.facebook.com; only graph.instagram.com with IG_APP_ID works for instagram_business_* permissions
-- [TikTok App Review status](project_tiktok_app_review.md) — 3rd submit live 2026-04-22 after 2 rejections; all fixes applied (apex-primary, DNS verify, aibiblegospels.com URL, new sandbox demo)
+- [TikTok App Review status](project_tiktok_app_review.md) — 3rd submit STILL "In review" as of 2026-04-27 (day 5); TikTok-side backlog per portal banner; do NOT click Recall; just wait
 - [TikTok OAuth quirks](feedback_tiktok_oauth_quirks.md) — localhost redirects rejected, prod creds fail pre-review; use public callback forwarder + sandbox mode
 - [Repo scope rule](feedback_repo_scope.md) — from this session, only edit files in youtubeoptermizer; ai-bible-gospels and other repos are READ-ONLY (separate Claude instance owns them)
 - [Daniel voice ID](reference_daniel_voice.md) — `onwK4e9ZLuTAKqWW03F9` (Daniel - Steady Broadcaster) is the channel's viral-proven voice; never substitute

@@ -53,3 +53,9 @@ TikTok Content Posting API app review — **3rd submission live 2026-04-22** aft
 ## Expected turnaround
 
 Based on prior 2 rounds: ~24-30 hours. Watch `aibiblegospels444@gmail.com` for `noreply@dev.tiktok.com` email subject "Your app status update".
+
+## Status as of 2026-04-27 (day 5)
+
+Dev portal screenshot confirms **Production tab → "In review"**. TikTok banner: *"This version of AI Bible Gospels is in review. There may be a delay in the app review process due to a high volume of requests."*
+
+Round 3 is running long vs the 24-30h baseline — TikTok-side backlog, NOT a problem with the submission. No action required; do not resubmit. Continue checking dashboard or Gmail. The `Recall` button in the portal is visible — DO NOT click it (would withdraw the submission and force a 4th submit).

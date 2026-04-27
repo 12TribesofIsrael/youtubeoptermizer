@@ -1,22 +1,35 @@
 ---
-name: Meta App Review submitted — awaiting approval
-description: App Review SUBMITTED 2026-04-17 after fixing 3 bugs (wrong API, wrong POST, wrong metrics). Review in progress, expect approval by 2026-04-28.
+name: Meta App Review APPROVED — IG Business scopes live
+description: App Review APPROVED & live as of 2026-04-27. All 5 advanced IG Business scopes pass production probes; live caption update returned success=true.
 type: project
 originSessionId: bcd90f81-62ce-4cfd-9853-eea2d174964b
 ---
-Meta App Review for Instagram Business Login was **SUBMITTED on 2026-04-17**.
+Meta App Review for Instagram Business Login — **APPROVED & LIVE confirmed 2026-04-27**.
 
-**Status:** Review still in progress as of 2026-04-22 (day 5 of 10). Meta's 10-day window closes 2026-04-28. API probe on 2026-04-22 confirmed the Meta app `/permissions` only shows `email`+`public_profile` as live (consistent with pending review — submission tracked via IG app `922450807234394`, not Meta app `1452257036358754`).
+Submitted 2026-04-17 (after fixing 3 bugs: wrong API graph.facebook.com→graph.instagram.com, wrong content_publish call GET→POST, wrong insights metric impressions→reach/follower_count/profile_views). Approval landed within Meta's 10-day window.
 
-**Permissions submitted:** Human Agent, instagram_business_basic, instagram_business_manage_messages, instagram_business_content_publish, instagram_business_manage_insights, instagram_business_manage_comments
+## Verified live on 2026-04-27 (via scripts/meta-priv-probe.py + caption update probe)
 
-**What was fixed on 2026-04-17 (after 2+ weeks stuck at 0/1):**
-1. Wrong API: old scripts used graph.facebook.com — fixed to graph.instagram.com
-2. Wrong content_publish call: was GET /content_publishing_limit — fixed to POST /media (container)
-3. Wrong insights metric: "impressions" invalid on IG Business API — fixed to reach, follower_count, profile_views
+All 5 advanced scopes pass on `graph.instagram.com/v23.0` with IG_BUSINESS_TOKEN:
+- `instagram_business_basic` — `/me`, `/{ig_id}/media` return data
+- `instagram_business_manage_comments` — `/{post_id}/comments` returned 1 comment
+- `instagram_business_manage_insights` — `/{ig_id}/insights?metric=reach,follower_count,profile_views&period=day` returned values (e.g. reach 93/56)
+- `instagram_business_manage_messages` — `/{ig_id}/conversations?platform=instagram` returned data
+- `instagram_business_content_publish` — POST `/{ig_id}/media` created a container (auto-expires 24h)
 
-**API access works during review** — IG_BUSINESS_TOKEN can already read posts via graph.instagram.com.
+End-to-end caption write also passes:
+- POST to `/{media_id}` with `caption` + `comment_enabled=true` → `{"success":true}` HTTP 200
+- IMPORTANT: caption updates require `comment_enabled` param — without it returns "The parameter comment_enabled is required" (IGApiException code 100). Update meta-update-posts.py if it doesn't already pass this.
 
-**Once approved:** Run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
+## What's unlocked
 
-**Why:** Needed to programmatically manage @aibiblegospels Instagram content (captions, comments, cross-posting).
+- `python scripts/meta-update-posts.py instagram --live` — fix all 538 IG captions
+- Comment moderation, DM management, content publish, and insights reads on @aibiblegospels
+
+## Why
+
+Needed to programmatically manage @aibiblegospels Instagram content (captions, comments, cross-posting, insights) — primary downstream use is the bulk caption/AEO rollout and DM auto-reply tooling.
+
+## How to apply
+
+Don't re-probe scopes — they're confirmed live. If a future call fails with a permissions error, re-test before assuming review status changed (token may have expired or specific endpoint may need different scope). Test with the meta-priv-probe.py harness first.
