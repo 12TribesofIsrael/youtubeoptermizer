@@ -1,15 +1,19 @@
 ---
-name: IG caption update requires comment_enabled param
-description: graph.instagram.com /{media_id} POST for caption updates rejects calls missing comment_enabled — returns IGApiException code 100
+name: IG caption updates silently no-op on graph.instagram.com
+description: POST /{ig-media-id} with caption param returns {"success":true} but does NOT actually update the caption text — the endpoint only honors comment_enabled
 type: feedback
-originSessionId: 78449298-8e83-47d1-be46-fbc199ac1481
+originSessionId: 7c0deec4-ec9f-4c90-bc4d-e00096845162
 ---
-When updating an IG caption via POST `https://graph.instagram.com/v23.0/{media_id}`, the request MUST include `comment_enabled` (true or false) alongside `caption` and `access_token`. Without it, the call fails with:
+**Captions on existing IG posts cannot be edited via the Graph API**, regardless of media_product_type (FEED, REELS, both confirmed silent no-op). The endpoint `POST https://graph.instagram.com/v22.0/{media_id}` with `caption` + `comment_enabled` + `access_token`:
 
-```
-{"error":{"message":"The parameter comment_enabled is required.","type":"IGApiException","code":100}}
-```
+- Returns HTTP 200 `{"success":true}`
+- Re-fetching `?fields=caption` shows the OLD caption — the new one was never applied
+- Only the `comment_enabled` toggle is actually honored
 
-**Why:** Discovered 2026-04-27 while probing scope-live status post-Meta-approval. First caption-write attempt failed; adding `comment_enabled=true` fixed it and returned `{"success":true}` HTTP 200.
+**Why:** Verified 2026-04-27 with a sentinel-string canary on 5 Reels + 1 FEED post. Sentinel `AEOTEST_FEED_2026_04_27` POSTed cleanly; re-fetch showed it absent. The "must include comment_enabled" rule from the prior version of this memory was a partial truth — without it you get code 100, with it you get a silent success that doesn't do what the parameter name implies.
 
-**How to apply:** Before any bulk caption rollout (e.g. `meta-update-posts.py instagram --live` over the 538 IG posts), confirm the script passes `comment_enabled`. If it doesn't, every call will fail with code 100 and you'll be debugging a 538-post cascade. Be intentional about the value — passing `true` re-asserts comments-on; passing `false` disables comments. Probably want to read the post's current value first and round-trip it, not blanket `true`.
+**How to apply:**
+- Don't try to bulk-rewrite captions on the 563 existing AI Bible Gospels IG posts. The first `aeo-ig-bulk-update.py --live` run on 5 posts confirmed silent failure.
+- For AEO on existing IG posts, use **pinned comments** instead (`instagram_business_manage_comments` scope is approved) — POST a comment carrying the AEO block, then pin it. Comments ARE indexed by answer engines.
+- For new IG posts going forward, set the AEO caption at publish time via `/{ig-user-id}/media` → `/{ig-user-id}/media_publish` — captions ARE editable in the create→publish flow.
+- For the same brand-awareness goal, pivot to **Facebook Page posts** (`graph.facebook.com/{post_id}` with `message`) — FB caption edits DO work on already-published posts. Existing `meta-update-posts.py` covers this surface.

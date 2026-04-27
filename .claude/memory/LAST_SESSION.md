@@ -1,34 +1,36 @@
 ---
-ended: 2026-04-27T00:00:00Z
+ended: 2026-04-27T23:59:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: this-session
+originSessionId: 7c0deec4-ec9f-4c90-bc4d-e00096845162
 ---
 # Last Session — 2026-04-27
 
 ## What the user wanted
-"Check on the status of our apps." App-review status check across Meta IG, TikTok, and YPP — saved-memory snapshots were 2-4 days old and the deadlines they cited had all passed, so this session existed to get a current, verified read.
+Thomas asked how the live APIs in this repo can drive brand awareness for **AI Bible Gospels** + **Faith Walk Live** across IG/TT/FB/YT, automating what he currently does manually. Boundary: edit only this repo, treat sibling repos (`AIconsultantforHmblzayy`, `faithwalklivecom`, `faithwalkbook`, `ai-bible-gospels`) as read-only.
 
 ## What we did
-- Tried Gmail (the authoritative source). [token_aibiblegospels444.json](C:/Users/Owner/.claude/skills/gmail-inbox/token_aibiblegospels444.json) refresh fails with `invalid_scope`: token saved with `[gmail.modify, labels, settings.basic, spreadsheets, drive]` but [gmail_unified.py:39-43](C:/Users/Owner/.claude/skills/gmail-inbox/scripts/gmail_unified.py#L39-L43) requests `[gmail.modify, labels, send]`. Send scope missing → Google rejects refresh. **Did not re-auth** (would need browser flow).
-- Built [scripts/meta-priv-probe.py](scripts/meta-priv-probe.py) — probes all 5 advanced IG Business scopes via `graph.instagram.com/v23.0`. Result: **all 5 PASS** (basic, manage_comments, manage_insights returned reach 93/56, manage_messages, content_publish container created).
-- End-to-end caption write also confirmed: POST to `/{media_id}` with `caption` + `comment_enabled=true` → `{"success":true}` HTTP 200. **Meta App Review is APPROVED & LIVE.** First write was on the most-recent post `18100711882824083` (Minister Zay tracker, posted ~2h before probe) — flagged the side effect to user (caption round-tripped, comments re-asserted on).
-- TikTok: `client_credentials` grant against prod key `awhtm3emzgjcvin6` returned 200 + token, but per [feedback_tiktok_approval_probes.md](C:/Users/Owner/.claude/projects/c--Users-Owner-repos-youtubeoptermizer/memory/feedback_tiktok_approval_probes.md) that's a known false positive. User then shared dev-portal screenshot: **"In review"** on Production tab, with portal banner attributing the slow turnaround to a TikTok-side backlog. Day 5, no rejection — just queued.
-- Synced memory: rewrote [project_meta_app_review_status.md](C:/Users/Owner/.claude/projects/c--Users-Owner-repos-youtubeoptermizer/memory/project_meta_app_review_status.md) to "APPROVED & LIVE 2026-04-27" with the verified scope-probe evidence; appended day-5 "In review" status + "do not click Recall" warning to [project_tiktok_app_review.md](C:/Users/Owner/.claude/projects/c--Users-Owner-repos-youtubeoptermizer/memory/project_tiktok_app_review.md); updated MEMORY.md index lines for both.
-- Committed and pushed: [c89f406](https://github.com/12TribesofIsrael/youtubeoptermizer/commit/c89f406) (`Add Meta IG Business privileged-scope probe`).
+- Read `../AIconsultantforHmblzayy/docs/playbook-days-33-40.md` (Days 33-40 distribution play) and `../AIconsultantforHmblzayy/docs/aeo-youtube-description-spec.md` for context.
+- Wrote `docs/api-automation-plan.md` — 5-script roadmap with live API status table and explicit "what the API CAN'T do" boundaries (IG Story stickers, TT Stitch UI, YT end screens stay manual).
+- Built `scripts/aeo-ig-bulk-update.py` — IG caption AEO rewrite mirroring the YT Phase A pattern (marker `— ABOUT AI BIBLE GOSPELS —`, checkpoint-resumable, dry-run by default, `comment_enabled=true` per memory rule, paces 50/day).
+- Live canary on 5 posts: all returned HTTP 200 `{"success":true}` but **none of the captions actually changed**. Confirmed via sentinel-string test (`AEOTEST_FEED_2026_04_27`) on both REELS and FEED `media_product_type` posts. The endpoint silently no-ops `caption` updates and only honors `comment_enabled`. Undocumented Meta gotcha.
+- Cleaned up 4 probe scripts, wiped poisoned checkpoint, corrected the misleading `feedback_ig_caption_update_comment_enabled.md` memory + MEMORY.md index entries for that and `project_meta_app_review_status.md`.
+- Pivoted plan in the doc: parked the IG caption script as reference, replaced with two new scripts:
+  - **1A `aeo-ig-pin-comment.py`** — pin an AEO comment on each of 563 IG posts (uses approved `instagram_business_manage_comments` scope; comments are indexed by answer engines).
+  - **1B `aeo-fb-bulk-update.py`** — bulk Facebook Page caption rewrite (FB allows `message` edits via `graph.facebook.com/{post_id}`; existing `scripts/meta-update-posts.py` proves the surface works).
+- Committed `0fce063` (api-automation-plan.md + parked aeo-ig-bulk-update.py), pushed to origin/main.
 
 ## Decisions worth remembering
-- **Caption updates require `comment_enabled` param** on graph.instagram.com — without it, IG returns IGApiException code 100. Worth checking whether [scripts/meta-update-posts.py](scripts/meta-update-posts.py) already passes this before the bulk 538-post run, or a 538-post failure cascade is on the table.
-- Did NOT re-auth Gmail this session. The fix is one of: (a) update [gmail_unified.py:39-43](C:/Users/Owner/.claude/skills/gmail-inbox/scripts/gmail_unified.py#L39-L43) `SCOPES` to match the actual token (drop `gmail.send`, add the rest), or (b) re-run the OAuth flow with the script's current scopes. Probably (a) is right since Thomas doesn't seem to use `gmail.send` from this script.
+- **Pivot to A+B in parallel** rather than picking one — A captures the IG surface (the original 538-post lever) via comments, B captures the FB surface where caption edits actually persist. Both reuse the same `CONSTANTS_BLOCK` from the parked IG script.
+- **Kept aeo-ig-bulk-update.py in the repo** instead of deleting — its `transform_caption()` and `CONSTANTS_BLOCK` will be lifted into 1A and 1B verbatim. The doc parks it with a "Reference: parked scripts" footer.
+- **No emojis in the AEO constants block.** Matches the YT spec rule — keeps the block quotable by LLMs.
+- **Canary > batch.** Live-tested on 5 before scaling — that's how we caught the silent no-op. Without the canary the whole 563-post run would have looked successful and we'd have shipped nothing.
 
 ## Open threads / next session starts here
-- **Bag the Meta win.** Run `python scripts/meta-update-posts.py instagram --live` for the 538 IG captions. Verify the script passes `comment_enabled` before the bulk run — if not, the round-trip will fail with the IGApiException code 100 we saw. Suggest a dry-run on 1-3 posts first.
-- **Gmail auth is broken.** Fix [gmail_unified.py:39-43](C:/Users/Owner/.claude/skills/gmail-inbox/scripts/gmail_unified.py#L39-L43) `SCOPES` so refresh works without re-OAuth (or re-OAuth if `gmail.send` is actually wanted). Currently blocking any Gmail-driven verification of TikTok approval emails.
-- **TikTok**: just wait. Don't click `Recall` in the dev portal — that withdraws and forces a 4th submit. Re-check dashboard or Gmail (once unblocked) in 1-2 days.
-- **YPP**: 72 days to 2026-07-08 reapply. Phase 4B long-form is still the highest-leverage runway — trailer script written, 4-6 animated explainers (10-20 min) unstarted. AEO Phase B (per-video LLM content) is the secondary track, paced over the same window.
+1. **Build script 1A** — `scripts/aeo-ig-pin-comment.py`. Pattern: paginate `/{ig-biz-id}/media`, for each post check `/{media_id}/comments` for the marker, if absent POST a comment with `CONSTANTS_BLOCK` body, then pin it. Marker matches the YT/parked-IG: `— ABOUT AI BIBLE GOSPELS —`. Dry-run by default, `--live --limit N`, checkpoint at `output/aeo-ig-comment-checkpoint.json`. Test on 5-post canary first; verify the comment actually appears + is pinned by visiting the permalink before scaling. Memory `feedback_ig_caption_update_comment_enabled.md` warns of silent-success patterns on this API surface — treat any `success:true` response with skepticism until canary-verified.
+2. **Build script 1B** — `scripts/aeo-fb-bulk-update.py`. Lift `transform_caption()` from the parked IG script. Endpoint is `graph.facebook.com/v25.0/{post_id}` with `message` field. Use `META_ACCESS_TOKEN` (Page token, not the IG_BUSINESS_TOKEN). `scripts/meta-update-posts.py` is the working reference but uses `linktr.ee` — don't reuse it directly, write the new script with the canonical AEO block.
+3. **Thomas said "wait for me to say next"** — do not auto-build 1A or 1B in a fresh session unless Thomas re-greenlights.
+4. Comment-pin verification gap: confirm `instagram_business_manage_comments` covers the pin operation, not just post. If pin fails, the unpinned comment still adds AEO surface but loses pole position.
 
 ## Uncommitted work
-Clean working tree. 0 commits ahead of origin/main.
-
-## Focus note
-session-end
+Clean working tree.
