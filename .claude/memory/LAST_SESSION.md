@@ -2,35 +2,36 @@
 ended: 2026-04-27T23:59:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: 7c0deec4-ec9f-4c90-bc4d-e00096845162
+originSessionId: f722b886-dd9c-4fd1-bbd4-62cd81fc83ea
 ---
-# Last Session — 2026-04-27
+# Last Session — 2026-04-27 (late)
 
 ## What the user wanted
-Thomas asked how the live APIs in this repo can drive brand awareness for **AI Bible Gospels** + **Faith Walk Live** across IG/TT/FB/YT, automating what he currently does manually. Boundary: edit only this repo, treat sibling repos (`AIconsultantforHmblzayy`, `faithwalklivecom`, `faithwalkbook`, `ai-bible-gospels`) as read-only.
+Tommy asked to build the IG comment-pin script (1A from `docs/api-automation-plan.md`) and run it across his 563 IG posts. Mid-session pivoted to a deeper privacy goal: scrub his legal name ("Thomas Lee") off every public surface — repo files, YT video descriptions, IG comments — replacing with the alias **Tommy Lee**. Wrap-up by night.
 
 ## What we did
-- Read `../AIconsultantforHmblzayy/docs/playbook-days-33-40.md` (Days 33-40 distribution play) and `../AIconsultantforHmblzayy/docs/aeo-youtube-description-spec.md` for context.
-- Wrote `docs/api-automation-plan.md` — 5-script roadmap with live API status table and explicit "what the API CAN'T do" boundaries (IG Story stickers, TT Stitch UI, YT end screens stay manual).
-- Built `scripts/aeo-ig-bulk-update.py` — IG caption AEO rewrite mirroring the YT Phase A pattern (marker `— ABOUT AI BIBLE GOSPELS —`, checkpoint-resumable, dry-run by default, `comment_enabled=true` per memory rule, paces 50/day).
-- Live canary on 5 posts: all returned HTTP 200 `{"success":true}` but **none of the captions actually changed**. Confirmed via sentinel-string test (`AEOTEST_FEED_2026_04_27`) on both REELS and FEED `media_product_type` posts. The endpoint silently no-ops `caption` updates and only honors `comment_enabled`. Undocumented Meta gotcha.
-- Cleaned up 4 probe scripts, wiped poisoned checkpoint, corrected the misleading `feedback_ig_caption_update_comment_enabled.md` memory + MEMORY.md index entries for that and `project_meta_app_review_status.md`.
-- Pivoted plan in the doc: parked the IG caption script as reference, replaced with two new scripts:
-  - **1A `aeo-ig-pin-comment.py`** — pin an AEO comment on each of 563 IG posts (uses approved `instagram_business_manage_comments` scope; comments are indexed by answer engines).
-  - **1B `aeo-fb-bulk-update.py`** — bulk Facebook Page caption rewrite (FB allows `message` edits via `graph.facebook.com/{post_id}`; existing `scripts/meta-update-posts.py` proves the surface works).
-- Committed `0fce063` (api-automation-plan.md + parked aeo-ig-bulk-update.py), pushed to origin/main.
+- **Built `scripts/aeo-ig-pin-comment.py`** — posts + pins the AEO `CONSTANTS_BLOCK` as a comment on each IG post. Idempotent (marker check), checkpointed, dry-run by default. Lifted CONSTANTS + helpers verbatim from the parked `aeo-ig-bulk-update.py`.
+- **Discovered IG pin endpoint quirk**: `POST /{ig-comment-id}` requires BOTH `is_pinned=true` AND `hide=false` together. First canary errored with code 100 ("hide is required"); patched with `hide=false`. Saved as feedback memory.
+- **IG comment-pin progress: 256/563** posts pinned. Canary (latest Reel DXnbyvTDNbn, comment 18089952173590782) cleanly verified. Then `--limit 50` clean (5 sec/post pace). Then `--limit 200` clean. Stopped on attempt #257 with Meta code 368 ("action deemed abusive"). Saved as feedback memory.
+- **Privacy scrub: Thomas Lee → Tommy Lee** across 9 tracked repo files (3 scripts, 2 docs, 4 memory files). Rewrote `user_thomas_profile.md` to drop legal-name callout. Added `feedback_use_tommy_not_legal.md` rule. Old IG canary comment (Thomas Lee) deleted, reposted with Tommy Lee, re-pinned, verified.
+- **Built `scripts/aeo-fb-bulk-update.py`** for FB Page caption rewrite. Token refresh chain: user pasted new short-lived token → ran `meta-token-refresh.py` → got long-lived user token + non-expiring `META_PAGE_TOKEN` (now in `.env`). Read works (90 FB posts). **Write blocked on missing `pages_manage_posts` scope** (code 100/200 errors) — same blocker for both create and edit paths. Tommy can't add the scope in Graph Explorer; needs Meta App Review.
+- **Built `scripts/yt-thomas-to-tommy.py`** — find-replace "Thomas Lee" → "Tommy Lee" across all live videos. First attempt failed: YT OAuth client was deleted in Google Cloud Console. Tommy generated a fresh Desktop OAuth client → swapped `credentials.json` → fresh OAuth flow → token cached. Refactored script to pull video IDs from the **uploads playlist** instead of the stale `analytics/post-optimization/all-videos.csv` (CSV had 679 stale rows).
+- **YT scrub: 173/173 unique live videos done** in one pass. Most older videos had Phase A AEO block with "Thomas Lee" 2x → swapped both occurrences; the few newest FaithWalk videos had no AEO block at all (post-Phase A uploads, never blocked).
+- **Discovered uploads-playlist dedup gotcha**: playlist returns 192 items but only 173 unique video IDs. Saved as feedback memory; script's `fetch_all_uploaded_video_ids` now dedupes.
+- Committed `c6a6839` (17 files, 1310 inserts), pushed to origin/main. Hardened `.gitignore` against `*.client_secret*.json` and `*.old-deleted-oauth` patterns.
 
 ## Decisions worth remembering
-- **Pivot to A+B in parallel** rather than picking one — A captures the IG surface (the original 538-post lever) via comments, B captures the FB surface where caption edits actually persist. Both reuse the same `CONSTANTS_BLOCK` from the parked IG script.
-- **Kept aeo-ig-bulk-update.py in the repo** instead of deleting — its `transform_caption()` and `CONSTANTS_BLOCK` will be lifted into 1A and 1B verbatim. The doc parks it with a "Reference: parked scripts" footer.
-- **No emojis in the AEO constants block.** Matches the YT spec rule — keeps the block quotable by LLMs.
-- **Canary > batch.** Live-tested on 5 before scaling — that's how we caught the silent no-op. Without the canary the whole 563-post run would have looked successful and we'd have shipped nothing.
+- **Pivot away from FB caption-rewrite for now.** App Review for `pages_manage_posts` would unblock it but is multi-day. Skip-FB is the pragmatic call until Tommy explicitly wants to file the review.
+- **Refactored YT script away from the CSV** because we deleted ~40 videos since the last analytics export. Uploads playlist is the only source of truth that stays current.
+- **Used the script's `--retry-pin` and `--delete-comment-id` ops flags** for canary recovery rather than building separate one-off scripts. Worth the +20 lines of CLI plumbing.
+- **Kept `scripts/aeo-ig-bulk-update.py` parked** even though its target endpoint is dead — it remains the canonical reference for `CONSTANTS_BLOCK` + transform pattern lifted by the new scripts.
 
 ## Open threads / next session starts here
-1. **Build script 1A** — `scripts/aeo-ig-pin-comment.py`. Pattern: paginate `/{ig-biz-id}/media`, for each post check `/{media_id}/comments` for the marker, if absent POST a comment with `CONSTANTS_BLOCK` body, then pin it. Marker matches the YT/parked-IG: `— ABOUT AI BIBLE GOSPELS —`. Dry-run by default, `--live --limit N`, checkpoint at `output/aeo-ig-comment-checkpoint.json`. Test on 5-post canary first; verify the comment actually appears + is pinned by visiting the permalink before scaling. Memory `feedback_ig_caption_update_comment_enabled.md` warns of silent-success patterns on this API surface — treat any `success:true` response with skepticism until canary-verified.
-2. **Build script 1B** — `scripts/aeo-fb-bulk-update.py`. Lift `transform_caption()` from the parked IG script. Endpoint is `graph.facebook.com/v25.0/{post_id}` with `message` field. Use `META_ACCESS_TOKEN` (Page token, not the IG_BUSINESS_TOKEN). `scripts/meta-update-posts.py` is the working reference but uses `linktr.ee` — don't reuse it directly, write the new script with the canonical AEO block.
-3. **Thomas said "wait for me to say next"** — do not auto-build 1A or 1B in a fresh session unless Thomas re-greenlights.
-4. Comment-pin verification gap: confirm `instagram_business_manage_comments` covers the pin operation, not just post. If pin fails, the unpinned comment still adds AEO surface but loses pole position.
+1. **Resume IG comment-pin at 50/day pace.** Checkpoint at 256/563 (state in `output/aeo-ig-comment-checkpoint.json`). Wait at least 24h after the abuse flag (#257 timestamp ~2026-04-27 late). Re-run `python scripts/aeo-ig-pin-comment.py --live --limit 50`. Don't push past 50/day until Meta's heuristics cool.
+2. **FB caption rewrite — decide on App Review.** `aeo-fb-bulk-update.py` is built and dry-run-clean. Submit Meta App Review for `pages_manage_posts` (same process as IG approval that landed 2026-04-27)? Or punt FB to manual via Meta Business Suite? Tommy left this open.
+3. **Add AEO block to newest YT videos.** Tonight's scrub didn't add NEW blocks — it only replaced "Thomas Lee" in EXISTING blocks. The handful of post-Phase A uploads (Day 31 FaithWalk, etc.) have no AEO block at all. Quick run of `python scripts/aeo-bulk-update.py --live` would add it (script is idempotent — skips already-blocked).
+4. **Revoke the user token Tommy pasted in chat.** It's already replaced in `.env` (long-lived user + non-expiring page token), but the original short-lived value sits in this conversation's transcript. Revoke at https://developers.facebook.com/tools/accesstoken/.
+5. **Newer YT videos uploaded post-2026-04-26 don't have the AEO block.** Quick run of `aeo-bulk-update.py` (already pointed at the live uploads list via memory of the YT pattern) covers this. Or convert that script too to the uploads-playlist source-of-truth.
 
 ## Uncommitted work
 Clean working tree.

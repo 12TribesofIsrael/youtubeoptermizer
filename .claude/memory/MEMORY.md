@@ -20,9 +20,14 @@
 - [Memory rules can go stale](feedback_memory_rule_staleness.md) — when citing a rule, verify the rationale still applies; don't reflexively apply rules whose context has shifted (e.g. "no bulk-edit during active review" doesn't apply once review is over)
 - [User profile — Tommy Lee](user_thomas_profile.md) — public name "Tommy Lee"; solo operator; prefers ready-to-use output over templates
 - [Use Tommy Lee — never legal name in public/repo](feedback_use_tommy_not_legal.md) — privacy: every script CONSTANTS_BLOCK, doc, memory file, and AEO surface uses "Tommy Lee"; legal name stays out of the repo entirely
+- [IG comment pin requires hide=false](feedback_ig_pin_endpoint_shape.md) — POST /{ig-comment-id} for pinning needs is_pinned=true AND hide=false together; sending is_pinned alone errors with code 100
+- [IG comment-posting abuse flag at ~256/session](feedback_ig_comment_abuse_threshold.md) — Meta code 368 triggers after rapid bulk commenting; pace at 50/day, 24h+ cooldown after flag
+- [YT uploads playlist returns dups](feedback_yt_uploads_playlist_dedup.md) — playlistItems.list on uploads can return same video_id across pages; always dedupe by videoId; CSV exports also unreliable, use uploads playlist as source of truth
+- [YT OAuth recovered 2026-04-27](project_yt_oauth_recovery_2026.md) — original OAuth client deleted in Google Cloud; replaced with fresh Desktop client at credentials.json; token.json regenerated
 - [Channel email](reference_channel_email.md) — use `aibiblegospels444@gmail.com` (NOT technologygurusllc@gmail.com) for all AI Bible Gospels OAuth, contact info, sign-offs
 - [Gmail API wired](reference_gmail_access.md) — aibiblegospels444@gmail.com Gmail is authenticated; token + registry at `~/.claude/skills/gmail-inbox/`; use `/gmail-inbox` skill or `gmail_unified.py`
 - [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY
+- [Faith Walk Live = flagship product](project_faith_walk_live_flagship.md) — AI Bible Gospels (parent) → Faith Walk Live (flagship app, faithwalklive.com); Minister Zay's walk is LIVE, 37 days in as of 2026-04-27; load-bearing motivation behind the AEO rollout (news-traffic funnel)
 - [Shorts pre-scheduling](feedback_shorts_prescheduling.md) — 10-15 Shorts scheduled 1-2 weeks out is Thomas's normal workflow, not panic behavior; don't flag or recommend trimming
 - [Scheduled Shorts paused 2026-04-22](project_scheduled_shorts_paused_2026_04_22.md) — 15 "12 Tribes" Shorts (Apr 22–May 6) unscheduled to private drafts during YPP appeal; drip-release post-resolution, don't daily-publish
 - [Scrub public-repo commits](feedback_public_repo_scrub.md) — youtubeoptermizer repo is public on GitHub; strip emails/personal info from docs before commit
