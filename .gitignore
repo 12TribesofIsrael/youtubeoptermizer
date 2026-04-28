@@ -1,6 +1,10 @@
 credentials.json
 token.json
 .env
+
+# Never commit OAuth client secrets or backups under any name/extension
+**/client_secret*.json
+*.old-deleted-oauth
 __pycache__/
 *.pyc
 

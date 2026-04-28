@@ -18,7 +18,8 @@
 - [TikTok approval probes](feedback_tiktok_approval_probes.md) — client_credentials + authorize URL are false positives; only post-login consent step reveals the real client_key gate
 - [Read files, not MEMORY.md index](feedback_read_files_not_index.md) — index lines can drift from file bodies; paraphrasing the index gave stale TikTok info on 2026-04-21
 - [Memory rules can go stale](feedback_memory_rule_staleness.md) — when citing a rule, verify the rationale still applies; don't reflexively apply rules whose context has shifted (e.g. "no bulk-edit during active review" doesn't apply once review is over)
-- [User profile — Thomas Lee](user_thomas_profile.md) — full legal name "Thomas Lee"; use for formal sign-offs; solo operator; prefers ready-to-use output over templates
+- [User profile — Tommy Lee](user_thomas_profile.md) — public name "Tommy Lee"; solo operator; prefers ready-to-use output over templates
+- [Use Tommy Lee — never legal name in public/repo](feedback_use_tommy_not_legal.md) — privacy: every script CONSTANTS_BLOCK, doc, memory file, and AEO surface uses "Tommy Lee"; legal name stays out of the repo entirely
 - [Channel email](reference_channel_email.md) — use `aibiblegospels444@gmail.com` (NOT technologygurusllc@gmail.com) for all AI Bible Gospels OAuth, contact info, sign-offs
 - [Gmail API wired](reference_gmail_access.md) — aibiblegospels444@gmail.com Gmail is authenticated; token + registry at `~/.claude/skills/gmail-inbox/`; use `/gmail-inbox` skill or `gmail_unified.py`
 - [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY

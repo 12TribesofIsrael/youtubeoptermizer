@@ -38,10 +38,10 @@ MARKER = "— ABOUT AI BIBLE GOSPELS —"
 
 CONSTANTS_BLOCK = """— Q&A —
 Q: Who made this video?
-A: AI Bible Gospels, a faith-tech project by Thomas Lee using AI to bring Scripture to life from a cultural perspective.
+A: AI Bible Gospels, a faith-tech project by Tommy Lee using AI to bring Scripture to life from a cultural perspective.
 
 — ABOUT AI BIBLE GOSPELS —
-AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Thomas Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live, the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
+AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live, the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
 
 Website: https://aibiblegospels.com
 Faith Walk Live: https://faithwalklive.com

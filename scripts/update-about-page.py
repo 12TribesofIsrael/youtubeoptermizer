@@ -7,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.youtube.client import YouTubeClient
 
-ABOUT_TEXT = """AI Bible Gospels is a faith-tech brand founded by Thomas Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live (faithwalklive.com), the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
+ABOUT_TEXT = """AI Bible Gospels is a faith-tech brand founded by Tommy Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live (faithwalklive.com), the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
 
 Website: https://aibiblegospels.com
 Faith Walk Live: https://faithwalklive.com

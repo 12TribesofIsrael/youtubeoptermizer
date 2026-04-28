@@ -10,7 +10,7 @@
 ## Exact field-by-field entries for the form
 
 ### First name
-Thomas
+Tommy
 
 ### Last name
 Lee
@@ -30,7 +30,7 @@ No
 
 ---
 
-I'm Thomas Lee, creator of AI Bible Gospels (@AIBIBLEGOSPELS). Appealing the inauthentic-content finding.
+I'm Tommy Lee, creator of AI Bible Gospels (@AIBIBLEGOSPELS). Appealing the inauthentic-content finding.
 
 Scripts are original, written by me, grounded in the 1611 KJV. The retention data contradicts "mass-produced": 66% avg view duration on Shorts, Part 33 hit 79.17% retention + 7.84% CTR, top Short 115K views / 70.6% retention. Template filler doesn't hold viewers to the end. That's a real audience.
 
@@ -43,7 +43,7 @@ https://youtu.be/mAJS97kNC5E
 
 Please reinstate monetization.
 
-Thomas Lee
+Tommy Lee
 
 ---
 
@@ -52,7 +52,7 @@ Thomas Lee
 ## Submit checklist
 
 - [ ] Confirm you are signed in as **[channel owner email]** (the form confirms this — don't submit from the wrong account)
-- [ ] First name: Thomas
+- [ ] First name: Tommy
 - [ ] Last name: Lee
 - [ ] Channel URL: `https://www.youtube.com/@AIBIBLEGOSPELS`
 - [ ] Video appeal already done in Studio: No

@@ -52,7 +52,7 @@ IG_API = "https://graph.instagram.com/v22.0"
 MARKER = "— ABOUT AI BIBLE GOSPELS —"
 
 CONSTANTS_BLOCK = """— ABOUT AI BIBLE GOSPELS —
-AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand by Thomas Lee using AI to narrate Scripture from a cultural perspective underrepresented in biblical media. Flagship: Faith Walk Live — the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
+AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand by Tommy Lee using AI to narrate Scripture from a cultural perspective underrepresented in biblical media. Flagship: Faith Walk Live — the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
 
 Website: aibiblegospels.com
 Faith Walk Live: faithwalklive.com

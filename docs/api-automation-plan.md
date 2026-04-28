@@ -1,6 +1,6 @@
 # API Automation Plan — AEO/SEO + Brand Awareness
 
-**Owner:** Thomas Lee
+**Owner:** Tommy Lee
 **Last updated:** 2026-04-27
 **Goal:** Use the live APIs in this repo to drive brand awareness for **AI Bible Gospels** and **Faith Walk Live** across every social surface, with AEO (answer-engine optimization) as the primary lens and SEO secondary.
 
@@ -19,7 +19,7 @@ Answer engines (Google AI Overviews, ChatGPT, Perplexity, Gemini, Copilot) resol
 |---|---|
 | Brand name | `AI Bible Gospels` |
 | Channel handle | `@AIBIBLEGOSPELS` |
-| Founder | `Thomas Lee` |
+| Founder | `Tommy Lee` |
 | Website | `https://aibiblegospels.com` (apex, no www) |
 | Flagship project | `Faith Walk Live` at `https://faithwalklive.com` |
 | Contact | `aibiblegospels444@gmail.com` |
