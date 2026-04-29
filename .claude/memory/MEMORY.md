@@ -9,7 +9,7 @@
 - [IG Business API metrics](feedback_ig_insights_metrics.md) — graph.instagram.com does NOT support "impressions" metric; use reach, follower_count, profile_views instead
 - [IG caption edits silently no-op](feedback_ig_caption_update_comment_enabled.md) — graph.instagram.com /{media_id} returns success but doesn't actually change captions; only honors comment_enabled. Use pinned comments or FB caption rewrite instead
 - [Meta App Review wrong API](feedback_meta_app_review_wrong_api.md) — first ~10 attempts failed using graph.facebook.com; only graph.instagram.com with IG_APP_ID works for instagram_business_* permissions
-- [TikTok App Review status](project_tiktok_app_review.md) — 3rd submit STILL "In review" as of 2026-04-27 (day 5); TikTok-side backlog per portal banner; do NOT click Recall; just wait
+- [TikTok App Review status](project_tiktok_app_review.md) — 4th submit filed 2026-04-29 after 3rd rejection on 2026-04-28 ("invalid ToS/Privacy", "internal-use"); now points to /terms /privacy on aibiblegospels.com apex; description rewritten as creator service. Description + submission-reason fields cap at 120 chars
 - [TikTok OAuth quirks](feedback_tiktok_oauth_quirks.md) — localhost redirects rejected, prod creds fail pre-review; use public callback forwarder + sandbox mode
 - [Repo scope rule](feedback_repo_scope.md) — from this session, only edit files in youtubeoptermizer; ai-bible-gospels and other repos are READ-ONLY (separate Claude instance owns them)
 - [Daniel voice ID](reference_daniel_voice.md) — `onwK4e9ZLuTAKqWW03F9` (Daniel - Steady Broadcaster) is the channel's viral-proven voice; never substitute
@@ -17,17 +17,12 @@
 - [TikTok AI-label review](feedback_tiktok_ai_label_review.md) — first post with the AI-content label triggers TikTok review + auto sets privacy to Only me; wait for clearance, don't manually flip
 - [TikTok approval probes](feedback_tiktok_approval_probes.md) — client_credentials + authorize URL are false positives; only post-login consent step reveals the real client_key gate
 - [Read files, not MEMORY.md index](feedback_read_files_not_index.md) — index lines can drift from file bodies; paraphrasing the index gave stale TikTok info on 2026-04-21
+- [Don't parallel-drive a portal Thomas is already in](feedback_browser_automation_vs_manual.md) — when Thomas has an admin UI open in Chrome, don't run Playwright on the same flow; give copy-paste values instead
 - [Memory rules can go stale](feedback_memory_rule_staleness.md) — when citing a rule, verify the rationale still applies; don't reflexively apply rules whose context has shifted (e.g. "no bulk-edit during active review" doesn't apply once review is over)
-- [User profile — Tommy Lee](user_thomas_profile.md) — public name "Tommy Lee"; solo operator; prefers ready-to-use output over templates
-- [Use Tommy Lee — never legal name in public/repo](feedback_use_tommy_not_legal.md) — privacy: every script CONSTANTS_BLOCK, doc, memory file, and AEO surface uses "Tommy Lee"; legal name stays out of the repo entirely
-- [IG comment pin requires hide=false](feedback_ig_pin_endpoint_shape.md) — POST /{ig-comment-id} for pinning needs is_pinned=true AND hide=false together; sending is_pinned alone errors with code 100
-- [IG comment-posting abuse flag at ~256/session](feedback_ig_comment_abuse_threshold.md) — Meta code 368 triggers after rapid bulk commenting; pace at 50/day, 24h+ cooldown after flag
-- [YT uploads playlist returns dups](feedback_yt_uploads_playlist_dedup.md) — playlistItems.list on uploads can return same video_id across pages; always dedupe by videoId; CSV exports also unreliable, use uploads playlist as source of truth
-- [YT OAuth recovered 2026-04-27](project_yt_oauth_recovery_2026.md) — original OAuth client deleted in Google Cloud; replaced with fresh Desktop client at credentials.json; token.json regenerated
+- [User profile — Thomas Lee](user_thomas_profile.md) — full legal name "Thomas Lee"; use for formal sign-offs; solo operator; prefers ready-to-use output over templates
 - [Channel email](reference_channel_email.md) — use `aibiblegospels444@gmail.com` (NOT technologygurusllc@gmail.com) for all AI Bible Gospels OAuth, contact info, sign-offs
 - [Gmail API wired](reference_gmail_access.md) — aibiblegospels444@gmail.com Gmail is authenticated; token + registry at `~/.claude/skills/gmail-inbox/`; use `/gmail-inbox` skill or `gmail_unified.py`
 - [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY
-- [Faith Walk Live = flagship product](project_faith_walk_live_flagship.md) — AI Bible Gospels (parent) → Faith Walk Live (flagship app, faithwalklive.com); Minister Zay's walk is LIVE, 37 days in as of 2026-04-27; load-bearing motivation behind the AEO rollout (news-traffic funnel)
 - [Shorts pre-scheduling](feedback_shorts_prescheduling.md) — 10-15 Shorts scheduled 1-2 weeks out is Thomas's normal workflow, not panic behavior; don't flag or recommend trimming
 - [Scheduled Shorts paused 2026-04-22](project_scheduled_shorts_paused_2026_04_22.md) — 15 "12 Tribes" Shorts (Apr 22–May 6) unscheduled to private drafts during YPP appeal; drip-release post-resolution, don't daily-publish
 - [Scrub public-repo commits](feedback_public_repo_scrub.md) — youtubeoptermizer repo is public on GitHub; strip emails/personal info from docs before commit

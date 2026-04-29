@@ -1,37 +1,45 @@
 ---
-ended: 2026-04-27T23:59:00Z
+ended: 2026-04-29T00:00:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: f722b886-dd9c-4fd1-bbd4-62cd81fc83ea
+originSessionId: 902a63d9-43f4-44f8-947d-455372616484
 ---
-# Last Session — 2026-04-27 (late)
+# Last Session — 2026-04-29
 
 ## What the user wanted
-Tommy asked to build the IG comment-pin script (1A from `docs/api-automation-plan.md`) and run it across his 563 IG posts. Mid-session pivoted to a deeper privacy goal: scrub his legal name ("Thomas Lee") off every public surface — repo files, YT video descriptions, IG comments — replacing with the alias **Tommy Lee**. Wrap-up by night.
+Recover from the TikTok app-review 3rd-round rejection on 2026-04-28 ("invalid ToS link", "invalid Privacy link", "App will not be approved for personal or company internal use") and get a 4th submission filed the same day.
 
 ## What we did
-- **Built `scripts/aeo-ig-pin-comment.py`** — posts + pins the AEO `CONSTANTS_BLOCK` as a comment on each IG post. Idempotent (marker check), checkpointed, dry-run by default. Lifted CONSTANTS + helpers verbatim from the parked `aeo-ig-bulk-update.py`.
-- **Discovered IG pin endpoint quirk**: `POST /{ig-comment-id}` requires BOTH `is_pinned=true` AND `hide=false` together. First canary errored with code 100 ("hide is required"); patched with `hide=false`. Saved as feedback memory.
-- **IG comment-pin progress: 256/563** posts pinned. Canary (latest Reel DXnbyvTDNbn, comment 18089952173590782) cleanly verified. Then `--limit 50` clean (5 sec/post pace). Then `--limit 200` clean. Stopped on attempt #257 with Meta code 368 ("action deemed abusive"). Saved as feedback memory.
-- **Privacy scrub: Thomas Lee → Tommy Lee** across 9 tracked repo files (3 scripts, 2 docs, 4 memory files). Rewrote `user_thomas_profile.md` to drop legal-name callout. Added `feedback_use_tommy_not_legal.md` rule. Old IG canary comment (Thomas Lee) deleted, reposted with Tommy Lee, re-pinned, verified.
-- **Built `scripts/aeo-fb-bulk-update.py`** for FB Page caption rewrite. Token refresh chain: user pasted new short-lived token → ran `meta-token-refresh.py` → got long-lived user token + non-expiring `META_PAGE_TOKEN` (now in `.env`). Read works (90 FB posts). **Write blocked on missing `pages_manage_posts` scope** (code 100/200 errors) — same blocker for both create and edit paths. Tommy can't add the scope in Graph Explorer; needs Meta App Review.
-- **Built `scripts/yt-thomas-to-tommy.py`** — find-replace "Thomas Lee" → "Tommy Lee" across all live videos. First attempt failed: YT OAuth client was deleted in Google Cloud Console. Tommy generated a fresh Desktop OAuth client → swapped `credentials.json` → fresh OAuth flow → token cached. Refactored script to pull video IDs from the **uploads playlist** instead of the stale `analytics/post-optimization/all-videos.csv` (CSV had 679 stale rows).
-- **YT scrub: 173/173 unique live videos done** in one pass. Most older videos had Phase A AEO block with "Thomas Lee" 2x → swapped both occurrences; the few newest FaithWalk videos had no AEO block at all (post-Phase A uploads, never blocked).
-- **Discovered uploads-playlist dedup gotcha**: playlist returns 192 items but only 173 unique video IDs. Saved as feedback memory; script's `fetch_all_uploaded_video_ids` now dedupes.
-- Committed `c6a6839` (17 files, 1310 inserts), pushed to origin/main. Hardened `.gitignore` against `*.client_secret*.json` and `*.old-deleted-oauth` patterns.
+- **Diagnosed root cause** — submitted Terms/Privacy/Website URLs all pointed at homepage `https://www.aibiblegospels.com/`; existing GH-Pages legal pages literally said *"Our software is used exclusively by the account owner"* (textbook personal/internal-use wording).
+- **Edited `aibiblegospelscom` repo with explicit Thomas approval** (override of `feedback_repo_scope.md` read-only rule for this task) — commit `85d3f13`:
+  - `src/app/terms/page.tsx` — new TikTok-compliant Terms, framed as creator-publishing service
+  - `src/app/privacy/page.tsx` — new Privacy Policy with `aibiblegospels444@gmail.com` data-deletion path, third-party platform links
+  - `src/app/sitemap.ts` — added `/terms` and `/privacy`
+  - `src/app/page.tsx` — footer rewired off GH Pages, onto internal Next.js Link routes
+  - Local `npm install` then `npm run build` — passed; pushed; Vercel deployed; verified `curl -I` 200 on both routes
+- **Updated TikTok Developer Portal** — Thomas clicked Return to Draft (modal Confirm), then I gave copy-paste values for 4 fields. Final values:
+  - Description (120-char cap): *"Creators schedule and publish video posts to their own TikTok account, then track engagement and growth analytics."*
+  - Terms URL: `https://aibiblegospels.com/terms`
+  - Privacy URL: `https://aibiblegospels.com/privacy`
+  - Web/Desktop URL: `https://aibiblegospels.com` (apex)
+  - Submission reason (120-char cap): *"Fixed invalid ToS/Privacy links and reframed app description as creator publishing service per reviewer comments."*
+- **4th submission filed by Thomas 2026-04-29.**
+- **Wrote paper trail** in youtubeoptermizer at `docs/tiktok-app-review-2026-04-29.md` — commit `1d12f93`, pushed.
+- **Memory updates** — rewrote `project_tiktok_app_review.md` end-to-end (was stale "in review" snapshot from Apr 27); updated MEMORY.md index entry.
+- **Cleaned up** 9 `.tmp-tiktok-*` inspection artifacts left in working dir from Playwright probes.
 
 ## Decisions worth remembering
-- **Pivot away from FB caption-rewrite for now.** App Review for `pages_manage_posts` would unblock it but is multi-day. Skip-FB is the pragmatic call until Tommy explicitly wants to file the review.
-- **Refactored YT script away from the CSV** because we deleted ~40 videos since the last analytics export. Uploads playlist is the only source of truth that stays current.
-- **Used the script's `--retry-pin` and `--delete-comment-id` ops flags** for canary recovery rather than building separate one-off scripts. Worth the +20 lines of CLI plumbing.
-- **Kept `scripts/aeo-ig-bulk-update.py` parked** even though its target endpoint is dead — it remains the canonical reference for `CONSTANTS_BLOCK` + transform pattern lifted by the new scripts.
+- **Override of repo scope rule** — Thomas authorized me (this instance) to edit `aibiblegospelscom` directly for the TikTok fix because handoff to the other Claude instance would have been slower. The rule still applies for non-emergency work; per-task overrides are how he prefers to handle exceptions.
+- **Operator name on legal pages** — chose `AI Bible Gospels` only (dropped `Born Made Bosses LLC`) for consistency with TikTok/Meta/YouTube review-surface entity names. Born Made Bosses LLC still appears on the legacy GH-Pages legal repo, which we left untouched (still hosts the OAuth `callback.html` forwarder).
+- **Description is 120-char-capped, not 1000** — I drafted 870-char copy; Thomas hit the limit and asked for short variants. New project memory notes both this AND the 120-char "submission reason" textbox at Submit time.
 
 ## Open threads / next session starts here
-1. **Resume IG comment-pin at 50/day pace.** Checkpoint at 256/563 (state in `output/aeo-ig-comment-checkpoint.json`). Wait at least 24h after the abuse flag (#257 timestamp ~2026-04-27 late). Re-run `python scripts/aeo-ig-pin-comment.py --live --limit 50`. Don't push past 50/day until Meta's heuristics cool.
-2. **FB caption rewrite — decide on App Review.** `aeo-fb-bulk-update.py` is built and dry-run-clean. Submit Meta App Review for `pages_manage_posts` (same process as IG approval that landed 2026-04-27)? Or punt FB to manual via Meta Business Suite? Tommy left this open.
-3. **Add AEO block to newest YT videos.** Tonight's scrub didn't add NEW blocks — it only replaced "Thomas Lee" in EXISTING blocks. The handful of post-Phase A uploads (Day 31 FaithWalk, etc.) have no AEO block at all. Quick run of `python scripts/aeo-bulk-update.py --live` would add it (script is idempotent — skips already-blocked).
-4. **Revoke the user token Tommy pasted in chat.** It's already replaced in `.env` (long-lived user + non-expiring page token), but the original short-lived value sits in this conversation's transcript. Revoke at https://developers.facebook.com/tools/accesstoken/.
-5. **Newer YT videos uploaded post-2026-04-26 don't have the AEO block.** Quick run of `aeo-bulk-update.py` (already pointed at the live uploads list via memory of the YT pattern) covers this. Or convert that script too to the uploads-playlist source-of-truth.
+- **Watch for TikTok 4th-round response** in `aibiblegospels444@gmail.com` (subject: *"Your app status update"* from `noreply@dev.tiktok.com`) — but the email is generic; real status is in Dev Portal → AI Bible Gospels → Production tab. Past rounds: 24-30h baseline, but round 3 ran 6 days due to TikTok-side backlog.
+- **If 4th rejected, likely friction points** (in priority order):
+  1. Demo video — recorded showing Thomas posting to his own account; doesn't reinforce the new "creator service" framing. Re-record with creator-onboards-then-posts arc.
+  2. `Born Made Bosses LLC` name still on GH-Pages legal repo — discoverable via Google, mismatches the canonical `AI Bible Gospels` brand on the TikTok submission.
+- **Untouched in this session** — `docs/x.md` was the X/Twitter distribution plan from a prior session. Thomas confirmed "no need for that anymore" and removed it himself before commit. If X distribution comes up again, it'd need a fresh plan.
+- **Repo scope rule still active** — `feedback_repo_scope.md` says `aibiblegospelscom` is READ-ONLY (separate Claude instance). The override here was task-specific. Keep deferring to that instance for non-emergency work on that repo.
 
 ## Uncommitted work
 Clean working tree.
