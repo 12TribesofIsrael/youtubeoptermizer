@@ -12,6 +12,6 @@ The active blueprint is `docs/api-automation-plan.md` (committed `0fce063` on 20
 - 4 — `aeo-yt-phase-b.py` (TBD) — per-video LLM AEO content for 187 YT videos
 - 5 — `unified-analytics.py` (TBD) — daily cross-platform rollup CSV
 
-**Why:** Thomas asked 2026-04-27 how to leverage the just-approved Meta API + existing YT/FB/Gmail tokens for brand awareness across IG/TT/FB/YT. Goal is AEO entity-resolution (every surface using the same canonical strings: `aibiblegospels.com`, `faithwalklive.com`, `@AIBIBLEGOSPELS`, founder `Thomas Lee`).
+**Why:** Thomas asked 2026-04-27 how to leverage the just-approved Meta API + existing YT/FB/Gmail tokens for brand awareness across IG/TT/FB/YT. Goal is AEO entity-resolution (every surface using the same canonical strings: `aibiblegospels.com`, `faithwalklive.com`, `@AIBIBLEGOSPELS`, founder `Tommy Lee`).
 
 **How to apply:** When resuming AEO/brand-awareness work, read `docs/api-automation-plan.md` first — it has the live API status table, the parked-script note for `aeo-ig-bulk-update.py`, and the order of operations. The script #1 path (bulk IG caption rewrite) was tried and found impossible due to Meta silent-no-op — see `feedback_ig_caption_update_comment_enabled.md`. The pivot is 1A + 1B in parallel; Thomas said "wait for me to say next" before building.
