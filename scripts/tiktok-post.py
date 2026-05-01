@@ -311,13 +311,30 @@ def get_creator_info(access_token: str) -> dict:
     )
 
 
+# ── Chunk planning (TikTok rules) ──────────────────────────────────────
+# TikTok requires:
+#   - chunk_size between 5 MB and 64 MB
+#   - last chunk must be ≥ chunk_size and ≤ 2 × chunk_size
+# Easiest way to satisfy both: single-chunk upload when file fits in 64 MB,
+# otherwise use 10 MB chunks with last chunk absorbing the remainder
+# (achieved via `total_chunks = video_size // chunk_size`).
+MAX_SINGLE_CHUNK = 64_000_000  # decimal 64 MB stays safely under 64 MiB hard limit
+
+
+def compute_chunk_plan(video_size: int) -> tuple[int, int]:
+    if video_size <= MAX_SINGLE_CHUNK:
+        return video_size, 1
+    chunk_size = 10_000_000
+    total_chunks = video_size // chunk_size
+    return chunk_size, total_chunks
+
+
 # ── Video upload — inbox (drafts) ──────────────────────────────────────
 # Inbox means the video lands in the creator's TikTok drafts for them
 # to finalize and publish manually. Safest mode — no risk of publishing
 # anything unintended. Requires only video.upload scope.
 def init_inbox_upload(access_token: str, video_size: int) -> dict:
-    chunk_size = min(video_size, 10_000_000)  # 10 MB chunks (TikTok max)
-    total_chunks = (video_size + chunk_size - 1) // chunk_size
+    chunk_size, total_chunks = compute_chunk_plan(video_size)
     return http_post_json(
         f"{API_BASE}/post/publish/inbox/video/init/",
         {
@@ -338,8 +355,7 @@ def init_inbox_upload(access_token: str, video_size: int) -> dict:
 # privacy_level values.
 def init_direct_post(access_token: str, video_size: int,
                      title: str, privacy_level: str) -> dict:
-    chunk_size = min(video_size, 10_000_000)
-    total_chunks = (video_size + chunk_size - 1) // chunk_size
+    chunk_size, total_chunks = compute_chunk_plan(video_size)
     return http_post_json(
         f"{API_BASE}/post/publish/video/init/",
         {
@@ -362,20 +378,25 @@ def init_direct_post(access_token: str, video_size: int,
 
 
 # ── Upload video bytes to pre-signed URL ──────────────────────────────
+# Chunk boundaries here MUST match what was sent to /init/ — the
+# pre-signed URL was issued against a specific (chunk_size, total_chunks)
+# plan. Last chunk absorbs any remainder so its size lands in
+# [chunk_size, 2 × chunk_size).
 def upload_video_file(upload_url: str, file_path: Path) -> bool:
     total = file_path.stat().st_size
-    chunk_size = min(total, 10_000_000)
+    chunk_size, total_chunks = compute_chunk_plan(total)
 
     with file_path.open("rb") as f:
         offset = 0
-        chunk_index = 0
-        while offset < total:
-            chunk = f.read(chunk_size)
+        for chunk_index in range(total_chunks):
+            is_last = chunk_index == total_chunks - 1
+            this_chunk_size = total - offset if is_last else chunk_size
+            chunk = f.read(this_chunk_size)
             if not chunk:
                 break
             end = offset + len(chunk) - 1
             content_range = f"bytes {offset}-{end}/{total}"
-            print(f"  Uploading chunk {chunk_index + 1}: {content_range}")
+            print(f"  Uploading chunk {chunk_index + 1}/{total_chunks}: {content_range}")
             status, body = http_put_bytes(
                 upload_url,
                 chunk,
@@ -386,7 +407,6 @@ def upload_video_file(upload_url: str, file_path: Path) -> bool:
                 print(f"  Upload failed: status={status} body={body[:200]}")
                 return False
             offset = end + 1
-            chunk_index += 1
     return True
 
 

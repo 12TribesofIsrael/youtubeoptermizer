@@ -9,8 +9,10 @@
 - [IG Business API metrics](feedback_ig_insights_metrics.md) — graph.instagram.com does NOT support "impressions" metric; use reach, follower_count, profile_views instead
 - [IG caption edits silently no-op](feedback_ig_caption_update_comment_enabled.md) — graph.instagram.com /{media_id} returns success but doesn't actually change captions; only honors comment_enabled. Use pinned comments or FB caption rewrite instead
 - [Meta App Review wrong API](feedback_meta_app_review_wrong_api.md) — first ~10 attempts failed using graph.facebook.com; only graph.instagram.com with IG_APP_ID works for instagram_business_* permissions
-- [TikTok App Review status](project_tiktok_app_review.md) — 3rd submit STILL "In review" as of 2026-04-27 (day 5); TikTok-side backlog per portal banner; do NOT click Recall; just wait
+- [TikTok App Review status](project_tiktok_app_review.md) — 4th rejection (2026-05-01) addressed via multi-tenant pivot built same day: `/connect/tiktok` OAuth flow live on aibiblegospels.com (commit 9f454a3 in aibiblegospelscom). End-to-end round-trip verified. 5th submit pending demo re-record + production config rewrites
 - [TikTok OAuth quirks](feedback_tiktok_oauth_quirks.md) — localhost redirects rejected, prod creds fail pre-review; use public callback forwarder + sandbox mode
+- [TikTok Sandbox vs Production are separate configs](feedback_tiktok_sandbox_separate_config.md) — each has its own redirect URIs / scopes / description; saving in main app config does NOT propagate to sandbox; "Delete Sandbox" button in header signals you're in the sandbox
+- [TikTok chunk math last-chunk rule](feedback_tiktok_chunk_math.md) — last chunk must be ≥ chunk_size; use single-chunk for files ≤64 MB, else total_chunks = video_size // chunk_size (last absorbs remainder)
 - [Repo scope rule](feedback_repo_scope.md) — from this session, only edit files in youtubeoptermizer; ai-bible-gospels and other repos are READ-ONLY (separate Claude instance owns them)
 - [Daniel voice ID](reference_daniel_voice.md) — `onwK4e9ZLuTAKqWW03F9` (Daniel - Steady Broadcaster) is the channel's viral-proven voice; never substitute
 - [Aspect ratios](reference_aspect_ratios.md) — 9:16 vertical (1080×1920, `instagram-story`) = SHORT (TikTok/Reels/Shorts); 16:9 (`full-hd`) = LONG (never for TikTok)
