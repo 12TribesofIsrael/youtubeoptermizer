@@ -1,36 +1,47 @@
 ---
-ended: 2026-04-29T18:30:00Z
+ended: 2026-05-01T15:00:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: 5eb7f750-854c-4407-bd99-d48e87fa9b29
+originSessionId: 62c79a8b-054b-4cd8-8b2e-74b106c34f3d
 ---
-# Last Session — 2026-04-29
+# Last Session — 2026-05-01
 
 ## What the user wanted
-Tommy resumed the session, then asked to (1) keep grinding the IG comment-pin AEO rollout, (2) figure out why the FB caption rewrite was blocked and unblock it, (3) get plain-English capability references for both the Meta App and the YouTube OAuth client, and (4) publish a launch-style FB Page post announcing the new aibiblegospels.com positioning.
+Tommy wanted to address the TikTok 4th rejection (filed 2026-04-29, structural feedback: "no login entry point + no personal/internal use"). He chose Path A — multi-tenant pivot — and gave write access to `aibiblegospelscom` so we could build a real "Login with TikTok" entry point on the canonical site, then resubmit.
 
 ## What we did
-- **IG comment-pin: 256 → 306** (+50 in one clean run, 0 errored). 48h+ past the 2026-04-27 abuse flag — cooldown satisfied. Checkpoint at `output/aeo-ig-comment-checkpoint.json`. 257 posts remain. New log: `output/ig-pin-resume-2026-04-29.log`.
-- **Diagnosed FB token "regression":** ran `debug_token` on `META_PAGE_TOKEN` — token is fine (valid, never-expires, 8 scopes from the 2026-04-27 IG App Review). Truth: FB caption write **never** worked over the API; `pages_manage_posts` was never in the scope set. The IG approval that landed last week is what Tommy was conflating with FB write access.
-- **Added `pages_manage_posts` + `read_insights` (and `pages_manage_engagement` as bonus) to the Meta App** at App Dashboard → Use Cases → Permissions. Multiple Graph Explorer round-trips before the consent dialog took (kept tripping on dependency-injected `pages_read_user_content` for `pages_manage_engagement`, and on stale-token-not-regenerated). Final clean user token had `pages_manage_posts`. **Derived a Page token** from it via `GET /{PAGE_ID}?fields=access_token` — required because "new Pages experience" rejects user tokens for `/feed` writes.
-- **FB bulk caption rewrite (Script 1B): 65 completed + 24 story-only skips + 2 edge errors** out of 89 latest posts. Errors: one emoji-only post (FB rejects edits on those), one re-write race on the canary post. 97% success rate on writable posts. Run: `output/fb-bulk-2026-04-29.log`. Checkpoint: `output/aeo-fb-checkpoint.json`.
-- **Published new FB launch post** announcing aibiblegospels.com brand-positioning shift. Site is now repositioned as a **faith-tech tools brand** (live trackers, stream automation, ministry websites, prayer walls — "Software in service of the calling") for ministers/streamers/missions, not just an AI Bible content channel. Post id `601690023018873_122181239450785084`, marker present, link card to aibiblegospels.com. Permalink: https://www.facebook.com/122181036062785084/posts/122181239450785084
-- **New capability reference docs:** `docs/meta-app-capabilities.md` (10 granted Meta scopes, what the app CAN/CANNOT do, App Review tier matrix, gotchas) and `docs/youtube-app-capabilities.md` (3 YT OAuth scopes, quota math at 10K units/day → ~200 video edits, auth flow, scripts that consume it).
-- **Privacy scan + scrub** before commit: rewrote two leaks in `youtube-app-capabilities.md` — removed call-out to the secondary `technologygurusllc@gmail.com` account, and removed literal "Thomas Lee" mention in the script-table description. Repo is public, scrub rule honored.
-- Committed `30dab3a` (7 files, 1036 inserts), rebased onto two TikTok-side commits from the other machine (`1d12f93` + `879aeff`), pushed to origin/main.
+- **Built /connect/tiktok OAuth flow on aibiblegospelscom** (commit `9f454a3` in that repo, 7 files / 578 inserts):
+  - `/connect/tiktok` — marketing page with explainer + Connect button
+  - `/api/tiktok/start` — generates CSRF state cookie, redirects to TikTok consent
+  - `/api/tiktok/callback` — validates state, exchanges code, fetches user.info, redirects to success
+  - `/connect/tiktok/success` — confirmation page with activation CTA (email aibiblegospels444@gmail.com)
+  - `/connect/tiktok/error` — handles `access_denied` / `state_mismatch` / `token_exchange_failed` / `server_misconfigured`
+  - Homepage gains a "For creators" section (between YouTube and Work-with-us) + footer Connect link
+  - Sitemap includes /connect/tiktok
+  - Privacy/Terms already had multi-tenant framing — no changes needed
+  - Rebased on top of the other instance's `9af3fcb` (Anointed flagship section) before push
+- **Configured Vercel env vars** for `aibiblegospelscom`: `TIKTOK_CLIENT_KEY=sbawswnygychzo38lw` + `TIKTOK_CLIENT_SECRET` (sandbox; prod creds preserved as comments in `youtubeoptermizer/.env`). First deploy after my push didn't pick up env vars because they were added AFTER the build — Tommy redeployed and start route correctly redirected to TikTok OAuth (Location header decoded fine).
+- **TikTok dev portal — added redirect URI** to **sandbox config specifically** (separate from main app config — that's the gotcha that ate ~30 min). Sandbox now has both `https://aibiblegospels.com/api/tiktok/callback` (website flow) and `https://12tribesofisrael.github.io/aibiblegospels-legal/callback.html` (Python script flow).
+- **Verified end-to-end OAuth round-trip live** — Tommy clicked through: aibiblegospels.com → /connect/tiktok → Connect with TikTok → consent screen → approved → landed on /connect/tiktok/success showing "TikTok connected. Step 1 of 2 complete." (handle box didn't render — sandbox tester `username` field is empty; non-blocking, callback treats as non-fatal).
+- **Sandbox upload demo started** — ran `scripts/tiktok-post.py --video short_1_00_51_to_02_02.mp4 --reuse`. Hit a chunk-math bug (`invalid_params: total chunk count is invalid` — last chunk was smaller than chunk_size), patched it via `compute_chunk_plan()` helper, retried successfully. All 64 MB / 6 chunks uploaded; status stuck at `PROCESSING_UPLOAD` past 15-min poll cap. `publish_id: v_inbox_file~v2.7634916387802351630`.
+- **Tommy filed the 5th submission** on the dev portal (he confirmed "5th attempt filed" — typo'd "failed" first, corrected himself).
+- **Scheduled a one-time agent** to check status in ~30h. Routine `trig_01KTNBKyMv4EhpG3nvZDEcm9` fires `2026-05-02T20:45:00Z` (Sat 4:45pm EDT). Reports approved/rejected/still-in-review using Gmail MCP. URL: https://claude.ai/code/routines/trig_01KTNBKyMv4EhpG3nvZDEcm9.
+- **Committed in `youtubeoptermizer`**: `d792f8b` (memory + chunk-math fix), `2908d8f` (5th-submit memory), `3bc31d7` (gitignore *.mp4 / *.mov / *.webm / *.mkv).
 
 ## Decisions worth remembering
-- **Skipped Meta App Review for `pages_manage_posts`** — Standard Access (App Admin in dev mode, on his own Page) is sufficient indefinitely for the AEO automation, since only Tommy runs the scripts. Advanced Access is only needed if other Meta users need it.
-- **Did NOT add `read_insights` after the dependency mess** — Tommy added `pages_manage_engagement` instead in Graph Explorer (he had to drop something to dodge `pages_read_user_content` consent error). `read_insights` only matters for Script 5 (`unified-analytics.py`) which isn't built yet — adding it later is fine.
-- **Used inline `META_PAGE_TOKEN='...'` env-var injection** for the bulk run rather than overwriting the permanent `.env` value. Keeps the never-expiring page token safe; the temp 1h user-derived page token only existed in the script's process memory.
-- **Did not retry the 2 errored FB posts.** Emoji-only post is a known FB API edge case; canary re-write race is harmless because the canary already succeeded. Net 65/67 writable = good enough.
+- **Picked Path A over Path B (walk away)** — even though I'd recommended walking away. Tommy granted write access on `aibiblegospelscom` and wanted to ship the multi-tenant flow. Right call given the brand pivot already positioned aibiblegospels.com as a faith-tech tools company.
+- **Kept the open-items diagnostic checklist intact in memory** even after 5th submit was filed. Tommy explicitly rejected my edit that would have replaced it. If 5th lands in same lane as prior rejections, that 4-item checklist (description / demo / scope explanations / submission reason) is the triage ladder.
+- **No tokens stored in the website OAuth flow** — the callback exchanges the code, fetches user.info, then redirects to success without persisting anything. The "service" the reviewer needs to see is the multi-tenant entry point + activation email CTA. Real scheduling product is Phase 2 if client demand emerges.
+- **Used GH Pages forwarder + new aibiblegospels.com URI in parallel** — not as replacement. Python upload script keeps using GH Pages; website flow uses the new one. Both registered in sandbox.
+- **Did NOT click "Submit for review" before configuring sandbox redirect URI** — Submit is a production-only action. Sandbox edits propagate immediately on Save (and need their own Save in the sandbox config UI, not the main one).
 
 ## Open threads / next session starts here
-1. **Resume IG comment-pin at 50/day pace tomorrow.** Checkpoint at 306/563 (257 left ≈ 5 more daily runs). Run `python scripts/aeo-ig-pin-comment.py --live --limit 50`. 24h+ between runs to respect the abuse-flag cooldown rule.
-2. **Add `read_insights` when building Script 5.** App Dashboard → Use Cases → Permissions → "+ Add" → re-mint Page token via Graph Explorer (workflow now well-documented in `docs/meta-app-capabilities.md`).
-3. **Newer YT videos still missing AEO block.** Script `aeo-bulk-update.py` is idempotent and will skip already-blocked. One run when convenient.
-4. **Revoke the FB user token Tommy pasted in chat.** Two short-lived user tokens (one ~1h-expired by now, other expiring soon). Already replaced in usage; just hygiene to revoke at https://developers.facebook.com/tools/accesstoken/.
-5. **Central memory-backup repo (`claude-memory-backup`) refused fast-forward** at session-start. Origin diverged from local. Not blocking — needs manual reconcile when convenient. Project's own in-repo memory sync works fine.
+1. **Wait for the scheduled agent at 2026-05-02T20:45 UTC** — it'll report TikTok 5th-submission status via Gmail MCP. Don't manually re-check the dev portal in the interim (won't help; just creates noise).
+2. **Sandbox upload `v_inbox_file~v2.7634916387802351630`** still `PROCESSING_UPLOAD` last we saw. Run `python scripts/tiktok-status.py "v_inbox_file~v2.7634916387802351630"` to check; eventually flips to `SEND_TO_USER_INBOX` (or fails). Memory says sandbox queue is slow today; no urgency.
+3. **Empty handle on /connect/tiktok/success** — the user.info call inside `/api/tiktok/callback` returned no `username` field for the sandbox tester. Non-blocking, but for production demo polish, may want to fall back to `display_name` or `open_id` truncated. File: `c:\Users\Owner\repos\aibiblegospelscom\src\app\api\tiktok\callback\route.ts`.
+4. **If 5th rejection lands** — diagnostic checklist is in `.claude/memory/project_tiktok_app_review.md` "Production-config items" section. Items 1–3 (description, demo, scope explanations) most likely lanes.
+5. **If 5th approval lands** — production credential swap-over plan: Vercel env vars sandbox→prod, add redirect URI to **production** redirect URI list (currently only in sandbox), redeploy, retest.
+6. **Resume IG comment-pin at 50/day** — open thread from prior session (306/563, ~257 left) — not touched today; cooldown still satisfied.
 
 ## Uncommitted work
 Clean working tree.
