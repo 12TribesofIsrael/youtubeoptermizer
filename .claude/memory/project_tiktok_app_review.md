@@ -1,10 +1,10 @@
 ---
 name: TikTok App Review status
-description: 4th rejection 2026-05-01 fixed with multi-tenant pivot; /connect/tiktok OAuth flow built and verified live on aibiblegospels.com; 5th submit pending demo re-record
+description: 5th submission filed 2026-05-01 after same-day multi-tenant pivot (OAuth flow built on aibiblegospels.com, full round-trip verified live); awaiting TikTok review
 type: project
 originSessionId: 3f97120f-9e3e-4e35-89e8-cf5aa8126068
 ---
-TikTok Content Posting API app review — **4th rejection 2026-05-01** addressed structurally via multi-tenant OAuth flow on aibiblegospels.com. **5th submission pending** demo re-record + production config updates.
+TikTok Content Posting API app review — **5th submission filed 2026-05-01** the same day the 4th rejection landed, after a full multi-tenant pivot on aibiblegospels.com.
 
 ## Timeline
 
@@ -95,12 +95,22 @@ Tommy chose path 1. Built and pushed to `aibiblegospelscom` repo (`9f454a3 Add T
 
 **Verified end-to-end live** — Tommy completed full round-trip: aibiblegospels.com → /connect/tiktok → click Connect → TikTok consent → approved → redirected to /connect/tiktok/success.
 
-## Open items before clicking Submit for review (5th attempt)
+## Production-config items that needed updates before the 5th submit
+
+Kept as a diagnostic checklist — if rejection #5 lands, these are the most likely lanes:
 
 1. **Production app description** must NOT say "our own TikTok account" or any "internal/personal use" phrasing — that triggered rejection #4. Rewrite to multi-tenant: e.g. "Lets ministers, Christian streamers, and missions teams schedule and publish faith content to their own TikTok accounts."
-2. **Demo video re-record** — use the new flow (homepage → /connect/tiktok → external sandbox tester consents → success page). Old demo showed Tommy's own account = "internal use" trigger.
+2. **Demo video** — needs the new flow (homepage → /connect/tiktok → external sandbox tester consents → success page). Old demo showed Tommy's own account = "internal use" trigger.
 3. **Per-scope explanations** — `user.info.basic`: "confirms which creator's account is connected." `video.upload`: "uploads creator-submitted content to the creator's own TikTok inbox as drafts for their review and publication."
-4. **Submission reason** (120-char field): suggested — "Multi-tenant content publisher for ministers and Christian creators. Login at aibiblegospels.com/connect/tiktok."
+4. **Submission reason** (120-char field): "Multi-tenant content publisher for ministers and Christian creators. Login at aibiblegospels.com/connect/tiktok."
+
+## 5th submission filed 2026-05-01
+
+Tommy clicked Submit for review same day as the 4th rejection landed. App is now back **In review**. Expected turnaround per prior rounds: 24–30 hours, possibly longer with TikTok backlog (round 3 ran several days). Watch `aibiblegospels444@gmail.com` for `noreply@dev.tiktok.com` "Your app status update" emails — generic subject, real status only visible in dev portal.
+
+**While waiting:** do NOT click Recall (would withdraw the submission). Don't edit any production config fields (would invalidate the in-flight review). Sandbox edits are still safe.
+
+Whether items 1–3 above were all updated before submit isn't fully confirmed in this session — if rejection #5 cites the same "internal use" framing, check those fields in the production app config first.
 
 ## Sandbox upload demo (in flight as of 2026-05-01 13:42 UTC)
 
