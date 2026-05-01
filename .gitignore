@@ -25,6 +25,12 @@ docs/Gmail*.pdf
 # Rendered clone videos — too big for git, stored locally only
 clonevideos/
 
+# Video files — too big for git, sandbox demos / source clips stored locally
+*.mp4
+*.mov
+*.webm
+*.mkv
+
 # Claude Code local state — ignore everything in .claude/ EXCEPT the
 # memory subfolder (which is synced cross-machine via `npm run memory:push`).
 .claude/*
