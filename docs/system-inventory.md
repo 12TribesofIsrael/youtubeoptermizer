@@ -24,7 +24,7 @@
 | Facebook | Yes | Yes | Yes | Live — 8 posts published April 1 |
 | Instagram | Yes | Read only | No | App Review submitted 4/17 — waiting approval |
 | X/Twitter | Keys saved | No | No | Free tier blocks API posting |
-| TikTok | Yes | Yes (drafts) | Sandbox | App Review submitted 2026-04-18 — awaiting verdict |
+| TikTok | Yes | Yes (drafts) | Production | **APPROVED 2026-05-06** — Content Posting API live; scopes: `user.info.basic` + `video.upload` |
 
 ---
 
@@ -83,7 +83,7 @@
 
 | Script | What it does |
 |--------|-------------|
-| `scripts/tiktok-post.py` | OAuth flow (TikTok Login Kit) + video upload via Content Posting API. Supports inbox (drafts) and direct publish modes. Chunked upload, automatic token refresh, sandbox-friendly. |
+| `scripts/tiktok-post.py` | OAuth flow (TikTok Login Kit) + video upload via Content Posting API. Supports inbox (drafts) and direct publish modes. Chunked upload, automatic token refresh. **Production credentials live as of 2026-05-06.** |
 
 ### Content Generation
 

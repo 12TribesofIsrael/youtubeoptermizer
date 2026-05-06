@@ -613,6 +613,19 @@ The −24K total-views drop is a deliberate artifact of Phase 1 cleanup (30 low-
 
 ---
 
+### April 28 → May 6, 2026 — TikTok app review: rejected twice more, then APPROVED
+
+- **April 28**: 3rd-submit rejection — three reviewer notes: "Invalid Terms of Service link", "Invalid Privacy Policy link", "App will not be approved for personal or company internal use." Root cause: all three URLs pointed to `aibiblegospels.com` homepage (no `/terms` or `/privacy` routes), and the legal text on the GH-Pages site said *"Our software is used exclusively by the account owner"* — definitionally personal/internal use.
+- **April 29**: Built `/terms` and `/privacy` routes on the canonical site (in the separate `aibiblegospelscom` repo, commit `85d3f13`), reframed Terms as a "creator publishing service," tightened the 120-char description to *"Creators schedule and publish video posts to their own TikTok account, then track engagement and growth analytics."* Updated portal URL fields to the apex + new routes. **4th submission filed.** Full diff documented in [tiktok-app-review-2026-04-29.md](tiktok-app-review-2026-04-29.md).
+- **May 1**: 4th-submit rejection. **5th submission filed** with multi-tenant OAuth flow and chunk-math fix (see commit `d792f8b`).
+- **May 6 — APPROVED.** Content Posting API now live on production credentials. Scopes: `user.info.basic` + `video.upload` (inbox/drafts mode only — `video.publish` not requested, would require separate approval).
+- **Action items unblocked**:
+  - Swap `.env` to production `TIKTOK_CLIENT_KEY` + `TIKTOK_CLIENT_SECRET`; sandbox creds preserved as comments.
+  - Re-run OAuth via `python scripts/tiktok-post.py --auth-only` to mint a fresh production access token (sandbox-issued tokens won't work against prod client_key).
+  - Cross-posting Shorts → TikTok drafts is now possible end-to-end.
+
+---
+
 ## Analytics Checkpoints
 
 Use these dates to measure impact in YouTube Studio:
