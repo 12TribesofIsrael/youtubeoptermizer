@@ -1,61 +1,53 @@
 ---
 name: TikTok App Review status
-description: Third submission 2026-04-22 after 2 rejections; all 5 fixes applied (apex redirect, DNS verify, new demo, scope rewrite, URL update)
+description: APPROVED 2026-05-06 on 5th submission; Content Posting API live with user.info.basic + video.upload (inbox/drafts only)
 type: project
 originSessionId: 3f97120f-9e3e-4e35-89e8-cf5aa8126068
 ---
-TikTok Content Posting API app review — **3rd submission live 2026-04-22** after fixing all flagged issues from the 2nd rejection.
+TikTok Content Posting API app review — **APPROVED 2026-05-06** on the 5th submission.
 
-## Timeline
-
-- **2026-04-18** — 1st submission as "Ai-Bible-Gospels"
-- **2026-04-20 02:18 UTC** — 1st rejection: name mismatch (app "Ai-Bible-Gospels" vs website/legal "AI Bible Gospels")
-- **2026-04-20** — renamed app to "AI Bible Gospels" (spaces), resubmitted
-- **2026-04-21 08:57 UTC** — 2nd rejection: Website URL + Demo video
-- **2026-04-22** — 3rd submission after full fix pass (see below)
-
-## 2nd rejection reasons (verbatim, 2026-04-21)
-
-- **Website URL** — "cannot be a landing page or login page. You must have an externally facing fully developed website."
-- **Demo video** — "must show the complete end-to-end flow... all selected products and scopes must be clearly demonstrated... required to use sandbox."
-
-## Apr 22 fix pass (what changed before 3rd submit)
-
-1. **Website URL** → `https://aibiblegospels.com` (live Next.js/Vercel site, verified via TikTok DNS TXT after flipping apex as primary). Replaced the legal-pages GH URL.
-2. **Apex as primary in Vercel** — previously `aibiblegospels.com` 308'd to `www.aibiblegospels.com`; reversed so apex serves directly, www→apex. Fixed DNS TXT verification failure (www is CNAME to Vercel, blocks TXT per spec).
-3. **DNS TXT at root** — `tiktok-developers-site-verification=KwMOkEST8r3pyyR2bg2YFuveU8x88zEX` at `@` in GoDaddy. Prior attempt split the string wrong (put prefix as Name, token as Value at subdomain) — TikTok's actual format is full string in Value at root.
-4. **Privacy + Terms footer links** on aibiblegospels.com (pointing to existing legal URLs on GH Pages). Added via aibiblegospelscom repo (separate Claude instance).
-5. **Re-recorded sandbox demo** showing: site tour → OAuth consent (both scopes visible) → user info call → video upload → inbox confirmation.
-6. **Scope explanation** rewritten to be specific (prior was 7 words for video.upload — reviewer flagged as vague).
-
-## Key facts (locked)
+## Final state
 
 - **App name**: "AI Bible Gospels" (Organization: Born Made Bosses LLC)
-- **Website URL**: `https://aibiblegospels.com` (apex canonical, live, verified)
-- **Target user** (sandbox tester): aibiblegospels_
-- **Active credentials in .env**: SANDBOX (sbawswnygychzo38lw) — production creds preserved as comments
-- **Scopes**: user.info.basic + video.upload (no video.publish)
+- **Status**: Production / live
 - **Products**: Login Kit + Content Posting API (Direct Post OFF, inbox/drafts only)
-- **Redirect URI**: https://12tribesofisrael.github.io/aibiblegospels-legal/callback.html
-- **Privacy Policy URL**: https://12tribesofisrael.github.io/aibiblegospels-legal/privacy.html
-- **Terms URL**: https://12tribesofisrael.github.io/aibiblegospels-legal/terms.html
+- **Scopes granted**: `user.info.basic` + `video.upload`
+- **Scope NOT granted**: `video.publish` (direct-to-feed) — would require separate approval; not requested
+- **Production client_key**: `awhtm3emzgjcvin6` (now active in `.env`)
+- **Sandbox client_key**: `sbawswnygychzo38lw` (kept for dev testing — separate dev portal config)
+- **Website URL**: `https://aibiblegospels.com` (apex canonical)
+- **Terms URL**: `https://aibiblegospels.com/terms` (Next.js route on aibiblegospelscom repo)
+- **Privacy URL**: `https://aibiblegospels.com/privacy` (Next.js route on aibiblegospelscom repo)
+- **Redirect URI (script)**: `https://12tribesofisrael.github.io/aibiblegospels-legal/callback.html`
 
-## Gotchas (still true — don't re-learn)
+## Submission timeline (for the record)
 
-- Email from `noreply@dev.tiktok.com` subject "Your app status update" is GENERIC — real rejection reason ONLY visible in Dev Portal, not email body.
-- TikTok **follows redirects** during DNS verification. If Website URL is apex but apex redirects to www, TikTok looks for TXT at www — which may be a CNAME (blocks TXT). Fix: make apex the non-redirected canonical.
-- TikTok TXT verification format: **entire string** (`tiktok-developers-site-verification=<token>`) goes in the **Value** field at **root** (`@`). NOT subdomain, NOT split at the `=`.
-- TikTok rejects localhost redirect URIs. Use GH Pages forwarder (`callback.html`).
-- Pre-approval OAuth requires Sandbox mode — production creds return `client_key` error until approved.
-- Dev Portal won't save app config without a placeholder demo video first. Upload any mp4, save, swap real demo later.
-- Sandbox video processing is slow (5-15 min for PROCESSING_UPLOAD → SEND_TO_USER_INBOX); production <30s.
+| # | Date | Outcome | Reason |
+|---|---|---|---|
+| 1 | 2026-04-18 | Rejected 2026-04-20 | Name mismatch (`Ai-Bible-Gospels` vs `AI Bible Gospels`) |
+| 2 | 2026-04-20 | Rejected 2026-04-21 | Website URL was login page; demo video incomplete |
+| 3 | 2026-04-22 | Rejected 2026-04-28 | Invalid ToS/Privacy links; "internal use" framing |
+| 4 | 2026-04-29 | Rejected 2026-05-01 | (covered by [tiktok-app-review-2026-04-29.md](../../../youtubeoptermizer/docs/tiktok-app-review-2026-04-29.md)) |
+| 5 | 2026-05-01 | **APPROVED 2026-05-06** | Multi-tenant OAuth + chunk-math fix |
 
-## Expected turnaround
+## What's unblocked now
 
-Based on prior 2 rounds: ~24-30 hours. Watch `aibiblegospels444@gmail.com` for `noreply@dev.tiktok.com` email subject "Your app status update".
+1. End-to-end posting: Shorts → TikTok drafts via `python scripts/tiktok-post.py --video path.mp4`
+2. Multi-tenant OAuth via `aibiblegospels.com` (already built — separate Claude instance owns that repo)
+3. `creator_info` queries return real privacy/mode capabilities
 
-## Status as of 2026-04-27 (day 5)
+## What's still gated
 
-Dev portal screenshot confirms **Production tab → "In review"**. TikTok banner: *"This version of AI Bible Gospels is in review. There may be a delay in the app review process due to a high volume of requests."*
+- `video.publish` scope (direct-to-feed posting) — would need separate approval round
+- Mass-DM-to-followers — TikTok API doesn't expose this even after approval (see `project_tiktok_hook_formula.md` and 2026-05-02 session log)
 
-Round 3 is running long vs the 24-30h baseline — TikTok-side backlog, NOT a problem with the submission. No action required; do not resubmit. Continue checking dashboard or Gmail. The `Recall` button in the portal is visible — DO NOT click it (would withdraw the submission and force a 4th submit).
+## Action item after approval
+
+Sandbox-issued access tokens do NOT work against the production `client_key`. After swapping `.env` to prod creds, must re-OAuth once: `python scripts/tiktok-post.py --auth-only`.
+
+## Gotchas (still true post-approval)
+
+- Email from `noreply@dev.tiktok.com` subject "Your app status update" is GENERIC — real status only in Dev Portal.
+- Sandbox config and Production config are separate spaces in the dev portal — saving in one does not propagate (see `feedback_tiktok_sandbox_separate_config.md`).
+- TikTok rejects localhost redirect URIs — use the GH Pages forwarder.
+- Sandbox video processing is slow (5-15 min); production should be <30s.
