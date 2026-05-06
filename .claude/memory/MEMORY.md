@@ -28,6 +28,7 @@
 - [Gmail API wired](reference_gmail_access.md) — aibiblegospels444@gmail.com Gmail is authenticated; token + registry at `~/.claude/skills/gmail-inbox/`; use `/gmail-inbox` skill or `gmail_unified.py`
 - [aibiblegospels.com site](reference_aibiblegospels_site.md) — canonical parent-brand URL (Next.js/Vercel, apex=primary, live Apr 22); use for ALL platform review Website URL fields; repo is READ-ONLY
 - [Faith Walk Live = flagship product](project_faith_walk_live_flagship.md) — AI Bible Gospels (parent) → Faith Walk Live (flagship app, faithwalklive.com); Minister Zay's walk is LIVE, 37 days in as of 2026-04-27; load-bearing motivation behind the AEO rollout (news-traffic funnel)
+- [Zay Twitch footage source](reference_zay_twitch.md) — twitch.tv/hmblzayy is the public VOD/clip source for Faith Walk Live content; pull via yt-dlp, no need to ask Zay for raw files
 - [Shorts pre-scheduling](feedback_shorts_prescheduling.md) — 10-15 Shorts scheduled 1-2 weeks out is Thomas's normal workflow, not panic behavior; don't flag or recommend trimming
 - [Scheduled Shorts paused 2026-04-22](project_scheduled_shorts_paused_2026_04_22.md) — 15 "12 Tribes" Shorts (Apr 22–May 6) unscheduled to private drafts during YPP appeal; drip-release post-resolution, don't daily-publish
 - [Scrub public-repo commits](feedback_public_repo_scrub.md) — youtubeoptermizer repo is public on GitHub; strip emails/personal info from docs before commit
@@ -36,3 +37,5 @@
 - [AI Bible Gospels = faith-tech tools brand](project_aibiblegospels_brand_positioning.md) — site repositioned 2026-04-29 as faith-tech for ministers/streamers/missions (live trackers, stream automation, ministry websites, prayer walls); "Software in service of the calling"; affects all copy
 - [API capability reference docs](reference_capability_docs.md) — docs/meta-app-capabilities.md + docs/youtube-app-capabilities.md are source of truth for what each app can/cannot do, granted scopes, quota, App Review tier
 - [TikTok 5,549 hook formula](project_tiktok_hook_formula.md) — pinned post cracked at 10.4% share rate; melanated direct-gaze + 3-6 word curiosity-gap teaser + 12 Tribes topic; 3 clone variants queued in drafts/tiktok-community-build-2026-05-02.md
+- [Community hub strategy](project_community_hub_strategy.md) — Telegram (primary) + email on aibiblegospels.com (foundation) + FB Group (#2); skip Discord/TT-community; funnel: TT hook → email → Telegram → YT
+- [Browser skill bypasses App Review](feedback_browser_skill_bypasses_app_review.md) — when data lives in a web dashboard AND API path needs App Review, lead with Playwright scraping; pragmatism > calendar-time loss
