@@ -11,6 +11,10 @@ originSessionId: 313cc896-8951-480b-acc4-46b203a2042a
 
 Minister Zay is expected to gain significant news/viral coverage as the walk progresses.
 
+**Zay's actual stated mission (confirmed via IG reel transcript 2026-05-06):** He's walking to fund a **school for at-risk kids in Philadelphia** — eventually a university, "franchising to Baltimore, DC." Quote: kids in Philly "got a lot of talent... but they're not able to utilize their talent and they end up in the system or they end up dead." He runs a GoFundMe (link in his IG bio) for the school. Zay's full identity per the reel: **Isaiah "Humble Zay" Thomas** (Twitch handle `hmblzayy`, IG `ministerzay`).
+
+**The walk's primary cause is the school, not 12 Tribes prophecy** — surprising given the channel's content thesis but confirmed by the source. When making content about Zay, lead with the school/kids cause and use AI Bible Gospels as the brand wrapper (faith-tech for ministers, "software in service of the calling"). Prophecy/identity framing can be undertone but don't lead with it; viewers familiar with the actual reels will hear the dissonance.
+
 **Why:** Tommy's strategic goal — when news outlets and the public start Googling "Minister Zay" or "Faith Walk", he wants every search/AI engine to point to **AI Bible Gospels** (parent) or **faithwalklive.com** (the app) so the audience uses HIS app to track the walk rather than third-party coverage. This is the load-bearing motivation behind the entire AEO rollout (`docs/api-automation-plan.md`, Phase A complete, Phase B in flight).
 
 **How to apply:**

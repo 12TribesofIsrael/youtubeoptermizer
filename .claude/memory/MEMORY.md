@@ -40,3 +40,5 @@
 - [Community hub strategy](project_community_hub_strategy.md) — Telegram (primary) + email on aibiblegospels.com (foundation) + FB Group (#2); skip Discord/TT-community; funnel: TT hook → email → Telegram → YT
 - [Telegram channel](reference_telegram_channel.md) — t.me/aibiblegospels created 2026-05-06; broadcast channel = funnel destination from TT bio + YT descriptions + site email signups; bot pending
 - [Browser skill bypasses App Review](feedback_browser_skill_bypasses_app_review.md) — when data lives in a web dashboard AND API path needs App Review, lead with Playwright scraping; pragmatism > calendar-time loss
+- [ElevenLabs key scope](feedback_elevenlabs_key_scope.md) — shared key has TTS but lacks user_read; subscription/balance probes 401 even when credits are fine. Verify with tiny TTS POST, not /v1/user
+- [gpt-image-1 nails brand title cards](feedback_gpt_image_1_for_title_cards.md) — first-pass clean text on multi-line scripture + 6-label CTA cards at quality=high 1536x1024; dall-e-3 fallback unnecessary for this brand identity
