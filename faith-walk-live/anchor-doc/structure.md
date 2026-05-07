@@ -74,9 +74,10 @@ Recommend opening with a road/struggle shot, not a prayer — keeps the cold ope
 ### 12:00–13:30 — Closing Scripture & CTA
 **Visual:** Gold-on-black scripture card (Matthew 25:40), then CTA card.
 **CTA:**
-- Primary: GoFundMe URL (the school) — `[NEED FROM THOMAS or pull from Zay's IG bio]`
+- Primary: GoFundMe URL (the school) — `https://gofund.me/19cf823bc`
 - Secondary: `Track the walk live → faithwalklive.com`
 - Tertiary: `Subscribe @AIBIBLEGOSPELS — software for ministers, stories of the calling`
+- Quaternary (small footer text): `Press kit → faithwalklive.com/press · Follow on X → x.com/aibiblegospels`
 **Audio:** Fade to silence on final card.
 
 ---
@@ -131,7 +132,7 @@ This doc reads more "social-mission documentary" and less "AI Bible Gospels prop
 ## Next Steps
 
 1. Confirm working title with Thomas.
-2. Get GoFundMe URL from Thomas (or pull from Zay's IG bio).
+2. ~~Get GoFundMe URL from Thomas.~~ ✅ Confirmed 2026-05-07: `https://gofund.me/19cf823bc`.
 3. Lock narration script (next file to rewrite).
 4. Lock title-card prompts (need scripture-card text changes).
 5. Update clip-beat-mapping with IG reel as Beat 1 primary.

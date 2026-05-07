@@ -39,9 +39,11 @@ This is the documentary of his walk so far. Real footage. Real testimony. No ree
 
 — HOW TO SUPPORT —
 🥾 Track the walk live: https://faithwalklive.com
-💰 Donate to the school (GoFundMe): [GOFUNDME_URL_FROM_THOMAS]
+💰 Donate to the school (GoFundMe): https://gofund.me/19cf823bc
 🎥 Watch live on Twitch: https://www.twitch.tv/hmblzayy
 📺 Subscribe for more: https://www.youtube.com/@AIBIBLEGOSPELS
+🐦 Follow on X: https://x.com/aibiblegospels
+📰 Press kit (for journalists): https://faithwalklive.com/press
 
 — Q&A —
 Q: Who is the man walking?
@@ -68,13 +70,15 @@ AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee th
 Website: https://aibiblegospels.com
 Faith Walk Live: https://faithwalklive.com
 YouTube: https://www.youtube.com/@AIBIBLEGOSPELS
+X: https://x.com/aibiblegospels
 LinkedIn: https://www.linkedin.com/in/ai-bible-gospels-049005353/
+Press: https://faithwalklive.com/press
 Contact: aibiblegospels444@gmail.com
 
 #AIBibleGospels #FaithWalkLive #HumbleZay #3000MilesForTheKids
 ```
 
-**Open item:** swap `[GOFUNDME_URL_FROM_THOMAS]` for the actual GoFundMe link before upload. Pull from Zay's IG bio if Thomas doesn't have it.
+**Open item:** verify `https://faithwalklive.com/press` is live before upload (sibling Claude ships per `docs/press-kit-faithwalklive-spec.md`). If not live by ship date, drop the press-kit line from the description; everything else is locked. GoFundMe URL confirmed 2026-05-07: `https://gofund.me/19cf823bc`.
 
 ---
 
@@ -114,8 +118,11 @@ YT allows up to ~2 thumbnail swaps without penalty per video. Lock the primary, 
 Three ways to back this mission:
 
 1. Track the walk live → https://faithwalklive.com
-2. Donate to the school → [GOFUNDME_URL]
+2. Donate to the school → https://gofund.me/19cf823bc
 3. Watch the broadcast live → https://www.twitch.tv/hmblzayy
+
+Follow on X → https://x.com/aibiblegospels
+Press kit (journalists) → https://faithwalklive.com/press
 
 Every dollar goes to the school in Philly. Every step is a brick.
 ```
@@ -189,7 +196,7 @@ Run within 24 hours of publish:
 - [ ] Thumbnail is the locked primary (not auto-generated frame)
 - [ ] All 3 end screen elements load on mobile
 - [ ] Pinned comment is live
-- [ ] All description links resolve (faithwalklive.com, GoFundMe, Twitch, channel)
+- [ ] All description links resolve (faithwalklive.com, GoFundMe, Twitch, channel, X, press kit)
 - [ ] Closed captions auto-generated AND manually corrected for the Beat 1 Zay-quote section (Whisper sometimes mangles "Humble Zay" — verify it reads correctly)
 - [ ] Playlist assignment is correct
 - [ ] Tags saved (sometimes YT drops tags silently)

@@ -188,6 +188,6 @@ Format: `[TIMESTAMP] (DELIVERY NOTE) — Line`
 ## Open items (need from Thomas)
 
 1. **Working title** — confirm or pick alt from `structure.md`.
-2. **GoFundMe URL** — for the CTA. Pull from Zay's IG bio if Thomas doesn't have it on hand.
+2. ~~**GoFundMe URL**~~ ✅ Confirmed 2026-05-07: `https://gofund.me/19cf823bc`. Goes in description, not narration (narration line "the GoFundMe link is below this video" is correct as-is).
 3. **Day count at ship** — verify "eighty-two days" matches the actual ship date.
 4. **Car accident clip** — does the Twitch clips library include usable footage of/about the accident? `clips/00007_Zay_completed_41_miles_after_the_car_accident_2211673905.mp4` is the candidate. If unusable, narration line gets pulled.

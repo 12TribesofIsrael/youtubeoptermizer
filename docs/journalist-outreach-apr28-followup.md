@@ -4,6 +4,7 @@
 **Created:** 2026-05-06
 **Window:** T+8 days from Apr 28 incident. Fresh news beat = Zay resumed walking May 3 (Day 39). Send before the beat cools (~7 day shelf life).
 **Goal:** Earn news-domain backlinks to faithwalklive.com from the 11 outlets that covered the original Apr 28 incident, by handing them a ready-to-use follow-up angle.
+**Prerequisite:** the master template now references `faithwalklive.com/press` — verify that page is live (sibling Claude ships per `docs/press-kit-faithwalklive-spec.md`) before sending. If not yet live by send time (window closes ~May 10), drop the press-kit line; everything else stands.
 
 ---
 
@@ -34,8 +35,11 @@ recovery timeline at faithwalklive.com/updates/april-28-incident if
 you're considering a follow-up — your readers can check live mileage,
 location, and daily updates there.
 
-Happy to share screenshots, clips, or stats if helpful. Tracker is
-supporter-built, not affiliated with HMBL.
+Press kit (bio, fast facts, photos, logo, all cleared for editorial
+use): faithwalklive.com/press
+
+Happy to share additional screenshots, clips, or stats if helpful.
+Tracker is supporter-built, not affiliated with HMBL.
 
 Thanks,
 Tommy Lee
