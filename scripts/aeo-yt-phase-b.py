@@ -500,6 +500,8 @@ def main():
     log_lines = []
 
     quota_hit = False
+    transcript_block_streak = 0  # exit early if YT IP-blocks transcript fetches
+    transcript_block_total = 0
     processed_now = []
     cache_creation_total = 0
     cache_read_total = 0
@@ -534,9 +536,20 @@ def main():
 
             transcript = fetch_transcript(vid)
             if not transcript or len(transcript.strip()) < 60:
-                skipped.add(vid)
-                print(f"  [{i:>2}/{len(todo)}] SKIP   {vid}  transcript unavailable / too short")
+                # Don't add to permanent `skipped` — transcript blocks are retryable
+                # (YT rate-limits the transcript scraper from a given IP, but the
+                # video itself almost certainly has captions). On next run with
+                # the IP unblocked, this video gets another shot.
+                transcript_block_streak += 1
+                transcript_block_total += 1
+                print(f"  [{i:>2}/{len(todo)}] SKIP   {vid}  transcript unavailable (retryable)")
+                if transcript_block_streak >= 3:
+                    print(f"\n  Transcript IP block detected (3 in a row). Exiting early "
+                          f"to avoid burning through the queue. Re-run tomorrow when "
+                          f"the IP unblocks (typically 24-48h).")
+                    break
                 continue
+            transcript_block_streak = 0  # reset on any successful fetch
 
             content, usage = call_claude(client_anth, live_title, transcript, duration_s)
             cache_creation_total += getattr(usage, "cache_creation_input_tokens", 0) or 0
@@ -564,7 +577,9 @@ def main():
                 yt.update_video(vid, description=new_desc)
                 completed.add(vid)
                 processed_now.append(vid)
-                time.sleep(0.5)  # gentle pacing under YT quota
+                # Pace transcript fetches: 1.5s between successful runs gives YT's
+                # transcript scraper-blocker more breathing room than 0.5s did.
+                time.sleep(1.5)
             else:
                 # Dry-run: don't mark complete, just preview
                 pass
@@ -600,7 +615,9 @@ def main():
     print(f"Run summary ({'LIVE' if args.live else 'DRY-RUN'}):")
     print(f"  Processed this run:      {len(processed_now)}")
     print(f"  Cumulative completed:    {len(completed)} / {len(candidates_all)}")
-    print(f"  Skipped:                 {len(skipped)}  Errored: {len(errored)}")
+    print(f"  Skipped (permanent):     {len(skipped)}  Errored: {len(errored)}")
+    if transcript_block_total:
+        print(f"  Transcript blocks:       {transcript_block_total} (retryable next run)")
     print(f"  Anthropic tokens:        in={input_tokens_total}  out={output_tokens_total}  "
           f"cache_write={cache_creation_total}  cache_read={cache_read_total}")
     if not args.live:
