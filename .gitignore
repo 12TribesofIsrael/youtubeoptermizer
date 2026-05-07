@@ -18,6 +18,11 @@ thumbnails/
 tmp_*.json
 tmp_*.png
 
+# Playwright session cookies — full TikTok account auth, never commit
+.tiktok-session.json
+analytics/_debug-*.html
+analytics/_debug-*.png
+
 # Gmail PDFs — personal correspondence, repo is public on GitHub
 Gmail*.pdf
 docs/Gmail*.pdf
