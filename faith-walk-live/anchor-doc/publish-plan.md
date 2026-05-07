@@ -78,7 +78,7 @@ Contact: aibiblegospels444@gmail.com
 #AIBibleGospels #FaithWalkLive #HumbleZay #3000MilesForTheKids
 ```
 
-**Open item:** verify `https://faithwalklive.com/press` is live before upload (sibling Claude ships per `docs/press-kit-faithwalklive-spec.md`). If not live by ship date, drop the press-kit line from the description; everything else is locked. GoFundMe URL confirmed 2026-05-07: `https://gofund.me/19cf823bc`.
+**Status:** ✅ All description links live as of 2026-05-07 — GoFundMe (`https://gofund.me/19cf823bc`), press kit (`https://faithwalklive.com/press`), X (`https://x.com/aibiblegospels`). Description block is locked; ready to copy-paste at upload time.
 
 ---
 
