@@ -430,13 +430,13 @@ def verify_videos(yt: YouTubeClient, video_ids: list[str]) -> tuple[int, int]:
             has_b = PHASE_B_MARKER in desc
             title = v["snippet"]["title"][:55]
             if has_a and has_b:
-                print(f"  ✓ {vid}  Phase A+B present  {title}")
+                print(f"  OK   {vid}  Phase A+B present  {title}")
                 ok += 1
             else:
-                print(f"  ✗ {vid}  PhaseA={has_a} PhaseB={has_b}  {title}")
+                print(f"  FAIL {vid}  PhaseA={has_a} PhaseB={has_b}  {title}")
                 bad += 1
         except Exception as e:
-            print(f"  ✗ {vid}  ERR: {e}")
+            print(f"  FAIL {vid}  ERR: {e}")
             bad += 1
     return ok, bad
 
