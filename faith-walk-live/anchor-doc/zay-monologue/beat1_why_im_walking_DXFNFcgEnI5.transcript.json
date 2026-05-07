@@ -1,0 +1,1211 @@
+{
+  "language": "en",
+  "duration": 66.294375,
+  "text": "we're going on TikTok. I'm walking from Philadelphia to California and a lot of people are wondering why is this guy walking from Philly to Cali. My name is Isaiah Thomas, also known as Humbusei and I'm walking to California to build a school in Philadelphia. See a lot of kids and Philly got a lot of talent and a lot of gifts but they're not able to utilize their talent as a gift and they end up in the system or they end up day. So listen, as me as a kid, as a kid, I was able to start some of my orders to start a successful business and a successful brand in the city of Philadelphia and now raise the money to build this school, a university that's going to be able to help kids, not just in Philadelphia but soon later on franchising to buy them or DC all these type of environments where these kids just need an environment that's going to help them with. You could donate by now to go fund the link is in a bio of $2, $3, $4. It",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.78,
+      "text": " we're going on TikTok. I'm walking from Philadelphia to California and a lot of people are wondering",
+      "words": [
+        {
+          "word": " we're",
+          "start": 0.0,
+          "end": 0.28,
+          "probability": 0.3597870413213968
+        },
+        {
+          "word": " going",
+          "start": 0.28,
+          "end": 0.46,
+          "probability": 0.9272094964981079
+        },
+        {
+          "word": " on",
+          "start": 0.46,
+          "end": 0.62,
+          "probability": 0.9320187568664551
+        },
+        {
+          "word": " TikTok.",
+          "start": 0.62,
+          "end": 0.98,
+          "probability": 0.4140041768550873
+        },
+        {
+          "word": " I'm",
+          "start": 1.72,
+          "end": 2.2,
+          "probability": 0.9562971293926239
+        },
+        {
+          "word": " walking",
+          "start": 2.2,
+          "end": 2.4,
+          "probability": 0.9515439867973328
+        },
+        {
+          "word": " from",
+          "start": 2.4,
+          "end": 2.58,
+          "probability": 0.93607497215271
+        },
+        {
+          "word": " Philadelphia",
+          "start": 2.58,
+          "end": 2.92,
+          "probability": 0.7322024703025818
+        },
+        {
+          "word": " to",
+          "start": 2.92,
+          "end": 3.4,
+          "probability": 0.8042697906494141
+        },
+        {
+          "word": " California",
+          "start": 3.4,
+          "end": 3.88,
+          "probability": 0.9432417154312134
+        },
+        {
+          "word": " and",
+          "start": 3.88,
+          "end": 4.66,
+          "probability": 0.6663767099380493
+        },
+        {
+          "word": " a",
+          "start": 4.66,
+          "end": 4.76,
+          "probability": 0.9896609783172607
+        },
+        {
+          "word": " lot",
+          "start": 4.76,
+          "end": 4.88,
+          "probability": 0.9935814142227173
+        },
+        {
+          "word": " of",
+          "start": 4.88,
+          "end": 5.0,
+          "probability": 0.9992135763168335
+        },
+        {
+          "word": " people",
+          "start": 5.0,
+          "end": 5.24,
+          "probability": 0.9978043437004089
+        },
+        {
+          "word": " are",
+          "start": 5.24,
+          "end": 5.4,
+          "probability": 0.9934521913528442
+        },
+        {
+          "word": " wondering",
+          "start": 5.4,
+          "end": 5.78,
+          "probability": 0.9961835741996765
+        }
+      ]
+    },
+    {
+      "start": 5.78,
+      "end": 12.32,
+      "text": " why is this guy walking from Philly to Cali. My name is Isaiah Thomas, also known as Humbusei",
+      "words": [
+        {
+          "word": " why",
+          "start": 5.78,
+          "end": 6.54,
+          "probability": 0.8317837119102478
+        },
+        {
+          "word": " is",
+          "start": 6.54,
+          "end": 6.76,
+          "probability": 0.7802965641021729
+        },
+        {
+          "word": " this",
+          "start": 6.76,
+          "end": 6.88,
+          "probability": 0.996620774269104
+        },
+        {
+          "word": " guy",
+          "start": 6.88,
+          "end": 7.1,
+          "probability": 0.976319432258606
+        },
+        {
+          "word": " walking",
+          "start": 7.1,
+          "end": 7.56,
+          "probability": 0.9814731478691101
+        },
+        {
+          "word": " from",
+          "start": 7.56,
+          "end": 7.8,
+          "probability": 0.9918766021728516
+        },
+        {
+          "word": " Philly",
+          "start": 7.8,
+          "end": 8.08,
+          "probability": 0.8883205354213715
+        },
+        {
+          "word": " to",
+          "start": 8.08,
+          "end": 8.24,
+          "probability": 0.8860939741134644
+        },
+        {
+          "word": " Cali.",
+          "start": 8.24,
+          "end": 8.7,
+          "probability": 0.6927078515291214
+        },
+        {
+          "word": " My",
+          "start": 8.88,
+          "end": 9.26,
+          "probability": 0.988660454750061
+        },
+        {
+          "word": " name",
+          "start": 9.26,
+          "end": 9.4,
+          "probability": 0.9978881478309631
+        },
+        {
+          "word": " is",
+          "start": 9.4,
+          "end": 9.58,
+          "probability": 0.9890783429145813
+        },
+        {
+          "word": " Isaiah",
+          "start": 9.58,
+          "end": 9.84,
+          "probability": 0.7700790762901306
+        },
+        {
+          "word": " Thomas,",
+          "start": 9.84,
+          "end": 10.3,
+          "probability": 0.9482041001319885
+        },
+        {
+          "word": " also",
+          "start": 10.76,
+          "end": 11.08,
+          "probability": 0.8839590549468994
+        },
+        {
+          "word": " known",
+          "start": 11.08,
+          "end": 11.34,
+          "probability": 0.9090255498886108
+        },
+        {
+          "word": " as",
+          "start": 11.34,
+          "end": 11.58,
+          "probability": 0.9972890615463257
+        },
+        {
+          "word": " Humbusei",
+          "start": 11.58,
+          "end": 12.32,
+          "probability": 0.3864945825189352
+        }
+      ]
+    },
+    {
+      "start": 12.32,
+      "end": 18.54,
+      "text": " and I'm walking to California to build a school in Philadelphia. See a lot of kids and",
+      "words": [
+        {
+          "word": " and",
+          "start": 12.32,
+          "end": 12.76,
+          "probability": 0.6473882794380188
+        },
+        {
+          "word": " I'm",
+          "start": 12.76,
+          "end": 12.96,
+          "probability": 0.9919751584529877
+        },
+        {
+          "word": " walking",
+          "start": 12.96,
+          "end": 13.32,
+          "probability": 0.9931087493896484
+        },
+        {
+          "word": " to",
+          "start": 13.32,
+          "end": 13.76,
+          "probability": 0.9891329407691956
+        },
+        {
+          "word": " California",
+          "start": 13.76,
+          "end": 14.3,
+          "probability": 0.723035454750061
+        },
+        {
+          "word": " to",
+          "start": 14.3,
+          "end": 15.22,
+          "probability": 0.9613693356513977
+        },
+        {
+          "word": " build",
+          "start": 15.22,
+          "end": 15.56,
+          "probability": 0.9956603646278381
+        },
+        {
+          "word": " a",
+          "start": 15.56,
+          "end": 15.7,
+          "probability": 0.33421990275382996
+        },
+        {
+          "word": " school",
+          "start": 15.7,
+          "end": 15.98,
+          "probability": 0.9963492155075073
+        },
+        {
+          "word": " in",
+          "start": 15.98,
+          "end": 16.2,
+          "probability": 0.8139671087265015
+        },
+        {
+          "word": " Philadelphia.",
+          "start": 16.2,
+          "end": 16.62,
+          "probability": 0.9809584021568298
+        },
+        {
+          "word": " See",
+          "start": 17.34,
+          "end": 17.58,
+          "probability": 0.9402195811271667
+        },
+        {
+          "word": " a",
+          "start": 17.58,
+          "end": 17.68,
+          "probability": 0.9260842204093933
+        },
+        {
+          "word": " lot",
+          "start": 17.68,
+          "end": 17.86,
+          "probability": 0.99254310131073
+        },
+        {
+          "word": " of",
+          "start": 17.86,
+          "end": 18.02,
+          "probability": 0.9989092350006104
+        },
+        {
+          "word": " kids",
+          "start": 18.02,
+          "end": 18.26,
+          "probability": 0.997038722038269
+        },
+        {
+          "word": " and",
+          "start": 18.26,
+          "end": 18.54,
+          "probability": 0.5872100591659546
+        }
+      ]
+    },
+    {
+      "start": 18.54,
+      "end": 23.8,
+      "text": " Philly got a lot of talent and a lot of gifts but they're not able to utilize their talent as a",
+      "words": [
+        {
+          "word": " Philly",
+          "start": 18.54,
+          "end": 18.84,
+          "probability": 0.9498040080070496
+        },
+        {
+          "word": " got",
+          "start": 18.84,
+          "end": 19.06,
+          "probability": 0.9747158288955688
+        },
+        {
+          "word": " a",
+          "start": 19.06,
+          "end": 19.18,
+          "probability": 0.9982590079307556
+        },
+        {
+          "word": " lot",
+          "start": 19.18,
+          "end": 19.36,
+          "probability": 0.9943939447402954
+        },
+        {
+          "word": " of",
+          "start": 19.36,
+          "end": 19.5,
+          "probability": 0.9926897883415222
+        },
+        {
+          "word": " talent",
+          "start": 19.5,
+          "end": 19.9,
+          "probability": 0.9924867153167725
+        },
+        {
+          "word": " and",
+          "start": 19.9,
+          "end": 20.38,
+          "probability": 0.913598358631134
+        },
+        {
+          "word": " a",
+          "start": 20.38,
+          "end": 20.5,
+          "probability": 0.9911097288131714
+        },
+        {
+          "word": " lot",
+          "start": 20.5,
+          "end": 20.66,
+          "probability": 0.9981787204742432
+        },
+        {
+          "word": " of",
+          "start": 20.66,
+          "end": 20.86,
+          "probability": 0.9968867897987366
+        },
+        {
+          "word": " gifts",
+          "start": 20.86,
+          "end": 21.08,
+          "probability": 0.9524323344230652
+        },
+        {
+          "word": " but",
+          "start": 21.08,
+          "end": 21.72,
+          "probability": 0.5832329392433167
+        },
+        {
+          "word": " they're",
+          "start": 21.72,
+          "end": 21.84,
+          "probability": 0.9688417017459869
+        },
+        {
+          "word": " not",
+          "start": 21.84,
+          "end": 22.06,
+          "probability": 0.9958460927009583
+        },
+        {
+          "word": " able",
+          "start": 22.06,
+          "end": 22.36,
+          "probability": 0.9986318945884705
+        },
+        {
+          "word": " to",
+          "start": 22.36,
+          "end": 22.46,
+          "probability": 0.9971386194229126
+        },
+        {
+          "word": " utilize",
+          "start": 22.46,
+          "end": 22.82,
+          "probability": 0.9967821836471558
+        },
+        {
+          "word": " their",
+          "start": 22.82,
+          "end": 23.06,
+          "probability": 0.9928919076919556
+        },
+        {
+          "word": " talent",
+          "start": 23.06,
+          "end": 23.42,
+          "probability": 0.4342287480831146
+        },
+        {
+          "word": " as",
+          "start": 23.42,
+          "end": 23.56,
+          "probability": 0.987539529800415
+        },
+        {
+          "word": " a",
+          "start": 23.56,
+          "end": 23.8,
+          "probability": 0.9249435663223267
+        }
+      ]
+    },
+    {
+      "start": 23.8,
+      "end": 29.7,
+      "text": " gift and they end up in the system or they end up day. So listen, as me as a kid,",
+      "words": [
+        {
+          "word": " gift",
+          "start": 23.8,
+          "end": 24.4,
+          "probability": 5.916124791838229e-05
+        },
+        {
+          "word": " and",
+          "start": 24.4,
+          "end": 24.4,
+          "probability": 0.13664467632770538
+        },
+        {
+          "word": " they",
+          "start": 24.4,
+          "end": 24.52,
+          "probability": 0.24513749778270721
+        },
+        {
+          "word": " end",
+          "start": 24.52,
+          "end": 24.7,
+          "probability": 0.9219697117805481
+        },
+        {
+          "word": " up",
+          "start": 24.7,
+          "end": 24.84,
+          "probability": 0.9874283671379089
+        },
+        {
+          "word": " in",
+          "start": 24.84,
+          "end": 24.94,
+          "probability": 0.9729116559028625
+        },
+        {
+          "word": " the",
+          "start": 24.94,
+          "end": 25.04,
+          "probability": 0.9027954339981079
+        },
+        {
+          "word": " system",
+          "start": 25.04,
+          "end": 25.44,
+          "probability": 0.9569650292396545
+        },
+        {
+          "word": " or",
+          "start": 25.44,
+          "end": 25.94,
+          "probability": 0.6667163968086243
+        },
+        {
+          "word": " they",
+          "start": 25.94,
+          "end": 26.06,
+          "probability": 0.7019141912460327
+        },
+        {
+          "word": " end",
+          "start": 26.06,
+          "end": 26.24,
+          "probability": 0.9938920736312866
+        },
+        {
+          "word": " up",
+          "start": 26.24,
+          "end": 26.42,
+          "probability": 0.9929987192153931
+        },
+        {
+          "word": " day.",
+          "start": 26.42,
+          "end": 26.64,
+          "probability": 0.34066349267959595
+        },
+        {
+          "word": " So",
+          "start": 27.26,
+          "end": 27.46,
+          "probability": 0.9141479134559631
+        },
+        {
+          "word": " listen,",
+          "start": 27.46,
+          "end": 27.82,
+          "probability": 0.942978024482727
+        },
+        {
+          "word": " as",
+          "start": 28.14,
+          "end": 28.94,
+          "probability": 0.6401516795158386
+        },
+        {
+          "word": " me",
+          "start": 28.94,
+          "end": 29.16,
+          "probability": 0.6729215979576111
+        },
+        {
+          "word": " as",
+          "start": 29.16,
+          "end": 29.36,
+          "probability": 0.9375566244125366
+        },
+        {
+          "word": " a",
+          "start": 29.36,
+          "end": 29.48,
+          "probability": 0.6261107325553894
+        },
+        {
+          "word": " kid,",
+          "start": 29.48,
+          "end": 29.7,
+          "probability": 0.9718412160873413
+        }
+      ]
+    },
+    {
+      "start": 30.54,
+      "end": 36.3,
+      "text": " as a kid, I was able to start some of my orders to start a successful business and a successful",
+      "words": [
+        {
+          "word": " as",
+          "start": 30.54,
+          "end": 31.02,
+          "probability": 0.1545652151107788
+        },
+        {
+          "word": " a",
+          "start": 31.02,
+          "end": 31.26,
+          "probability": 0.7320592403411865
+        },
+        {
+          "word": " kid,",
+          "start": 31.26,
+          "end": 31.52,
+          "probability": 0.9948641657829285
+        },
+        {
+          "word": " I",
+          "start": 32.32,
+          "end": 32.34,
+          "probability": 0.9671854376792908
+        },
+        {
+          "word": " was",
+          "start": 32.34,
+          "end": 32.52,
+          "probability": 0.993459165096283
+        },
+        {
+          "word": " able",
+          "start": 32.52,
+          "end": 32.7,
+          "probability": 0.9949632883071899
+        },
+        {
+          "word": " to",
+          "start": 32.7,
+          "end": 32.8,
+          "probability": 0.9883637428283691
+        },
+        {
+          "word": " start",
+          "start": 32.8,
+          "end": 33.0,
+          "probability": 0.9473373889923096
+        },
+        {
+          "word": " some",
+          "start": 33.0,
+          "end": 33.22,
+          "probability": 0.19429656863212585
+        },
+        {
+          "word": " of",
+          "start": 33.22,
+          "end": 33.4,
+          "probability": 0.17959503829479218
+        },
+        {
+          "word": " my",
+          "start": 33.4,
+          "end": 33.42,
+          "probability": 0.6572871208190918
+        },
+        {
+          "word": " orders",
+          "start": 33.42,
+          "end": 33.74,
+          "probability": 0.7794811129570007
+        },
+        {
+          "word": " to",
+          "start": 33.74,
+          "end": 34.66,
+          "probability": 0.34984201192855835
+        },
+        {
+          "word": " start",
+          "start": 34.66,
+          "end": 34.84,
+          "probability": 0.972453236579895
+        },
+        {
+          "word": " a",
+          "start": 34.84,
+          "end": 34.92,
+          "probability": 0.9557079672813416
+        },
+        {
+          "word": " successful",
+          "start": 34.92,
+          "end": 35.3,
+          "probability": 0.6955300569534302
+        },
+        {
+          "word": " business",
+          "start": 35.3,
+          "end": 35.72,
+          "probability": 0.969433605670929
+        },
+        {
+          "word": " and",
+          "start": 35.72,
+          "end": 35.92,
+          "probability": 0.3405303955078125
+        },
+        {
+          "word": " a",
+          "start": 35.92,
+          "end": 36.0,
+          "probability": 0.8734182715415955
+        },
+        {
+          "word": " successful",
+          "start": 36.0,
+          "end": 36.3,
+          "probability": 0.9839088320732117
+        }
+      ]
+    },
+    {
+      "start": 36.3,
+      "end": 44.0,
+      "text": " brand in the city of Philadelphia and now raise the money to build this school, a university",
+      "words": [
+        {
+          "word": " brand",
+          "start": 36.3,
+          "end": 37.04,
+          "probability": 0.9592882990837097
+        },
+        {
+          "word": " in",
+          "start": 37.04,
+          "end": 37.6,
+          "probability": 0.38474351167678833
+        },
+        {
+          "word": " the",
+          "start": 37.6,
+          "end": 37.7,
+          "probability": 0.9755868315696716
+        },
+        {
+          "word": " city",
+          "start": 37.7,
+          "end": 37.94,
+          "probability": 0.924591600894928
+        },
+        {
+          "word": " of",
+          "start": 37.94,
+          "end": 38.1,
+          "probability": 0.9866742491722107
+        },
+        {
+          "word": " Philadelphia",
+          "start": 38.1,
+          "end": 38.4,
+          "probability": 0.9962416887283325
+        },
+        {
+          "word": " and",
+          "start": 38.4,
+          "end": 39.3,
+          "probability": 0.311391144990921
+        },
+        {
+          "word": " now",
+          "start": 39.3,
+          "end": 39.68,
+          "probability": 0.9893613457679749
+        },
+        {
+          "word": " raise",
+          "start": 39.68,
+          "end": 40.88,
+          "probability": 0.32747557759284973
+        },
+        {
+          "word": " the",
+          "start": 40.88,
+          "end": 40.98,
+          "probability": 0.934480607509613
+        },
+        {
+          "word": " money",
+          "start": 40.98,
+          "end": 41.28,
+          "probability": 0.998015284538269
+        },
+        {
+          "word": " to",
+          "start": 41.28,
+          "end": 42.08,
+          "probability": 0.9908695220947266
+        },
+        {
+          "word": " build",
+          "start": 42.08,
+          "end": 42.34,
+          "probability": 0.9931695461273193
+        },
+        {
+          "word": " this",
+          "start": 42.34,
+          "end": 42.56,
+          "probability": 0.7235625386238098
+        },
+        {
+          "word": " school,",
+          "start": 42.56,
+          "end": 42.84,
+          "probability": 0.09443260729312897
+        },
+        {
+          "word": " a",
+          "start": 43.24,
+          "end": 43.34,
+          "probability": 0.9686739444732666
+        },
+        {
+          "word": " university",
+          "start": 43.34,
+          "end": 44.0,
+          "probability": 0.9669745564460754
+        }
+      ]
+    },
+    {
+      "start": 44.0,
+      "end": 50.12,
+      "text": " that's going to be able to help kids, not just in Philadelphia but soon later on franchising",
+      "words": [
+        {
+          "word": " that's",
+          "start": 44.0,
+          "end": 44.5,
+          "probability": 0.6815699934959412
+        },
+        {
+          "word": " going",
+          "start": 44.5,
+          "end": 44.6,
+          "probability": 0.5923834443092346
+        },
+        {
+          "word": " to",
+          "start": 44.6,
+          "end": 44.6,
+          "probability": 0.9852240085601807
+        },
+        {
+          "word": " be",
+          "start": 44.6,
+          "end": 44.74,
+          "probability": 0.9922033548355103
+        },
+        {
+          "word": " able",
+          "start": 44.74,
+          "end": 44.9,
+          "probability": 0.9975005984306335
+        },
+        {
+          "word": " to",
+          "start": 44.9,
+          "end": 44.98,
+          "probability": 0.9926242232322693
+        },
+        {
+          "word": " help",
+          "start": 44.98,
+          "end": 45.18,
+          "probability": 0.9955452680587769
+        },
+        {
+          "word": " kids,",
+          "start": 45.18,
+          "end": 45.76,
+          "probability": 0.9863558411598206
+        },
+        {
+          "word": " not",
+          "start": 45.94,
+          "end": 46.26,
+          "probability": 0.9941354990005493
+        },
+        {
+          "word": " just",
+          "start": 46.26,
+          "end": 46.52,
+          "probability": 0.9981294274330139
+        },
+        {
+          "word": " in",
+          "start": 46.52,
+          "end": 46.6,
+          "probability": 0.46453139185905457
+        },
+        {
+          "word": " Philadelphia",
+          "start": 46.6,
+          "end": 47.0,
+          "probability": 0.9966081380844116
+        },
+        {
+          "word": " but",
+          "start": 47.0,
+          "end": 47.78,
+          "probability": 0.29412809014320374
+        },
+        {
+          "word": " soon",
+          "start": 47.78,
+          "end": 48.18,
+          "probability": 0.9715210199356079
+        },
+        {
+          "word": " later",
+          "start": 48.18,
+          "end": 48.82,
+          "probability": 0.44825416803359985
+        },
+        {
+          "word": " on",
+          "start": 48.82,
+          "end": 49.16,
+          "probability": 0.9853083491325378
+        },
+        {
+          "word": " franchising",
+          "start": 49.16,
+          "end": 50.12,
+          "probability": 0.5536908209323883
+        }
+      ]
+    },
+    {
+      "start": 50.12,
+      "end": 55.32,
+      "text": " to buy them or DC all these type of environments where these kids just need an environment that's",
+      "words": [
+        {
+          "word": " to",
+          "start": 50.12,
+          "end": 50.32,
+          "probability": 0.09059499204158783
+        },
+        {
+          "word": " buy",
+          "start": 50.32,
+          "end": 50.56,
+          "probability": 0.10255253314971924
+        },
+        {
+          "word": " them",
+          "start": 50.56,
+          "end": 50.76,
+          "probability": 0.4137422442436218
+        },
+        {
+          "word": " or",
+          "start": 50.76,
+          "end": 50.9,
+          "probability": 0.28716492652893066
+        },
+        {
+          "word": " DC",
+          "start": 50.9,
+          "end": 51.32,
+          "probability": 0.7445591688156128
+        },
+        {
+          "word": " all",
+          "start": 51.32,
+          "end": 51.9,
+          "probability": 0.6489869952201843
+        },
+        {
+          "word": " these",
+          "start": 51.9,
+          "end": 52.12,
+          "probability": 0.9597452282905579
+        },
+        {
+          "word": " type",
+          "start": 52.12,
+          "end": 52.26,
+          "probability": 0.5790342688560486
+        },
+        {
+          "word": " of",
+          "start": 52.26,
+          "end": 52.38,
+          "probability": 0.743648111820221
+        },
+        {
+          "word": " environments",
+          "start": 52.38,
+          "end": 52.88,
+          "probability": 0.9585570693016052
+        },
+        {
+          "word": " where",
+          "start": 52.88,
+          "end": 53.48,
+          "probability": 0.7775495648384094
+        },
+        {
+          "word": " these",
+          "start": 53.48,
+          "end": 53.78,
+          "probability": 0.972038745880127
+        },
+        {
+          "word": " kids",
+          "start": 53.78,
+          "end": 54.02,
+          "probability": 0.08936315774917603
+        },
+        {
+          "word": " just",
+          "start": 54.02,
+          "end": 54.28,
+          "probability": 0.8888960480690002
+        },
+        {
+          "word": " need",
+          "start": 54.28,
+          "end": 54.44,
+          "probability": 0.9869809746742249
+        },
+        {
+          "word": " an",
+          "start": 54.44,
+          "end": 54.6,
+          "probability": 0.9417245984077454
+        },
+        {
+          "word": " environment",
+          "start": 54.6,
+          "end": 55.04,
+          "probability": 0.9952961802482605
+        },
+        {
+          "word": " that's",
+          "start": 55.04,
+          "end": 55.32,
+          "probability": 0.8609316051006317
+        }
+      ]
+    },
+    {
+      "start": 55.32,
+      "end": 62.92,
+      "text": " going to help them with. You could donate by now to go fund the link is in a bio of $2, $3, $4. It",
+      "words": [
+        {
+          "word": " going",
+          "start": 55.32,
+          "end": 55.44,
+          "probability": 0.5776863098144531
+        },
+        {
+          "word": " to",
+          "start": 55.44,
+          "end": 55.52,
+          "probability": 0.9379985332489014
+        },
+        {
+          "word": " help",
+          "start": 55.52,
+          "end": 55.66,
+          "probability": 0.986062228679657
+        },
+        {
+          "word": " them",
+          "start": 55.66,
+          "end": 55.82,
+          "probability": 0.8690558671951294
+        },
+        {
+          "word": " with.",
+          "start": 55.82,
+          "end": 56.08,
+          "probability": 0.7295458316802979
+        },
+        {
+          "word": " You",
+          "start": 56.64,
+          "end": 57.12,
+          "probability": 0.8383004069328308
+        },
+        {
+          "word": " could",
+          "start": 57.12,
+          "end": 57.22,
+          "probability": 0.5883491635322571
+        },
+        {
+          "word": " donate",
+          "start": 57.22,
+          "end": 57.52,
+          "probability": 0.9993172883987427
+        },
+        {
+          "word": " by",
+          "start": 57.52,
+          "end": 57.82,
+          "probability": 0.8681262135505676
+        },
+        {
+          "word": " now",
+          "start": 57.82,
+          "end": 58.12,
+          "probability": 0.5126720666885376
+        },
+        {
+          "word": " to",
+          "start": 58.12,
+          "end": 58.6,
+          "probability": 0.3340774476528168
+        },
+        {
+          "word": " go",
+          "start": 58.6,
+          "end": 58.78,
+          "probability": 0.9536066651344299
+        },
+        {
+          "word": " fund",
+          "start": 58.78,
+          "end": 59.06,
+          "probability": 0.33774876594543457
+        },
+        {
+          "word": " the",
+          "start": 59.06,
+          "end": 59.2,
+          "probability": 0.8217883706092834
+        },
+        {
+          "word": " link",
+          "start": 59.2,
+          "end": 59.36,
+          "probability": 0.6926705241203308
+        },
+        {
+          "word": " is",
+          "start": 59.36,
+          "end": 59.54,
+          "probability": 0.6849763989448547
+        },
+        {
+          "word": " in",
+          "start": 59.54,
+          "end": 59.62,
+          "probability": 0.9141333699226379
+        },
+        {
+          "word": " a",
+          "start": 59.62,
+          "end": 59.72,
+          "probability": 0.6817485094070435
+        },
+        {
+          "word": " bio",
+          "start": 59.72,
+          "end": 60.1,
+          "probability": 0.5488659143447876
+        },
+        {
+          "word": " of",
+          "start": 60.1,
+          "end": 60.58,
+          "probability": 0.4601518213748932
+        },
+        {
+          "word": " $2,",
+          "start": 60.58,
+          "end": 61.14,
+          "probability": 0.449910432100296
+        },
+        {
+          "word": " $3,",
+          "start": 61.3,
+          "end": 61.68,
+          "probability": 0.8416529595851898
+        },
+        {
+          "word": " $4.",
+          "start": 61.8,
+          "end": 62.2,
+          "probability": 0.9857527613639832
+        },
+        {
+          "word": " It",
+          "start": 62.44,
+          "end": 62.92,
+          "probability": 0.8793957829475403
+        }
+      ]
+    }
+  ]
+}
