@@ -7,7 +7,9 @@ originSessionId: 313cc896-8951-480b-acc4-46b203a2042a
 **AI Bible Gospels** = parent faith-tech brand (creates tools for faith-based influencers).
 **Faith Walk Live** (`https://faithwalklive.com`) = current flagship product — a live GPS-tracking app for **Minister Zay's 3,000-mile walk from Philadelphia to California**.
 
-**Status as of 2026-04-27:** App is **already live**. Walk is **37 days in** (started ~2026-03-21). Minister Zay is expected to gain significant news/viral coverage as the walk progresses.
+**Walk start date (confirmed by Thomas 2026-05-06):** 2026-03-26 = Day 1. App is already live. Compute current day count from this anchor (today = today_date − 2026-03-26 + 1).
+
+Minister Zay is expected to gain significant news/viral coverage as the walk progresses.
 
 **Why:** Tommy's strategic goal — when news outlets and the public start Googling "Minister Zay" or "Faith Walk", he wants every search/AI engine to point to **AI Bible Gospels** (parent) or **faithwalklive.com** (the app) so the audience uses HIS app to track the walk rather than third-party coverage. This is the load-bearing motivation behind the entire AEO rollout (`docs/api-automation-plan.md`, Phase A complete, Phase B in flight).
 

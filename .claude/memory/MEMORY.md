@@ -38,4 +38,5 @@
 - [API capability reference docs](reference_capability_docs.md) — docs/meta-app-capabilities.md + docs/youtube-app-capabilities.md are source of truth for what each app can/cannot do, granted scopes, quota, App Review tier
 - [TikTok 5,549 hook formula](project_tiktok_hook_formula.md) — pinned post cracked at 10.4% share rate; melanated direct-gaze + 3-6 word curiosity-gap teaser + 12 Tribes topic; 3 clone variants queued in drafts/tiktok-community-build-2026-05-02.md
 - [Community hub strategy](project_community_hub_strategy.md) — Telegram (primary) + email on aibiblegospels.com (foundation) + FB Group (#2); skip Discord/TT-community; funnel: TT hook → email → Telegram → YT
+- [Telegram channel](reference_telegram_channel.md) — t.me/aibiblegospels created 2026-05-06; broadcast channel = funnel destination from TT bio + YT descriptions + site email signups; bot pending
 - [Browser skill bypasses App Review](feedback_browser_skill_bypasses_app_review.md) — when data lives in a web dashboard AND API path needs App Review, lead with Playwright scraping; pragmatism > calendar-time loss
