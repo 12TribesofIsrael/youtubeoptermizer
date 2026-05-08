@@ -1,4 +1,5 @@
 # Remotion Video Framework
+# When you say "let's make a Day 100 milestone recap" or "let's do that Deut 28 prophecy series
 
 A reusable pattern for producing branded videos via Remotion (programmatic React-based video composition + render-to-MP4). First proven on the Faith Walk Live anchor documentary 2026-05-07; intended for every future video on this channel.
 
