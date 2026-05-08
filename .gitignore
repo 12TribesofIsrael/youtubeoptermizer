@@ -53,3 +53,6 @@ src/anchor-doc/public/cards/
 src/anchor-doc/public/clips/
 src/anchor-doc/public/zay-monologue/
 src/anchor-doc/package-lock.json
+src/shorts/out/
+src/shorts/public/clips/
+src/shorts/package-lock.json

@@ -1,0 +1,20 @@
+{
+  "name": "fwl-shorts",
+  "version": "1.0.0",
+  "description": "Faith Walk Live Shorts \u2014 6-pack cut from the anchor doc, 1080x1920",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:all": "for s in s1_why s2_hit s3_auntie s4_hokas s5_milestone s6_test; do npx remotion render src/index.ts $s out/$s.mp4; done"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.4.0"
+  }
+}
