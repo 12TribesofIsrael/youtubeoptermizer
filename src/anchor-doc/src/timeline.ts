@@ -149,13 +149,15 @@ export const CLIPS: ClipEntry[] = [
     src: "clips/00150_GIMMIE_MY_HAT_1027974929.mp4" },
 
   // ─── Beat 4: The Mission (9:30-12:00, narration covers 9:30-10:38) ───────
-  // Light ambient under narration; reuse clips with different trim points for variety.
-  { start: sec(570), duration: sec(30),                  src: "clips/00027_W_Day_39_754093857.mp4", mute: true },          // Day 39
-  { start: sec(600), duration: sec(30),                  src: "clips/00016_W_Day_40_3888359721.mp4", mute: true },          // Day 40
-  { start: sec(630), duration: sec(30),                  src: "clips/00026_nap_town_intro_2633662352.mp4", mute: true },    // walking
-  { start: sec(660), duration: sec(18),                  src: "clips/00046_SPEECH_914284423.mp4", mute: true },             // Zay walking 0-18
-  { start: sec(678), duration: sec(30),                  src: "clips/00014_41_miles_left_to_Indianapolis_2604397892.mp4", mute: true }, // milestone
-  { start: sec(708), duration: sec(12),                  src: "clips/00046_SPEECH_914284423.mp4", trimStartSec: 18, mute: true },      // 18-30 of SPEECH
+  // Beat 4 v3 fix: clip ambient UNMUTED so 10:38-12:00 isn't dead silence
+  // after Daniel's narration ends. Walking footage carries natural road
+  // ambient + occasional Zay self-talk on stream archives.
+  { start: sec(570), duration: sec(30),                  src: "clips/00027_W_Day_39_754093857.mp4" },          // Day 39
+  { start: sec(600), duration: sec(30),                  src: "clips/00016_W_Day_40_3888359721.mp4" },          // Day 40
+  { start: sec(630), duration: sec(30),                  src: "clips/00026_nap_town_intro_2633662352.mp4" },    // walking
+  { start: sec(660), duration: sec(18),                  src: "clips/00046_SPEECH_914284423.mp4" },             // Zay walking 0-18
+  { start: sec(678), duration: sec(30),                  src: "clips/00014_41_miles_left_to_Indianapolis_2604397892.mp4" }, // milestone
+  { start: sec(708), duration: sec(12),                  src: "clips/00046_SPEECH_914284423.mp4", trimStartSec: 18 },      // 18-30 of SPEECH
 
   // 12:00-12:30 covered by Card 3.
   // 12:30-13:10 covered by Card 4.

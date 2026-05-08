@@ -6,9 +6,14 @@ import {
   OffthreadVideo,
   Sequence,
   staticFile,
+  useCurrentFrame,
 } from "remotion";
-import { CARDS, CLIPS, IG_REEL, NARRATIONS, TOTAL_FRAMES } from "./timeline";
+import { CARDS, CLIPS, FPS, IG_REEL, NARRATIONS, TOTAL_FRAMES } from "./timeline";
 import { theme } from "./theme";
+import subtitlesData from "./subtitles.json";
+
+type Cue = { start: number; end: number; text: string };
+const SUBTITLES: Cue[] = subtitlesData as Cue[];
 
 // ─── Single clip on the V1 main track ──────────────────────────────────────
 const ClipBlock: React.FC<{
@@ -128,6 +133,51 @@ const IgReelPillarbox: React.FC = () => {
   );
 };
 
+// ─── Subtitle overlay ──────────────────────────────────────────────────────
+// Looks up the active cue at the current frame and renders it lower-third on
+// a translucent black band. Gold serif on dark, smaller than card-card text.
+const Subtitles: React.FC = () => {
+  const frame = useCurrentFrame();
+  const t = frame / FPS;
+  // Suppress subs during full-bleed card overlays — cards carry their own text.
+  const onCard = CARDS.some(
+    (card) => frame >= card.start && frame < card.start + card.duration
+  );
+  if (onCard) return null;
+  const active = SUBTITLES.find((c) => t >= c.start && t <= c.end);
+  if (!active) return null;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 60,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "80%",
+          padding: "16px 32px",
+          background: "rgba(0, 0, 0, 0.65)",
+          color: theme.textCream,
+          fontFamily: theme.serif,
+          fontSize: 36,
+          lineHeight: 1.3,
+          textAlign: "center",
+          textShadow: "0 2px 4px rgba(0,0,0,0.85)",
+          borderRadius: 4,
+        }}
+      >
+        {active.text}
+      </div>
+    </div>
+  );
+};
+
 // ─── Card overlay (full-bleed PNG) ─────────────────────────────────────────
 const CardOverlay: React.FC<{ src: string }> = ({ src }) => (
   <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -177,6 +227,9 @@ export const DocumentaryTimeline: React.FC = () => {
           <Audio src={staticFile(n.src)} volume={1.0} />
         </Sequence>
       ))}
+
+      {/* Layer 5: Burned-in subtitles (visible everywhere except over cards) */}
+      <Subtitles />
     </AbsoluteFill>
   );
 };
