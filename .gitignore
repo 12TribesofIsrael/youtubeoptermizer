@@ -44,3 +44,12 @@ clonevideos/
 
 # Node modules (in case npm install ever runs for the memory-sync script)
 node_modules/
+
+# Remotion project — source committed, but skip rendered output, copied
+# public assets, and dep tree. Originals live under faith-walk-live/anchor-doc/.
+src/anchor-doc/out/
+src/anchor-doc/public/audio/
+src/anchor-doc/public/cards/
+src/anchor-doc/public/clips/
+src/anchor-doc/public/zay-monologue/
+src/anchor-doc/package-lock.json

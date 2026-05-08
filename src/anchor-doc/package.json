@@ -1,0 +1,23 @@
+{
+  "name": "anchor-doc",
+  "version": "1.0.0",
+  "description": "Faith Walk Live anchor documentary — Remotion composition",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts AnchorDoc out/anchor-doc.mp4",
+    "render:preview": "remotion render src/index.ts AnchorDoc out/preview.mp4 --frames=0-900",
+    "render:beat0": "remotion render src/index.ts AnchorDoc out/beat0.mp4 --frames=0-900",
+    "render:beat1": "remotion render src/index.ts AnchorDoc out/beat1.mp4 --frames=900-7950"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.4.0"
+  }
+}
