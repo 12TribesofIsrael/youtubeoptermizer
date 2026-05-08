@@ -12,7 +12,10 @@ export type ClipSegment = {
   start: number;        // start in frames within the Short timeline
   duration: number;     // in frames
   trimStartSec?: number;// skip first N seconds of source clip
-  mute?: boolean;       // mute the clip's own audio
+  // Audio: clips default to UNMUTED (clip ambient plays). Only set mute=true
+  // when a narration MP3 or other audio track is replacing the clip's audio
+  // for that segment. Silence in a 30s mobile-vertical Short reads as broken.
+  mute?: boolean;
   // Source aspect — drives the cropping behaviour:
   // - "vertical": already 9:16, render full-bleed
   // - "wide-face-center": 16:9, center-crop on face (default)
@@ -87,14 +90,12 @@ ${STANDARD_CTA_DESCRIPTION}`,
       start: 0,
       duration: sec(15),
       trimStartSec: 8, // skip Twitch intro overlay frames
-      mute: true,
       source: "wide-face-center",
     },
     {
       src: "clips/00062_41_on_the_comeback_2893141447.mp4",
       start: sec(15),
       duration: sec(15),
-      mute: true,
       source: "wide-face-center",
     },
   ],
@@ -125,7 +126,7 @@ ${STANDARD_CTA_DESCRIPTION}`,
   ],
   cues: [
     { start: 0,        duration: sec(4),   text: "Strangers showing up for him",     position: "top", size: "hook" },
-    { start: sec(4),   duration: sec(2),   text: "3000 miles in",                    position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(2),   text: "Over 600 miles in",                position: "top", size: "hook" },
     { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",       position: "bottom", size: "cta" },
   ],
 };
@@ -170,14 +171,12 @@ ${STANDARD_CTA_DESCRIPTION}`,
       src: "clips/00027_W_Day_39_754093857.mp4",
       start: 0,
       duration: sec(15),
-      mute: true,
       source: "wide-face-center",
     },
     {
       src: "clips/00016_W_Day_40_3888359721.mp4",
       start: sec(15),
       duration: sec(15),
-      mute: true,
       source: "wide-face-center",
     },
   ],
@@ -201,11 +200,14 @@ const s6_test: ShortConfig = {
 
 ${STANDARD_CTA_DESCRIPTION}`,
   clips: [
-    { src: "clips/00038_rain_clip_2800609761.mp4",        start: 0,         duration: sec(7),  mute: true, source: "wide-face-center" },
-    { src: "clips/00058_struggle_3397564726.mp4",         start: sec(7),    duration: sec(7),  mute: true, source: "wide-face-center" },
-    { src: "clips/00196_no_food_oh_thats_y_2462850237.mp4", start: sec(14), duration: sec(6),  mute: true, source: "wide-face-center" },
-    { src: "clips/00011_Naptown_Potholes_Undefeated_3664286968.mp4", start: sec(20), duration: sec(5), mute: true, source: "wide-face-center" },
-    { src: "clips/00062_41_on_the_comeback_2893141447.mp4", start: sec(25), duration: sec(5),  mute: true, source: "wide-face-center" },
+    // Note: clips UNMUTED — natural ambient (rain, road noise, Zay self-talk)
+    // gives the montage rhythm. Silence in mobile-vertical Shorts reads as
+    // broken; only mute when a narration track is replacing clip audio.
+    { src: "clips/00038_rain_clip_2800609761.mp4",        start: 0,         duration: sec(7),  source: "wide-face-center" },
+    { src: "clips/00058_struggle_3397564726.mp4",         start: sec(7),    duration: sec(7),  source: "wide-face-center" },
+    { src: "clips/00196_no_food_oh_thats_y_2462850237.mp4", start: sec(14), duration: sec(6),  source: "wide-face-center" },
+    { src: "clips/00011_Naptown_Potholes_Undefeated_3664286968.mp4", start: sec(20), duration: sec(5), source: "wide-face-center" },
+    { src: "clips/00062_41_on_the_comeback_2893141447.mp4", start: sec(25), duration: sec(5),  source: "wide-face-center" },
   ],
   cues: [
     { start: 0,        duration: sec(4),   text: "What it takes to walk 3000 miles", position: "top", size: "hook" },

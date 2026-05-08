@@ -69,7 +69,15 @@ Shot lists are written assuming continuous narration. Real TTS MP3s have variabl
 
 **Fix:** sum your narration durations first, then place each one to start where the previous one ended (plus any intentional silence at cards or transitions). Don't trust shot-list timestamps blindly.
 
-### 3. Confirm asset paths resolve
+### 3. Default clips to UNMUTED (mute only when narration replaces audio)
+
+Don't mute clips by default. Silence in a mobile-vertical Short reads as **broken**, not stylistic — viewers think the audio is missing and swipe away. Even fast-cut montages need ambient (rain, road noise, voices) to feel real.
+
+**The rule:** only set `mute: true` when a narration MP3 or other audio track is **actively replacing** that clip's audio for that segment. Otherwise let clip ambient play.
+
+This was the rule we missed on Shorts s2/s5/s6 — publish-plan §8 said "text-overlay-driven" so I muted them, and Tommy flagged all three as having broken audio. Re-rendered unmuted, all three felt right.
+
+### 4. Confirm asset paths resolve
 
 ```bash
 ls PATH/TO/public/audio/  # must contain every MP3 referenced in NARRATIONS
