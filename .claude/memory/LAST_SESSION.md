@@ -1,46 +1,39 @@
 ---
-ended: 2026-05-06T22:30:00Z
+ended: 2026-05-08T18:00:00Z
 project: youtubeoptermizer (AI Bible Gospels)
 branch: main
-originSessionId: 544395dd-f971-4ead-9d62-b4c156bdab92
+originSessionId: 0734df78-6a4b-4eea-9432-c912278f58f1
 ---
-# Last Session — 2026-05-06 (evening: strategic alignment + journalist outreach)
-
-> **Note:** Two sessions ran today on this project. An earlier session (afternoon → evening) shipped the anchor documentary workspace (commit `584cde9`). This session's open threads from that work are preserved at the bottom under "Carry-over from earlier session." This block covers the evening session.
+# Last Session — 2026-05-08
 
 ## What the user wanted
-Strategic alignment check on AEO/SEO for Faith Walk Live: how to make faithwalklive.com the canonical destination for "the walk" topic queries while bootstrapping solo (cannot use HMBL team's surfaces — Twitch panels, Zay's bios, etc.). Goal: hack the existing Apr 28 news media exposure as a traffic/backlink lever for faithwalklive.com.
+Wrap up the FWL launch end-to-end: ship the 13:30 anchor documentary to YouTube, build a reusable Remotion framework so future videos don't re-discover the same bugs, then cut and schedule 6 cross-promo Shorts to drip over the week. Plus daily Phase B AEO writes during the YPP wait.
 
 ## What we did
-- Re-anchored the AEO/SEO conversation around the constraint "no HMBL team cooperation" — the 1–2% odds bootstrap problem
-- Mid-session, user revealed the bigger ecosystem at `C:\Users\Claude\hblfaithwalk` (READ-ONLY from this repo) — read `AIconsultantforHmblzayy/CLAUDE.md`, `docs/comment-camp-apr28.md`, `docs/bio-link-audit-apr28.md`, `docs/baseline-metrics-2026-04-28.md`, `faithwalklivecom/CLAUDE.md`, `faithwalklivecom/docs/seo-strategy.md`
-- Realized most of my prior recommendations (daily walk Shorts series, press pitches, site depth) were already shipped/queued by the consulting repo (TT Stitch playbook Days 33-40, X daily poster, HARO press lane, NewsArticle JSON-LD on `/updates/april-28-incident`, daily `recovery:append`)
-- Verified actual walk state via `AIconsultantforHmblzayy/src/faith-walk-tracker/checkpoints.json`: Day 34 Apr 28 strike at Lewisville IN (703 mi), Days 35-38 rest, Day 39 May 3 resumed (Greenfield IN, 732 mi), Day 40 May 4 Indianapolis (752 mi), Day 42 in progress today. **Walk never formally paused** (`paused: false` everywhere) — user corrected my "paused" framing
-- Identified the one high-ROI move not already covered: cold email outreach to the 11 journalists who covered Apr 28, leveraging the "back walking May 3" news beat to earn news-domain backlinks to faithwalklive.com
-- Drafted + committed `docs/journalist-outreach-apr28-followup.md` — master email template, per-outlet variants for the 3 highest-priority targets (Fox 59 Indy, Fox 29 Philly, Daily Voice PA), 8-outlet contact list with best-guess emails + verification step, skip list (TMZ/Shade Room/Express Tribune/Lokmat), send order + cadence, realistic expectations
-- Commit `9e3aeb9` pushed to origin/main. Branch caught up via `908021f` (TikTok analytics scraper from a parallel session) — all clean now
+- **Anchor doc shipped (Unlisted, scheduled by Tommy for 3 PM ET Public flip 2026-05-08)**: video_id `5rJrK2YexRs`, full metadata + thumbnail (gpt-image-1 at 1280x720) + English caption track (Whisper-transcribed) + added to new "Faith Walk Live — The 3000-Mile Walk" playlist (`PLFyw-nH_HYIsMQxk1eJAznVeOftUqv40Z`) + pinned-comment text posted (Tommy clicks Pin manually).
+- **Remotion v1 → v3 iteration on the doc**: v1 had two distinct bug classes — clips frozen on last frame (asked-for duration > source duration; `675_miles` 10.5s asked for 15s, `W_Day_39` 30s asked for 70s, etc.) AND silent gaps between beats (shot list assumed continuous narration; real TTS MP3s sum to 6:12 vs the doc's 13:30 → 70s gap between Beat 2/3, 80s gap Beat 4/CTA). v2 fix: probed all asset durations via mutagen, re-tiled narrations contiguously, capped clip slots ≤ source. v3 fix: added burned-in subtitles via Whisper transcription with timeline-offset cues + unmuted Beat 4 clips so 10:38-12:00 isn't dead silence.
+- **Remotion video framework documented + memory'd**: `docs/remotion-video-framework.md` is now the canonical playbook. Two durable feedback memories saved: probe asset durations BEFORE writing timeline code; default video clips to UNMUTED (silence in mobile-vertical Shorts reads as broken — bit us on 3 of 6 Shorts).
+- **6 cross-promo Shorts built + scheduled**: `src/shorts/` is a sibling Remotion project (proves the framework's "copy src/anchor-doc, swap inputs" path). All 6 generated, fixed audio bugs across 3 of them on review iteration, then uploaded as Private with publishAt scheduled 3 PM ET daily May 9-14. YT auto-flips each to Public on its day. video_ids: `chvwKC55ofw`, `DT0484KGG94`, `Z2QVCavDL4M`, `n3REs7esu2A`, `W1yxkL4GHCU`, `ksy8m7pIMuE`. All 6 added to the FWL playlist alongside the doc.
+- **Phase B AEO descriptions paced batch (1 today)**: ran `--live --limit 50 --verify`. YT transcript IP block still active — script auto-exited on 3 sequential blocks (working as designed per the v2 fix). Zero quota burned. State held at 20/187 completed. Retry tomorrow.
+- **Cross-doc updates triggered by faithwalklive.com/press going live (2026-05-07)**: flipped journalist outreach prerequisite from "verify before sending" to "hot"; flipped anchor-doc publish-plan open-item from "verify" to "✓ live"; saved `reference_faithwalklive_press_kit.md` memory.
 
 ## Decisions worth remembering
-- **Reframed the goal:** don't try to win HMBL personality queries (impossible without his surfaces); win the topic queries — "3000-mile walk", "Philly to California pilgrimage", "Christian pilgrimage live tracker". Topic queries are higher-volume + uncontested.
-- **Stopped recommending content/distribution work** — that's the consulting repo's lane (TT Stitch, X poster, HARO). My (youtubeoptermizer) lane is YT/IG/FB AEO + measurement.
-- Picked **journalist outreach over Reddit / new site page / comment-camp** as the single highest-ROI solo move because: (1) follow-up to a story they already published is much higher-converting than cold pitch; (2) even 1-of-8 = permanent news-domain backlink; (3) requires no platform automation, no HMBL cooperation, no waiting.
+- **Default to Unlisted on first upload, Tommy does the Public flip himself.** The anchor doc upload script defaulted to `privacyStatus="unlisted"` even though Tommy explicitly OK'd publishing — irreversible Public flip stays his click. This is the right pattern for any single-shot upload going forward.
+- **Shorts on `publishAt` schedule, not Public uploads.** All 6 uploaded as Private with `publishAt` set; YT handles the auto-flip. Pre-scheduling is Tommy's normal pattern (per existing memory `feedback_shorts_prescheduling.md`).
+- **Framework architecture: `src/anchor-doc/` is the reference, `src/shorts/` is the copy-paste-swap-inputs proof.** Both are sibling Remotion projects under `src/`. Each has its own `node_modules`, `package.json`, but identical scaffolding. The framework doc spells out the copy flow. This validated end-to-end this session.
+- **Phase B IP block is part of the cadence, not a bug to fix.** The script's early-exit pattern (3 transcript blocks → exit, no `skipped` checkpoint write) means daily runs are safe and cheap. Catalog finishes in ~13 more days at ~12/day. The proxy fix (WebshareProxyConfig, $1/mo) is in the back pocket if Tommy wants to compress to a single-shot 4-hour run.
+- **Audio defaults: clips UNMUTED unless narration replaces them.** Burned this lesson three times in a row across Shorts s2/s5/s6 before realizing the pattern. Now in code comments + framework doc rule #3 + a feedback memory. Should never bite us again on a future video.
 
 ## Open threads / next session starts here
 
-### From this evening's session
-1. **Tommy still needs to SEND the journalist emails.** The 8-outlet contact list is in `docs/journalist-outreach-apr28-followup.md`. Send window: ~7 days from May 3 walk resume = closes around May 10. Fox 59 Indy goes first (he's currently in their coverage area).
-2. **(b) Reddit r/Twitch update post** — drafted in-conversation (title: "Update: Minister Zay back walking after Apr 28 hit-and-run → live tracker"), NOT yet written to a doc. User said "one at a time" — pick this up next.
-3. **(c) Spec for `/updates/back-walking` page** on faithwalklivecom (sibling repo, sibling Claude owns it) — drafted in-conversation, NOT yet written. Targets recovery-search queries: "Is Minister Zay okay?", "When did the Faith Walk resume?", "Where is Minister Zay now?". Same NewsArticle JSON-LD pattern as the incident page.
-4. **`unified-analytics.py` (script #5)** — identified as the bigger missing piece. Day 30 review is ~May 28. Without this script, `baseline-metrics-2026-04-28.md` decision matrices have no automated data source. Currently nobody is pulling Vercel Analytics for `/updates/april-28-incident` traffic, X attribution, HARO attribution, or YT/IG/FB cross-platform stats.
-5. **Audit whether comment-camp + Search Console + HARO routine actually executed** during the Apr 28 window. Playbook says T+0/T+2h/T+6h cadence, we're at T+~200h with no confirmation any of it ran. If not, comment-camp window has closed (24-36h half-life) but Reddit + Search Console are still recoverable.
-6. **YT-specific items in `seo-strategy.md` Phase B Week 1** are unverified: end screens linking to faithwalklive.com, channel banner clickable URL, pinned comment on top 3 videos. These are MY (youtubeoptermizer) lane.
-
-### Carry-over from earlier afternoon→evening session (anchor doc work, commit `584cde9`)
-- **Final assembly in CapCut is Thomas's task** — all assets are in `faith-walk-live/anchor-doc/` (audio, clips, cards, IG reel, shot list). Track layout + in/out points + crop notes pre-computed.
-- **GoFundMe URL still a placeholder** in `faith-walk-live/anchor-doc/publish-plan.md` (`[GOFUNDME_URL_FROM_THOMAS]`) and the closing CTA narration says "the GoFundMe link is below this video" without naming the URL — Thomas needs to drop the URL before publishing.
-- **Day count in narration intentionally vague** ("six weeks in") — works for any near-term ship. If shipping after July 15, re-record with "two months in" or "three months in".
-- **Title card PNGs and accident-clip keyframes are local-only on this machine.** If a future session on a different machine needs them, run `python faith-walk-live/anchor-doc/scripts/generate-title-cards.py` (~$0.40) or regen keyframes from the accident clip.
-- **Optional next-up if Thomas picks anchor-doc back up:** pre-cut the 6 cross-promo Shorts described in `publish-plan.md` §8, draft the 3 community posts, draft the YT thumbnail (separate from in-doc title card 1).
+1. **Phase B AEO retry tomorrow.** One command: `python scripts/aeo-yt-phase-b.py --live --limit 50 --verify`. Should land ~12 fresh writes. Currently 20/187. ~13 more days to finish at this cadence.
+2. **Anchor doc Public flip + post-publish manual steps.** Tommy already scheduled 3 PM today. After it goes Public, Studio-only items remaining: pin the comment we posted (3-dot menu → Pin), add 3-element End Screen (Subscribe + Best-for-viewer + top 12 Tribes Short), set Faith Walk Live playlist as Featured on channel home.
+3. **Journalist outreach reply window: through ~May 15.** 8 emails sent 2026-05-07. Watch `aibiblegospels444@gmail.com` inbox. Any reply gets a "here's the full doc + press kit" follow-up — the doc is now ready to link in those replies.
+4. **6 Shorts auto-drop May 9-14 daily 3 PM ET.** No action needed. If any specific Short misses its scheduled time (rare), `output/shorts-drop-schedule.json` has the audit trail (video_id + publishAt) for manual Studio recovery.
+5. **Phase 4B long-form gap (CLAUDE.md flagged, not started).** 4-6 evergreen explainer videos (10-20 min) — the anchor doc fills 1 of 6. Framework now in place to crank these out. Top candidate per the `generate-scripture-cards.py` output: a Deuteronomy 28 verse-by-verse prophecy series (58 cards already generated). When Tommy wants to start, run the framework's "new video" flow.
+6. **Cross-platform repurpose to IG Reels + TikTok.** Each Short already at 1080x1920 9:16 — drop-in for TikTok and IG Reels. TikTok approved (per memory `project_tiktok_app_review.md`); Meta IG approved (per `project_meta_app_review_status.md`) but caption edits silently no-op so we'd post fresh, not edit. Not started this session.
+7. **Reddit r/Twitch update post.** Drafted in conversation 2 sessions ago, never written to a doc. Title: "Update: Minister Zay back walking after Apr 28 hit-and-run → live tracker". Picks up the recovery beat for the Twitch community. ~5 min to write.
+8. **`/updates/back-walking` page spec** for sibling Claude (faithwalklivecom). Drafted in conversation, never written. Same NewsArticle JSON-LD pattern as `/updates/april-28-incident`. Targets recovery-search queries: "Is Minister Zay okay?", "When did the Faith Walk resume?". ~10 min to spec.
 
 ## Uncommitted work
 Clean working tree.
