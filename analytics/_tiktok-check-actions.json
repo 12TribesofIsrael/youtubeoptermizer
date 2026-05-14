@@ -1,0 +1,7 @@
+[
+  {"action": "goto", "url": "https://www.tiktok.com/@aibiblegospels_"},
+  {"action": "wait", "seconds": 6},
+  {"action": "screenshot", "path": "analytics/_tiktok-public-profile.png"},
+  {"action": "evaluate", "script": "const out={};document.querySelectorAll('[data-e2e]').forEach(el=>{const k=el.getAttribute('data-e2e');const t=(el.innerText||'').trim();if(k&&t&&t.length<200)out[k]=t});return JSON.stringify(out,null,2)"},
+  {"action": "evaluate", "script": "const posts=[];document.querySelectorAll('div[data-e2e=\"user-post-item\"]').forEach((el,i)=>{const link=el.querySelector('a[href*=\"/video/\"]');const views=el.querySelector('[data-e2e=\"video-views\"]');const pinned=el.innerText.toLowerCase().includes('pinned');posts.push({i,href:link?link.href:null,views:views?views.innerText.trim():null,pinned,raw:(el.innerText||'').replace(/\\n/g,' | ').slice(0,150)})});return JSON.stringify(posts.slice(0,12),null,2)"}
+]

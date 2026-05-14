@@ -221,3 +221,123 @@ ${STANDARD_CTA_DESCRIPTION}`,
 };
 
 export const SHORTS: ShortConfig[] = [s1_why, s2_hit, s3_auntie, s4_hokas, s5_milestone, s6_test];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DRAFT BATCH (s7–s12) — hook lines following retention-curve learnings from
+// the s1-s6 pack. Rules baked in:
+//   1. Line 2 withholds (→ / ↓), never resolves — s1 template.
+//   2. Single-clip preferred. Multi-clip cuts at sec(15) bleed ~30 pts (s2).
+//   3. No status-report hooks ("Day X — City") — pair milestones with a stake.
+// Not exported in SHORTS until clips are pulled. Placeholder src paths are
+// flagged TODO_FOOTAGE so the build doesn't pick them up by accident.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const s7_cop_stop: ShortConfig = {
+  id: "s7-cop-stop",
+  fileLabel: "07-the-cop-stop",
+  title: "A cop pulled him over on a back road #FaithWalkLive #Shorts",
+  description: `On a back road during his 3,000-mile walk, a patrol car pulled up on Minister Zay. What happened next wasn't what anyone expected.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: police/trooper encounter clip from twitch.tv/hmblzayy VOD
+    { src: "clips/TODO_cop_stop.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "A cop pulled him over",          position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "Then he opened his trunk →",     position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+const s8_almost_quit: ShortConfig = {
+  id: "s8-almost-quit",
+  fileLabel: "08-almost-quit",
+  title: "He almost quit at mile 614 #FaithWalkLive #Shorts",
+  description: `Past 600 miles on foot, Minister Zay nearly walked off the road for good. Something pulled him back.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: breakdown / low-moment clip + tracker shot for mile marker
+    { src: "clips/TODO_almost_quit.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "He almost quit at mile 614",     position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "What he saw next →",             position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+const s9_stalker: ShortConfig = {
+  id: "s9-stalker",
+  fileLabel: "09-the-stalker",
+  title: "Someone followed him for 4 miles in a truck #FaithWalkLive #Shorts",
+  description: `On a stretch of US-40, a truck shadowed Minister Zay for nearly an hour. Then they stopped at the same gas station.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: vehicle-shadow / unease clip + a stop/encounter clip
+    { src: "clips/TODO_stalker.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "Someone followed him for 4 miles", position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "Watch what happens at the gas station ↓", position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+const s10_letter: ShortConfig = {
+  id: "s10-letter",
+  fileLabel: "10-the-letter",
+  title: "A stranger handed him a sealed envelope mid-walk #FaithWalkLive #Shorts",
+  description: `A stranger walked up to Minister Zay during his 3,000-mile walk and handed him a sealed envelope. He opened it on camera.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: any clip where someone hands Zay something + reaction shot
+    { src: "clips/TODO_letter.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "A stranger handed him a sealed envelope", position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "He opened it on camera →",       position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+const s11_3am: ShortConfig = {
+  id: "s11-3am",
+  fileLabel: "11-3am-walk",
+  title: "3 AM. No streetlights. 22 miles to the next town. #FaithWalkLive #Shorts",
+  description: `Pre-dawn on a rural stretch with no streetlights and 22 miles to the next town. Here's how he kept moving.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: night-walk clip (headlamp / dark rural road)
+    { src: "clips/TODO_3am.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "3 AM. No streetlights.",         position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "22 miles to the next town →",    position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+const s12_real_reason: ShortConfig = {
+  id: "s12-real-reason",
+  fileLabel: "12-real-reason",
+  title: "He's walked 800 miles. The real reason might surprise you. #FaithWalkLive #Shorts",
+  description: `Most people think they know why Minister Zay is walking 3,000 miles. The deeper reason runs back further than the school.
+
+${STANDARD_CTA_DESCRIPTION}`,
+  clips: [
+    // TODO_FOOTAGE: reflective/quiet Zay interview clip — single-clip preferred
+    { src: "clips/TODO_real_reason.mp4", start: 0, duration: SHORT_DURATION_FRAMES, source: "wide-face-center" },
+  ],
+  cues: [
+    { start: 0,        duration: sec(4),   text: "He's already walked 800 miles",  position: "top", size: "hook" },
+    { start: sec(4),   duration: sec(3),   text: "But this isn't really about the school →", position: "top", size: "hook" },
+    { start: sec(26),  duration: sec(4),   text: "Full doc → @AIBIBLEGOSPELS",     position: "bottom", size: "cta" },
+  ],
+};
+
+export const DRAFT_SHORTS: ShortConfig[] = [s7_cop_stop, s8_almost_quit, s9_stalker, s10_letter, s11_3am, s12_real_reason];
