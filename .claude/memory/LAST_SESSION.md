@@ -1,34 +1,34 @@
 ---
-ended: 2026-05-08T23:00:00Z
+ended: 2026-05-14T00:00:00Z
 project: youtubeoptermizer
 branch: main
-originSessionId: eb535d63-b370-4ffc-80bd-fae5761e75b7
+originSessionId: session-start-then-end
 ---
-# Last Session — 2026-05-08
+
+# Last Session — 2026-05-14
 
 ## What the user wanted
-Tommy saw the May 8 RV rolling-support announcement but couldn't find it on faithwalklive.com — he asked whether to surface it as a FAQ entry or a menu item.
+Quick resume + immediate wrap. Tommy ran `/session-start`, asked for `git pull` (no-op, already up to date), then ran `/session-end`. No work done in this session.
 
 ## What we did
-- Diagnosed the actual gap: the RV update page (`/updates/rv-rolling-support`) was already published, AND a `/updates` index listing it existed — but `Nav.tsx` had no link to `/updates`, so neither this update nor the Apr 28 update was reachable from the menu.
-- Wrote plan at `C:\Users\Deskt\.claude\plans\logical-herding-platypus.md` recommending **structural fix + content fix** rather than FAQ-only or menu-only.
-- Tommy gave per-task permission to edit `faithwalklivecom` directly ("you can make these changes I give you permission") — overriding the default repo-scope rule for this task.
-- Made 3 edits in `C:\Users\Claude\hblfaithwalk\faithwalklivecom\`:
-  1. `src/components/Nav.tsx` — inserted `Updates` between `FAQ` and `Prayer Wall` in the shared `links` array (mobile inherits via `links.slice(1)`).
-  2. `src/app/(site)/faq/page.tsx` — added 2 Q&As right after the Apr 28 entry: "Is Minister Zay still walking every mile, or is he riding in the RV?" and "Why did Minister Zay get an RV for the walk?" Both deep-link to `/updates/rv-rolling-support`. Existing JSON-LD generator picks them up automatically.
-  3. `src/app/(site)/press/page.tsx` — repointed the "📰 Latest update" CTA from `/updates/april-28-incident` → `/updates/rv-rolling-support`. Apr 28 link preserved in Fast Facts row.
-- Committed as `694b5de` on `faithwalklivecom@main` and pushed to GitHub (12TribesofIsrael/faithwalklive). Vercel auto-deploys on push.
-- youtubeoptermizer repo: NO edits made by this instance. Other instance committed its shorts work (`e72c414` shorts unmute, `c36da49` drop schedule, `abc03a6` memory sync) in parallel; Tommy asked twice to "commit" but each time the working tree was already clean.
+- Memory backup pull ran on session-start (27 pads hydrated; nothing new for youtubeoptermizer).
+- `git pull` — repo already up to date with origin/main.
+- Confirmed working tree state: clean except untracked `analytics/_tiktok-pilot-output.log` (carried over from prior TikTok scraper run, unchanged since last session).
 
 ## Decisions worth remembering
-- Picked "add `/updates` to nav AND add 2 FAQ entries" over either-or because: nav fix is structural (catches every future update automatically); FAQ fix catches search-intent visitors who don't browse menus. Together they cover both discovery paths.
-- Press kit "Latest update" CTA repointed (not added alongside) — semantically should always point to the newest update; the Apr 28 link survives in the Fast Facts table for cold journalists.
-- Did NOT promote the RV update on the homepage hero — homepage's job is conversion (Live Map / Clips / Subscribe); a single update would crowd CTAs and the next update would fight for the same slot.
+- None — pure session bookend.
 
 ## Open threads / next session starts here
-- Verify Vercel deploy succeeded — check `https://faithwalklive.com/` for `Updates` in nav, `/faq` for the 2 RV Q&As, `/press` for the repointed CTA.
-- The 6 cross-promo Shorts (committed by the other instance as `c36da49`) start dripping at 3 PM ET tomorrow (2026-05-09); see `output/shorts-drop-schedule.json` for IDs and dates.
-- No active YT/AEO/FWL-site threads from this instance.
+Carry-over from 2026-05-08 log (still unresolved, 6 days cold — verify before acting):
+- Verify Vercel deploy of faithwalklivecom changes (`/updates` in nav, 2 RV FAQ entries, repointed press CTA). 6 days old — almost certainly settled, but never confirmed by Claude.
+- 6 cross-promo Shorts drip schedule (`output/shorts-drop-schedule.json`, commit `c36da49`) was set to start 2026-05-09 3pm ET. That whole window has passed — worth pulling YT analytics on those 6 IDs if Tommy wants performance numbers.
+- `analytics/_tiktok-pilot-output.log` is untracked — decide whether to .gitignore it or commit it (likely belongs in .gitignore since it's a run artifact).
 
 ## Uncommitted work
-Clean working tree.
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+	analytics/_tiktok-pilot-output.log
+```
