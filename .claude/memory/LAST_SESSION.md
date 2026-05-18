@@ -5,75 +5,43 @@ metadata:
   ended: 2026-05-18T00:00:00Z
   project: youtubeoptermizer
   branch: main
-  originSessionId: 373f4945-6482-4d96-b023-f668cb24598b
+  originSessionId: c9699ade-565d-4b46-a93a-a2cf423ab18d
 ---
 
-# Last Session — 2026-05-18
+# Last Session — 2026-05-18 (later)
 
 ## What the user wanted
-Maximize TikTok now that the channel is in a viral surge (468 → 1,055 followers in ~50 days). Tommy uploaded fresh TT analytics CSVs and wanted: (1) a diagnostic read, (2) tactical levers ranked by ROI, (3) concrete execution on the top one or two — which became bio rewrite + on-screen FOLLOW CTA + reply-back to all the new commenters.
+Scope-and-cost a local FFmpeg-based video assembler that would replace JSON2Video as the last-mile step in the Custom Script 2.0 pipeline (concat 16 Kling clips + overlay Daniel TTS + burn karaoke subs). User wanted the design captured in repo docs, NOT implementation this session — they'll kick it off later this week.
 
 ## What we did
-- Diagnosed TT analytics (`analytics/Overview.csv`, `Content.csv`, `FollowerHistory.csv`, `FollowerActivity.csv`, `FollowerTopTerritories.csv`, `FollowerGender.csv`, `Viewers.csv`): 52.1K views/365d, 91.9% For You, 4.8% Search (untapped), 449 profile views/year = 0.86% click-through, audience 75.5% US / 72% male. Identified 6 leverage points; bio swap was the #1 fastest fix.
-- **Bio rewrite shipped (Tommy pasted into TT):**
-  ```
-  🕎12 Tribes of Israel
-  Deuteronomy 28 decoded
-  📙 Hebrew Israelite identity.
-  Daily breakdowns.
-  💬 Join the Telegram (free, daily drops) 👇🏿
-  t.me/aibiblegospels
-  ```
-  Site (`aibiblegospels.com`) hero is B2B faith-tech messaging that bounces TT traffic in 6 sec — direct-Telegram link bypasses that. See [[feedback_bio_link_target_decision]].
-- Built **Remotion CTA overlay project** at [src/cta-overlay/](src/cta-overlay/) — 3 variants (reward/curiosity/social), 1080×1920 @ 30fps × 60 frames, ProRes 4444 with transparent BG. npm install initially failed silently (SSL cert) — retried with `NODE_OPTIONS=--use-system-ca` and installed 194 packages. Renders NOT YET RUN. See [[reference_cta_overlay_remotion]] + [[feedback_npm_install_silent_fail]].
-- Built **TT comment reply pipeline**:
-  - Iterated scraper (`analytics/_tiktok-comments-actions-v4.json`) — captures 50/74 comments from viral post with proper display-name/comment separation
-  - Wrote `scripts/tt-comments-classify.py` — 6-bucket classifier (identity / intent / tribe_claim / skeptic / faithwalk / scripture_quoter / affirmer) × 5 templates each
-  - Generated `output/tt-comments-to-reply.md` — 30 reply-worthy comments priority-sorted, paste-ready
-  - See [[reference_tt_comment_scraper_workflow]].
-- **Attempted full auto-reply via Playwright canary** (3 replies: @reginajohnson33, @wise5775, @pointmansgroove). All 3 technically succeeded (typed N chars, editor cleared after Enter), but verification scrape showed @reginajohnson33 still at **0 replies** = silent failure. @wise5775 + @pointmansgroove ambiguous (replies present but baseline unknown). Tommy chose to **stop browser automation** and reply manually via the queue file. Critical learning logged at [[feedback_tt_comment_auto_reply_silent_fail]].
+- Explored both repos in parallel (read-only on `c:\Users\Claude\ai-bible-gospels`, scoped to `youtubeoptermizer` for any writes). Mapped JSON2Video integration in `ai-bible-gospels/workflows/custom-script/generate.py` and inventoried reusable building blocks in youtubeoptermizer ([`scripts/generate-narration.py`](../../../../../Claude/youtubeoptermizer/scripts/generate-narration.py), [`scripts/transcribe-narrations.py`](../../../../../Claude/youtubeoptermizer/scripts/transcribe-narrations.py), [`scripts/probe-clips.py`](../../../../../Claude/youtubeoptermizer/scripts/probe-clips.py), [`scripts/render-via-pipeline.py`](../../../../../Claude/youtubeoptermizer/scripts/render-via-pipeline.py)).
+- Plan subagent surfaced three corrections to the user's initial sketch: (1) FFmpeg not on PATH — verified `where ffmpeg` empty — needs install/bundle as task zero; (2) ASS karaoke needs per-word `\1c` color overrides on top of `\k` clock advance ("Approach B") — the snap-color JSON2Video effect can't be done with `\k` alone; (3) ElevenLabs cost is ~$3-5/render on `eleven_multilingual_v2` for 20-min long-form, NOT the $1-2 the user assumed.
+- Wrote the harness plan file at `C:\Users\Deskt\.claude\plans\how-hord-would-it-jiggly-abelson.md`.
+- After user direction "keep as a plan, document in the repo, don't move forward", promoted the plan into [`docs/local-ffmpeg-assembler.md`](../../../../../Claude/youtubeoptermizer/docs/local-ffmpeg-assembler.md) (250 lines, status-tagged `PLANNED — Not Built Yet`).
+- Committed and pushed as **792a805** ("docs: plan local FFmpeg assembler to replace JSON2Video"). Live on origin/main.
+- See durable [[project_local_ffmpeg_assembler_planned]].
 
 ## Decisions worth remembering
-- **Bio link → Telegram, not the site.** Site is B2B, TT users bounce. Captured durable: [[feedback_bio_link_target_decision]].
-- **No browser auto-reply on TT.** Silent-failure mode + 1,055-follower account is too valuable to risk. Manual or semi-supervised only. Captured durable: [[feedback_tt_comment_auto_reply_silent_fail]].
-- **Always verify npm install populated `node_modules/.bin/` before trusting exit 0.** SSL cert mid-stream errors yield exit 0 with empty deps. Captured durable: [[feedback_npm_install_silent_fail]].
-- @pointmansgroove's "white man's voice" question got a generic skeptic template instead of the honest "AI narration for now, voice will change as we grow" custom reply — Tommy explicitly chose generic; revisit only if he asks.
+- **Repo location: youtubeoptermizer**, not ai-bible-gospels, not a new repo. Six of eight new modules are 60-80% copy-paste from existing youtubeoptermizer scripts; ai-bible-gospels is READ-ONLY per `feedback_repo_scope.md`; only ai-bible-gospels edit needed is the upstream `--skip-json2video` flag (separate Claude session handles that).
+- **Effort estimate corrected to ~1 full day**, not half-day. ASS karaoke + Windows FFmpeg subtitle-path escaping eat the time.
+- **Cost math corrected.** Net savings vs. JSON2Video is ~$1-2/video, not $3-4. The dependency-removal value is the bigger lever than the dollar savings. A `eleven_turbo_v2` A/B could double the dollar savings if Daniel quality holds.
+- **Forgot the `Co-Authored-By` trailer on commit 792a805** — did NOT amend (always-new-commits rule). User aware, opted not to fix.
 
 ## Open threads / next session starts here
-
-**TT — Tommy's manual queue** ([output/tt-comments-to-reply.md](output/tt-comments-to-reply.md)):
-- 30 reply-worthy comments, priority-sorted
-- ⚠ Canary may have posted on @wise5775 + @pointmansgroove — check their reply threads before adding another (avoid double-replies)
-- @reginajohnson33 confirmed safe (canary did NOT post)
-
-**TT optimization — remaining 4 of 6 levers** (bio done, on-screen CTA built-not-rendered):
-1. On-screen FOLLOW CTA overlay — render 3 variants from [src/cta-overlay/](src/cta-overlay/) via `npx remotion render src/index.ts cta-<variant> out/cta-<variant>.mov --codec=prores --prores-profile=4444`. Drop into CapCut at tail of every Short.
-2. Search-keyword caption pattern (lead with exact search phrase, not hashtag wall)
-3. 2x/day posting at 11:30am + 6:30pm ET (peak active windows from `FollowerActivity.csv`)
-4. Original sound from viral hook (free distribution via creators-using-sound)
-5. Faith Walk content reframed with Deut-28-style hook formula (currently underperforming 10:1 vs 12 Tribes)
-
-**Other:**
-- Scrape only covered viral post (50/74 comments). Other commented posts (Feb 11 / Apr 6 / Apr 27 FWL stitch) not scraped yet — ~20 more reply-worthy comments waiting.
-- `analytics/_tiktok-pilot-output.log` STILL untracked from prior sessions — decide .gitignore vs commit.
-- Lots of new `analytics/_tt-*.json` scaffolding files + screenshots untracked (cleanup or commit).
-- `docs/ReviewEditScenes.md` + commit `af1990c` (Custom Script 2.0) came in from another Claude instance — not this session's work, don't reconcile here.
+1. **Kickoff the local FFmpeg assembler build** "this week". Single source of truth is [`docs/local-ffmpeg-assembler.md`](../../../../../Claude/youtubeoptermizer/docs/local-ffmpeg-assembler.md) — module layout, FFmpeg two-pass command sketches, ASS Approach B inline-color-override pattern, risk list, 1-scene canary protocol, effort breakdown. **Task zero:** install FFmpeg (`where ffmpeg` returned empty as of 2026-05-18) and add `faster-whisper`, `av`, `requests` to [`requirements.txt`](../../../../../Claude/youtubeoptermizer/requirements.txt).
+2. **Coordinate with the ai-bible-gospels Claude session** for the `--skip-json2video` flag in `workflows/custom-script/generate.py`. Same precedent as `--voice-id` / `--kling-model` from 2026-05-16. Manifest shape is defined in the doc.
+3. **A/B Daniel voice on `eleven_turbo_v2` vs `_multilingual_v2`** as a canary-day detour — if quality holds, halves TTS cost.
+4. Prior session's TT optimization queue ([output/tt-comments-to-reply.md](../../../../../Claude/youtubeoptermizer/output/tt-comments-to-reply.md), 4 of 6 levers remaining including the CTA-overlay render) is still open — see git history before this session.
 
 ## Uncommitted work
 ```
  M analytics/post-optimization/Chart data.csv
  M analytics/post-optimization/Table data.csv
  M analytics/post-optimization/Totals.csv
-?? analytics/Content.csv
-?? analytics/FollowerActivity.csv
-?? analytics/FollowerGender.csv
-?? analytics/FollowerHistory.csv
-?? analytics/FollowerTopTerritories.csv
-?? analytics/Overview.csv
-?? analytics/Viewers.csv
-?? analytics/_tt-* (multiple scraper JSONs, logs, screenshots)
-?? docs/ReviewEditScenes.md  (from other Claude instance, not this session)
+?? analytics/Content.csv, FollowerActivity.csv, FollowerGender.csv,
+?? analytics/FollowerHistory.csv, FollowerTopTerritories.csv, Overview.csv, Viewers.csv
+?? docs/ReviewEditScenes.md
 ?? scripts/tt-comments-classify.py
-?? src/cta-overlay/  (Remotion project, deps installed, not yet rendered)
-?? output/tt-comments-to-reply.md
+?? src/cta-overlay/
 ```
+All carried over from earlier on 2026-05-18 — not touched this session.
