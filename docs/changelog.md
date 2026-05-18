@@ -20,6 +20,61 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ## Changes Log
 
+### May 17-18, 2026 — Custom Script 2.0 pipeline + first LoRA + Edom long-form video
+
+Shipped a complete production pipeline for verbatim-preserving cinematic Bible videos, trained the first channel-locked FLUX LoRA, and produced the Edom / Genesis 49 deep dive end-to-end. Why: AI Bible Gospels Custom Script Mode's Claude scene-generator paraphrases scripture (proven failure 2026-05-16 on the Edom render — 22 of 39 scenes had verbatim KJV summarized away). Custom Script 2.0 bypasses that step.
+
+#### 1. Custom Script 2.0 pipeline ([docs/custom-script-2.0.md](custom-script-2.0.md))
+- **Script Format v2** ([docs/script-format-v2.md](script-format-v2.md)) — authored `.txt` with `[Visual:]` / `[Motion:]` / `[Lighting:]` cues + `Narrator:` blocks
+- **Converter** ([scripts/script-to-scenes.py](../scripts/script-to-scenes.py)) — parses v2 format, auto-injects archetype identity (Israelite / Edomite / tribe-specific), routes light/heavy identity by scene content, auto-splits long scripts into Part 1 / Part 2, hard-blocks unsafe patterns
+- **Wrapper** ([scripts/render-via-pipeline.py](../scripts/render-via-pipeline.py)) — thin shell over ai-bible-gospels' `generate.py` with auto-loaded LoRA config, Daniel voice default, Kling model selector
+- **Patch renderer** ([scripts/render-patch.py](../scripts/render-patch.py)) — surgical re-render: mix N fresh FLUX+Kling clips with reused ones + new narration. Cut Part 1 re-render cost from ~$6 to ~$3.
+
+#### 2. Three small edits to ai-bible-gospels' `generate.py` (sibling repo)
+- `--voice-id` flag (default Daniel `onwK4e9ZLuTAKqWW03F9`)
+- `--kling-model` flag with full model map (v1.6 / v2.1 / v3.0 / v3.0-pro / o3 / o3-pro)
+- `--lora-url` / `--lora-trigger` / `--lora-scale` flags routing FLUX to `fal-ai/flux-lora` endpoint
+- Retry logic on FLUX + Kling (3 attempts, exponential backoff) for `ConnectionError` / `Timeout` / `5xx`; fail-fast on 4xx (billing/auth/rate-limit)
+- All defaults preserve prior behavior — web UI / other callers unchanged
+
+#### 3. First channel-locked FLUX LoRA — `aibgospels` trigger
+- Scraped fal.ai history via tRPC API ([scripts/scrape-fal-history-v2.py](../scripts/scrape-fal-history-v2.py)) — 308 records, 156 unique FLUX images, 153 with verbatim prompts as captions
+- Auto-organized into archetype subfolders ([scripts/organize-lora-references.py](../scripts/organize-lora-references.py)): israelite (90) / greek (16) / roman (11) / scene (31) after pruning bad Esau-melanated renders
+- Auto-captioned with `aibgospels [archetype]` prefix ([scripts/rewrite-lora-captions.py](../scripts/rewrite-lora-captions.py))
+- Trained on `fal-ai/flux-lora-fast-training` — 148 captioned images, 1500 steps, ~5 min, ~$10. LoRA URL saved to `training/lora-config.json`; wrapper auto-loads on every render.
+
+#### 4. Edom / Genesis 49 long-form video ([drafts/edom-genesis49-longform-2026-05-16.txt](../drafts/edom-genesis49-longform-2026-05-16.txt))
+- 20-min cinematic deep dive built on the Bible-in-Black archetype (per [competitors.md](competitors.md))
+- Topic chosen because `rjtM2N5MIGM` (channel's highest CTR at 7.84%) proved demand
+- Strategic motivation: YPP reapply gate 2026-07-08 needs more watch hours; long-form is the only path to 4,000 hr/yr (Shorts watch time doesn't count toward that path)
+- Rendered Part 1 (16 scenes / 5-6 min) + Part 2 (23 scenes / 11-13 min) at v1.6 + LoRA for validation. Production cut at o3-pro pending review.
+- Total cost across iterations: ~$50-70 in fal.ai (multiple failed renders before the framework solidified)
+
+#### 5. Theological + production rules locked as memory + framework
+Five framework rules saved to user-level memory so all future scripts inherit them automatically:
+- **Black Hebrew Israelite phrase required** — the literal phrase, not just "melanated"/"dark-brown" (proven fail mode)
+- **Esau/Edom = Caucasian European** per Hebrew Israelite canon (Genesis 25:25 origin)
+- **Jacob blessing = God-ordained, not theft** — never use "stolen / theft / tricked" framing
+- **Canonical identity framework** — the converter is the framework; identity language always-injects from one place
+- **Visual block list** — `embracing / kiss / face-to-face / romantic / lovers` hard-blocked; converter raises ValueError on any source containing them. Especially TWO MALE FIGURES in close-quarters contact is non-negotiable.
+
+#### 6. 12 Tribes → Nationality mapping ([docs/tribes-to-nationalities.md](tribes-to-nationalities.md))
+Extracted verbatim from `G:/My Drive/AI BIBLE GOSPELS/Book Folders/12 Tribes Movie/The Prophecy Revealed/The Prophecy Revealed.txt` — the channel's canonical theology doc. Each tribe mapped to modern nationality (Judah=African American, Issachar=Mexican/Aztec, Naphtali=Polynesian/Chilean, etc.). Converter auto-injects the nationality markers when a tribe name appears in a `[Visual:]` cue. Future tribe-specific scenes auto-render with the right look — no manual prompt-engineering required.
+
+#### 7. Outcome
+The pipeline produces Bible content where:
+- Scripture is verbatim from the 1611 KJV PDF (never paraphrased)
+- Black Hebrew Israelite identity is consistently rendered (LoRA + canonical framework)
+- Esau/Edomites render as Caucasian Europeans (theological inverse, enforced at converter)
+- Each tribe auto-renders with its specific nationality features
+- Forbidden visual patterns can't slip through (hard-blocked at parse time)
+- Failed renders don't kill the run (retry logic on transient errors)
+- Partial re-renders cost a fraction of full re-renders (patch script)
+
+**What's next:** Tommy uses the script via Custom Script Mode + Kling v3.0 for the production cut of the Edom video. After publish, monitor watch-hour impact on the YPP reapply math (currently 1,940 hr/yr pace; need 4,000 hr/yr by 2026-07-08).
+
+---
+
 ### April 26, 2026 — Phase A complete + manual cleanup captured + Maccabees playlist
 
 #### 1. AEO description bulk-update — Phase A finished

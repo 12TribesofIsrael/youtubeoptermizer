@@ -56,3 +56,23 @@ src/anchor-doc/package-lock.json
 src/shorts/out/
 src/shorts/public/clips/
 src/shorts/package-lock.json
+
+# Custom Script 2.0 — training data + generated artifacts. Scripts are
+# committed; the trained LoRA URL, ~150-image dataset, and scraper debug
+# dumps stay local only. Reference images are scraped from the user's
+# fal.ai history and bound to their account.
+training/lora-references/
+training/lora-dataset.zip
+training/lora-config.json
+training/fal-*.json
+training/fal-*.html
+training/fal-*.png
+
+# Generated scene JSON (regenerable from drafts/*.txt via scripts/script-to-scenes.py)
+output/scenes/
+# Debug compare downloads
+output/compare/
+# Ad-hoc analytics scratch files (TikTok pilot logs, comment dumps)
+analytics/_tt-*
+analytics/_tiktok-*
+output/tt-comments-*.md
