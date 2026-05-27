@@ -1,0 +1,23 @@
+{
+  "name": "cta-overlay",
+  "version": "1.0.0",
+  "description": "2-second branded FOLLOW CTA overlay — renders 3 variants with transparent background (alpha channel) for drop-in use over any TikTok/Short export.",
+  "private": true,
+  "scripts": {
+    "studio": "npx remotion studio src/index.ts",
+    "render:reward": "npx remotion render src/index.ts cta-reward out/cta-reward.mov --codec=prores --prores-profile=4444",
+    "render:curiosity": "npx remotion render src/index.ts cta-curiosity out/cta-curiosity.mov --codec=prores --prores-profile=4444",
+    "render:social": "npx remotion render src/index.ts cta-social out/cta-social.mov --codec=prores --prores-profile=4444",
+    "render:all": "npm run render:reward && npm run render:curiosity && npm run render:social"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.4.0"
+  }
+}
