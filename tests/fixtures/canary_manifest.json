@@ -1,0 +1,17 @@
+{
+  "topic": "canary",
+  "aspect": "16x9",
+  "voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "voice_speed": 0.9,
+  "_note": "Replace kling_url with a real Kling clip URL before running the canary. The narration_text is a short 12-word KJV phrase for quick TTS + timing validation.",
+  "scenes": [
+    {
+      "scene_id": "01",
+      "kling_url": "REPLACE_WITH_REAL_KLING_URL",
+      "narration_text": "In the beginning God created the heaven and the earth.",
+      "duration_hint": 6.0,
+      "prompt": "Ancient creation, dark void, divine light emerging, no text",
+      "motion": "slow-zoom-in"
+    }
+  ]
+}

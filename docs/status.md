@@ -1,165 +1,112 @@
 # AI Bible Gospels — Master Status Doc
-**Last Updated:** April 1, 2026
-**Channel:** @AIBIBLEGOSPELS | 5,876 subs | 764K views
+**Last Updated:** May 27, 2026
+**Channel:** @AIBIBLEGOSPELS
+
+---
+
+## YPP (Monetization)
+
+- **SUSPENDED** — both appeals rejected (Apr 15 + Apr 23), reason: "inauthentic content"
+- **Reapply date: July 8, 2026** (~6 weeks out)
+- Catalog cleanup and AEO work is allowed during the wait — old "do not edit" rules retired post-denial
+
+---
+
+## YouTube Channel Work
+
+| Phase | Status |
+|---|---|
+| Phase 1 — Cleanup (30 deleted, 154 titles cleaned) | ✅ Done |
+| Phase 2 — Title optimization (84 Part titles, 50 em dash fixes) | ✅ Done |
+| Phase 3 — Thumbnails (20 custom, brand guide applied) | ✅ Done |
+| Phase 4A — Playlists (14/14), trailer, end screens, keywords | ✅ Done |
+| AEO descriptions — all 213 videos, constants block on every video | ✅ Done Apr 26 |
+| Phase 4B — Long-form content (4–6 animated explainers, 10–20 min) | 🔲 Not started |
 
 ---
 
 ## Platform API Status
 
-| Platform | API Keys | Script Built | Can Post New | Can Edit Existing | Status |
-|----------|----------|-------------|--------------|-------------------|--------|
-| Facebook | ✅ | ✅ | ✅ | ✅ | 🟢 LIVE |
-| Instagram | ✅ | ✅ | ✅ | ❌ | 🟡 App Review SUBMITTED 4/17 — waiting for approval (1-10 business days) |
-| X/Twitter | ✅ | ✅ | ❌ | ❌ | 🔴 Free tier = no posting via API |
-| TikTok | ❌ | ❌ | ❌ | ❌ | ⬜ Not started |
+| Platform | Status | Notes |
+|---|---|---|
+| YouTube API | 🟢 Live | OAuth recovered Apr 27 with fresh Desktop client |
+| Instagram API | 🟢 Approved | App Review approved Apr 27; IG silently no-ops caption edits on existing posts — use pinned comments instead |
+| Facebook API | 🟢 Live | FB Page token required for writes (User token rejected) |
+| TikTok API | 🟢 Approved | Content Posting API live May 6 — drafts/inbox mode; re-OAuth required once on prod creds |
+| Meta access token | 🔴 Recurring issue | Expires every ~60 days; has broken ~6 times; needs automated refresh |
 
 ---
 
-## What's Been Done
+## Video Production Pipeline
 
-### YouTube Channel
-- ✅ Deleted 30 low-performing / duplicate videos
-- ✅ Cleaned @AIBIBLEGOSPELS from 154 titles
-- ✅ Fixed 84 "Part X" titles (renamed to descriptive titles)
-- ✅ Fixed 50 em dash formatting issues
-- ✅ 20 custom thumbnails uploaded (brand guide applied)
-- ✅ 14 playlists created and organized
-- ✅ Channel trailer script written
+### Custom Script 2.0 (BUILT)
+Verbatim-preserving Bible video pipeline — bypasses the AI scene generator.
 
-### Facebook
-- ✅ Meta developer app created and published
-- ✅ API keys saved to .env
-- ✅ `scripts/facebook-post.py` built
-- ✅ **8 viral posts live on Facebook Page** (April 1, 2026)
-  - identity, prophecy, identity_chart, suppressed_truth, awe, tribe_engagement, cinematic, current_events
+```
+drafts/X.txt
+  → scripts/script-to-scenes.py   (verse → scenes JSON, injects identity stacks)
+  → output/scenes/X.json
+  → scripts/render-via-pipeline.py (Kling + ElevenLabs + JSON2Video)
+  → MP4
+```
 
-### Instagram
-- ✅ Instagram Business ID connected
-- ✅ `scripts/meta-update-posts.py` built (538 posts ready to update)
-- ❌ **Blocked by Meta App Review** — error #10, insufficient permissions
-- 🔲 TODO: Submit App Review request in Meta dashboard
-- 🔲 Once approved: run `python scripts/meta-update-posts.py instagram --live`
+- LoRA auto-loaded from `training/lora-config.json` (`aibgospels` trigger)
+- Identity stacks (MELANATED_SUFFIX / EDOM_SUFFIX) inject on every scene
+- Daniel voice: `onwK4e9ZLuTAKqWW03F9` (locked — proven viral)
 
-### X / Twitter
-- ✅ Developer account created (console.x.com)
-- ✅ API keys saved to .env (Consumer Key, Secret, Access Token, Access Secret)
-- ✅ `scripts/twitter-post.py` built (8 viral tweets ready)
-- ❌ **Blocked by Free tier** — Pay-per-use plan does not support OAuth 1.0a posting
-- 🔲 Option: Use Repurpose.io to post to X instead
-- 🔲 Option: Upgrade to X Basic ($100/month) for API posting
+### Local FFmpeg Assembler (PLANNED — NOT BUILT)
+Replaces JSON2Video as the last-mile assembly step. ~$1–2/video savings + removes external dependency.
 
-### TikTok
-- ⬜ API keys not yet obtained
-- ⬜ Apply at developers.tiktok.com (1-3 day approval)
-- 🔲 Once approved: build `scripts/tiktok-post.py`
+- Full spec: [`docs/local-ffmpeg-assembler.md`](local-ffmpeg-assembler.md)
+- **Task zero: FFmpeg not on PATH** — install first
+- Estimated build time: ~1 full day
+- Key complexity: ASS karaoke needs Approach B (per-word `\1c` color overrides), not just `\k` clock advance
 
 ---
 
-## Existing Posts — Can We Fix Them?
+## TikTok / Social
 
-| Platform | Fix Existing Captions? | Method |
-|----------|----------------------|--------|
-| Facebook | ✅ Yes — via API | `meta-update-posts.py facebook --live` |
-| Instagram | ⏳ Pending App Review | `meta-update-posts.py instagram --live` |
-| X/Twitter | ❌ No — API blocked | Manual only |
-| TikTok | ❌ No — TikTok API does not allow caption edits on existing posts | Manual only |
-
-**Bottom line on existing posts for TikTok/X:** There is no API (paid or free) that lets you edit captions on posts that are already published on TikTok or X. Those platforms don't expose that endpoint. Only Instagram and Facebook allow caption edits via API.
-
----
-
-## Repurpose.io — What It Can and Can't Do
-
-| Task | Repurpose Can Do? |
-|------|------------------|
-| Auto-post new videos to TikTok, IG, X, FB | ✅ Yes |
-| Add captions/descriptions to NEW posts | ✅ Yes — via caption templates |
-| Edit captions on EXISTING posts | ❌ No |
-| Fix old TikTok/X/IG posts | ❌ No |
-
-**The fix for existing posts on TikTok and X:** Manual. You would need to go into each post and edit the caption by hand — there is no automation path.
+| Item | Status |
+|---|---|
+| TT comment scraper | ✅ Built — `analytics/_tiktok-comments-actions-v4.json` |
+| TT comment classifier | ✅ Built — `scripts/tt-comments-classify.py` (6 buckets × 5 reply templates) |
+| TT comment reply queue | 🔲 4 of 6 levers remaining — `output/tt-comments-to-reply.md` (manual paste) |
+| CTA overlay Remotion (3 variants) | ✅ Built — `src/cta-overlay/` — **not yet rendered** |
+| TikTok bio → Telegram funnel | ✅ Live — bio sends to t.me/aibiblegospels |
+| Telegram channel | ✅ Live — t.me/aibiblegospels |
 
 ---
 
-## Active Scripts
+## Community / Funnel
 
-| Script | What It Does | Command |
-|--------|-------------|---------|
-| `scripts/facebook-post.py` | Post 8 viral posts to Facebook Page | `python scripts/facebook-post.py --live` |
-| `scripts/meta-update-posts.py` | Update all FB/IG post captions | `python scripts/meta-update-posts.py --live` |
-| `scripts/twitter-post.py` | Post 8 viral tweets (blocked — see X status) | `python scripts/twitter-post.py --live` |
-| `scripts/channel-status.py` | Pull live YouTube metrics | `python scripts/channel-status.py` |
+- **Funnel:** TikTok hook → Telegram (primary) → email (aibiblegospels.com) → YouTube
+- **FB Group** is hub #2
+- Skip Discord, X community, TT community features
 
 ---
 
-## Repurpose.io — Capabilities Reference
+## What To Do Next (Priority Order)
 
-| Task | Repurpose Can Do? |
-|------|------------------|
-| Auto-post new videos to TikTok, IG, X, FB, YouTube Shorts | ✅ Yes |
-| Add caption templates to NEW posts | ✅ Yes |
-| Create audiograms from audio clips | ✅ Yes |
-| Edit captions on EXISTING posts | ❌ No |
-| Generate AI captions | ❌ No |
-| Write blog posts from video | ❌ No |
-| Create quote graphics | ❌ No |
-| Summarize video into text posts | ❌ No |
-| Fix old TikTok/X/IG posts | ❌ No |
-
-**Bottom line:** Repurpose handles distribution only — it moves the video file to each platform. It does not generate or edit any content. Caption templates must be written manually and pasted into Repurpose settings.
-
-**Future plan:** Build a separate `repurpose-engine` project that uses Claude API + Whisper to auto-generate all 33 pieces of content from 1 YouTube video. Keep it separate from this repo.
+1. **Build the FFmpeg assembler** — single-day build, unblocks video production from JSON2Video. [`docs/local-ffmpeg-assembler.md`](local-ffmpeg-assembler.md) is the spec. Start: install FFmpeg.
+2. **Render the CTA overlay** — `src/cta-overlay/` is built, 3 FOLLOW CTA variants at 1080×1920 ProRes 4444, drop into CapCut tail of any Short.
+3. **TT comment replies** — 4 levers left in priority queue (manual paste, not auto-reply).
+4. **Phase 4B long-form** — 4–6 animated explainer videos before July 8 YPP reapply. Watch time from long-form directly supports the appeal.
+5. **Meta token rotation** — automate the 60-day refresh cycle so it stops breaking.
 
 ---
 
-## What Was Done (April 3-4, 2026)
+## Key Files Reference
 
-- ✅ New PC set up — codebase built, .env repopulated with Meta credentials
-- ✅ Facebook Page ID (601690023018873) and Instagram Business ID (17841454335324028) retrieved via API
-- ✅ **Repurpose AI auto-generate captions DISABLED** on all 4 workflows — was appending generic garbage to every post
-- ✅ Facebook bad caption fixed via API (`scripts/fix-facebook-captions.py`) — 1 post cleaned
-- ✅ TikTok, X, Instagram bad captions fixed manually
-- ✅ Meta App Review re-submitted with expanded permissions:
-  - instagram_business_basic (required)
-  - instagram_business_manage_comments
-  - instagram_business_content_publish
-  - instagram_business_manage_messages
-  - Human Agent
-- ✅ API test calls made for all permissions via Graph API Explorer
-- ✅ Site URL fixed in App Review — was bornmadebossesapparel.com → now youtube.com/@AIBIBLEGOSPELS
-
-## What Was Done (April 1-2, 2026)
-
-- ✅ Facebook — 8 viral posts live via API (`scripts/facebook-post.py`)
-- ✅ Repurpose.io — all 4 platform workflows configured (IG, TikTok, X, Facebook)
-- ✅ Caption templates added to all 4 workflows (see `docs/repurpose-templates.md`)
-- ✅ First comment (YouTube link) enabled on all 4 workflows
-- ✅ TikTok bumped to 3 posts/day
-- ✅ All 4 platform bios updated (Facebook, TikTok, Instagram, X)
-- ✅ 15 YouTube video titles rewritten with viral hooks
-- ✅ YouTube OAuth token refreshed
-- ✅ X/Twitter API keys saved + `scripts/twitter-post.py` built (8 tweets ready)
-- ✅ Google Drive content workflow planned — son to create `New-Shorts\` subfolder + 4 new Repurpose workflows
-
-## Immediate Next Steps (Priority Order)
-
-1. 🟡 **Meta App Review — SUBMITTED April 17** — Review in progress, expected approval by April 28. Once approved → run `python scripts/meta-update-posts.py instagram --live` to fix all 538 IG captions.
-2. 🔲 **Son: Create New-Shorts\ subfolder** in `G:\My Drive\AI BIBLE GOSPELS\Videos\` and set up 4 new Repurpose workflows pointing to it (one per platform — IG, TikTok, X, FB)
-3. ✅ **Fix X profile name** — changed to "AI Bible Gospels" (April 2, 2026)
-4. 🔲 **Hit 1,000 TikTok followers** — then add YouTube link to bio (currently at 470)
-5. ~~**Apply for TikTok API**~~ — **DEPRIORITIZED**: Repurpose already handles posting. API only adds analytics/comment replies — not worth the effort until 10K+ followers.
-6. 🔲 **Refresh Meta token** every 60 days — next due ~June 1, 2026
-7. 🔲 **Long-form content** — need 4-6 animated explainer videos (10-20 min) for ad revenue
-8. 🔲 **April 7** — pull fresh YouTube Studio CSVs to measure CTR/impression changes from March optimization
-
----
-
-## Token Expiry Tracker
-
-| Token | Expires | How to Refresh |
-|-------|---------|---------------|
-| META_ACCESS_TOKEN | ~60 days (short-lived) | Graph API Explorer → Generate Access Token |
-| TWITTER keys | Never (until regenerated) | X Developer Console → Apps → Keys |
-| TIKTOK_ACCESS_TOKEN | Not set up yet | — |
-
-**Note:** Meta tokens from Graph API Explorer are short-lived (1-2 hours). To get a 60-day token: use the Token Debugger at developers.facebook.com/tools/debug/accesstoken → Extend Token.
+| File | Purpose |
+|---|---|
+| `docs/status.md` | This file — master current state |
+| `docs/project-plan.md` | Full original roadmap with phases (reference only — some phases now complete) |
+| `docs/local-ffmpeg-assembler.md` | FFmpeg assembler spec (module layout, commands, risk list) |
+| `docs/api-automation-plan.md` | 5-script blueprint for AEO+brand-awareness across IG/FB/YT/TT |
+| `analytics/post-optimization/Table data.csv` | Per-video metrics (latest export) |
+| `docs/changelog.md` | Every change with dates and measurement plan |
+| `src/youtube/client.py` | YouTube API client |
+| `scripts/script-to-scenes.py` | Custom Script 2.0 converter |
+| `scripts/render-via-pipeline.py` | Custom Script 2.0 renderer |
+| `src/cta-overlay/` | Remotion CTA overlay project |
+| `output/tt-comments-to-reply.md` | TikTok comment reply priority queue |

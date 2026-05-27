@@ -76,3 +76,11 @@ output/compare/
 analytics/_tt-*
 analytics/_tiktok-*
 output/tt-comments-*.md
+
+# FFmpeg assembler intermediates and output (scripts/assemble-video.py)
+output/clips/
+output/audio/
+output/subs/
+output/scenes_tmp/
+output/renders/
+tools/ffmpeg/
