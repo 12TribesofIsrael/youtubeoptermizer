@@ -19,7 +19,7 @@ def _download_one(scene_id: str, url: str, out_path: Path, retries: int = 3) -> 
             size = out_path.stat().st_size
             if size < MIN_SIZE_BYTES:
                 raise RuntimeError(f"Downloaded clip too small ({size} bytes) — likely an error page")
-            print(f"  [{scene_id}] downloaded {size / (1024*1024):.1f} MB → {out_path.name}")
+            print(f"  [{scene_id}] downloaded {size / (1024*1024):.1f} MB -> {out_path.name}")
             return out_path
         except Exception as e:
             if attempt == retries:

@@ -15,11 +15,11 @@ ROOT = Path(__file__).resolve().parents[2]
 # Resolution and filter chains by aspect/strategy
 SCALE_FILTERS = {
     "16x9": {
-        "crop":     "scale=1920:1080:force_original_aspect_ratio=cover,crop=1920:1080,setsar=1,fps=30",
-        "blur-pad": "scale=1920:1080:force_original_aspect_ratio=cover,crop=1920:1080,setsar=1,fps=30",
+        "crop":     "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1,fps=30",
+        "blur-pad": "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1,fps=30",
     },
     "9x16": {
-        "crop":     "scale=1080:1920:force_original_aspect_ratio=cover,crop=1080:1920,setsar=1,fps=30",
+        "crop":     "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30",
         "blur-pad": (
             "[v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,"
             "setsar=1,fps=30[vout]"
@@ -141,11 +141,12 @@ def pass_a_all(
 
 
 def write_concat_list(scenes: list[dict], scene_paths: dict[str, Path], out_path: Path) -> Path:
-    """Write FFmpeg concat demuxer file listing all scene MP4s in order."""
+    """Write FFmpeg concat demuxer file listing all scene MP4s in order.
+    Uses absolute paths so FFmpeg doesn't resolve relative to the concat file's dir."""
     lines = []
     for scene in scenes:
         sid = scene["scene_id"]
-        p = scene_paths[sid]
+        p = scene_paths[sid].resolve()
         lines.append(f"file '{str(p).replace(chr(92), '/')}'")
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out_path
