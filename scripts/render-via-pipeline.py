@@ -42,6 +42,10 @@ def main():
                         help="Forward --scenes-only to generate.py — skips FLUX/Kling/JSON2Video (zero cost)")
     parser.add_argument("--post-produce", action="store_true",
                         help="Forward --post-produce to generate.py — runs intro/outro/logo overlay")
+    parser.add_argument("--skip-json2video", action="store_true",
+                        help="Stop after Kling; write clips_manifest.json then assemble locally with FFmpeg")
+    parser.add_argument("--manifest-out", default=None,
+                        help="Where to write clips_manifest.json (default: output/<topic>_manifest.json in ai-bible-gospels)")
     parser.add_argument("--no-lora", action="store_true",
                         help="Skip LoRA even if training/lora-config.json exists")
     parser.add_argument("--lora-url", default=None,
@@ -87,6 +91,10 @@ def main():
         cmd.append("--scenes-only")
     if args.post_produce:
         cmd.append("--post-produce")
+    if args.skip_json2video:
+        cmd.append("--skip-json2video")
+    if args.manifest_out:
+        cmd.extend(["--manifest-out", args.manifest_out])
 
     print(f"Running: {' '.join(cmd)}")
     print(f"  cwd: {PIPELINE_DIR}\n")

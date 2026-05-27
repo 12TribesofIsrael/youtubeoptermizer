@@ -1,0 +1,26 @@
+{
+  "topic": "canary3",
+  "aspect": "16x9",
+  "voice_id": "onwK4e9ZLuTAKqWW03F9",
+  "voice_speed": 0.9,
+  "scenes": [
+    {
+      "scene_id": "01",
+      "kling_url": "https://v3b.fal.media/files/b/0a951691/vWxfF5H5ozBXT9pYf5CZk_output.mp4",
+      "narration_text": "In the beginning God created the heaven and the earth.",
+      "duration_hint": 6.0
+    },
+    {
+      "scene_id": "02",
+      "kling_url": "https://v3b.fal.media/files/b/0a95169e/Aa4qy_0hT8kiGL26jz1lL_output.mp4",
+      "narration_text": "And the earth was without form, and void; and darkness was upon the face of the deep.",
+      "duration_hint": 8.0
+    },
+    {
+      "scene_id": "03",
+      "kling_url": "https://v3b.fal.media/files/b/0a9516ab/teOYNBXIe7yCwOxsWcfIE_output.mp4",
+      "narration_text": "And the Spirit of God moved upon the face of the waters.",
+      "duration_hint": 6.0
+    }
+  ]
+}
