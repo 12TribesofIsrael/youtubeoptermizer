@@ -179,5 +179,5 @@ def pass_b(
     ]
     _run(cmd, "passB/concat+subs")
     size_mb = out_path.stat().st_size / (1024 * 1024)
-    print(f"Pass B complete → {out_path.name} ({size_mb:.1f} MB)\n")
+    print(f"Pass B complete -> {out_path.name} ({size_mb:.1f} MB)\n")
     return out_path

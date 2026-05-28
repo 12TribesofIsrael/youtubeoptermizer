@@ -125,7 +125,7 @@ def _dialogue_line(chunk_start: float, chunk_end: float, chunk_words: list[dict]
             duration_s = chunk_words[i + 1]["start"] - w["start"]
         else:
             duration_s = w["end"] - w["start"]
-        cs = _cs(duration_s)
+        cs = max(2, _cs(duration_s))  # floor at 2cs — Whisper timing glitches can produce 0
         # Yellow while active, then snap back to gray
         text_parts.append(
             f"{{\\1c{YELLOW}\\k{cs}}}{word_text}{{\\1c{GRAY}}}"

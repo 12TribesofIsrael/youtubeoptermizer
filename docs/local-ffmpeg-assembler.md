@@ -1,6 +1,8 @@
-# Local FFmpeg Assembler — Planned (Not Built Yet)
+# Local FFmpeg Assembler
 
-**Status:** PLANNED — design complete, implementation deferred. Picked up next time we sit down to kick this off. ~1 full day of focused work when we start.
+**Status:** BUILT — 2026-05-27. 1-scene canary ✅, 3-scene A/V sync ✅, 19-scene full validation (1 Maccabees Ch.3) ✅ (512.8 MB output). Pending: user VLC review, then Modal deployment.
+
+**Entry point:** `python scripts/assemble-video.py --manifest <clips_manifest.json>`
 
 A local-only video assembler that replaces JSON2Video as the last-mile step in the Custom Script 2.0 pipeline. Ingests 16 Kling MP4 URLs + narration text → produces the same branded MP4 that JSON2Video currently produces, but assembled on this machine with FFmpeg.
 

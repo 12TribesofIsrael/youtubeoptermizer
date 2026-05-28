@@ -95,22 +95,26 @@ def main():
     # --- Phase 3: Whisper word timestamps ---
     words_by_scene = transcribe_all(scenes, audio_paths, args.whisper_model)
 
-    # --- Phase 4: Probe audio durations for subtitle offsets ---
-    audio_durations = {
-        sid: probe(audio_paths[sid])["duration_s"]
-        for sid in audio_paths
-    }
-
-    # --- Phase 5: Write merged ASS ---
-    ass_path = dirs["subs"] / "merged.ass"
-    write_merged_ass(scenes, words_by_scene, audio_durations, ass_path, aspect)
-    print(f"Subtitles written → {ass_path.name}\n")
-
-    # --- Phase 6: Pass A (per-scene encode) ---
+    # --- Phase 4: Pass A (per-scene encode) ---
+    # Must run before subtitle writing so we can probe the actual output durations.
+    # Each Pass A output is raw_audio + 0.2s (apad). Probing here ensures cumulative
+    # subtitle offsets account for that padding — raw MP3 durations would drift 0.2s
+    # per scene (2.6s off by scene 14, which makes karaoke race ahead of speech).
     scene_paths = pass_a_all(
         scenes, clip_paths, audio_paths, dirs["scenes_tmp"],
         aspect, args.vertical_strategy
     )
+
+    # --- Phase 5: Probe Pass A output durations for exact subtitle offsets ---
+    scene_durations = {
+        scene["scene_id"]: probe(scene_paths[scene["scene_id"]])["duration_s"]
+        for scene in scenes
+    }
+
+    # --- Phase 6: Write merged ASS using actual scene durations ---
+    ass_path = dirs["subs"] / "merged.ass"
+    write_merged_ass(scenes, words_by_scene, scene_durations, ass_path, aspect)
+    print(f"Subtitles written -> {ass_path.name}\n")
 
     # --- Phase 7: Write concat list ---
     concat_list = dirs["scenes_tmp"] / "concat_list.txt"
