@@ -78,10 +78,16 @@ def pass_a(
     out_path: Path,
     aspect: str,
     vertical_strategy: str = "crop",
+    sfx_path: "Path | None" = None,
+    sfx_volume: float = 0.12,
 ) -> Path:
     """
     Loop video clip to narration length, mux narration audio, normalize codec params.
     Identical codec output across all scenes is required for the concat demuxer in Pass B.
+
+    When sfx_path is provided, mixes SFX under narration via amix at sfx_volume.
+    SFX is stream-looped so short clips work for any scene length.
+    Narration stays at full volume; SFX fades in over 0.5s.
     """
     if out_path.exists():
         print(f"  [{scene_id}] Pass A cached: {out_path.name}")
@@ -89,18 +95,43 @@ def pass_a(
 
     vf = SCALE_FILTERS[aspect][vertical_strategy]
 
-    cmd = [
-        "-y",
-        "-stream_loop", "-1", "-i", str(clip_path),
-        "-i", str(audio_path),
-        "-map", "0:v:0", "-map", "1:a:0",
-        "-vf", vf,
-        "-af", "apad=pad_dur=0.2",
-        "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
-        "-shortest", "-fflags", "+genpts",
-        str(out_path),
-    ]
+    if sfx_path is not None:
+        # Three inputs: video (stream-looped), narration, SFX (stream-looped)
+        # amix: narration at 1.0, SFX at sfx_volume with 0.5s fade-in
+        # duration=first anchors to narration length so SFX loops/truncates cleanly
+        filter_complex = (
+            f"[1:a]volume=1.0[narr];"
+            f"[2:a]volume={sfx_volume:.3f},afade=t=in:st=0:d=0.5[sfx];"
+            f"[narr][sfx]amix=inputs=2:duration=first:dropout_transition=0[aout]"
+        )
+        cmd = [
+            "-y",
+            "-stream_loop", "-1", "-i", str(clip_path),
+            "-i", str(audio_path),
+            "-stream_loop", "-1", "-i", str(sfx_path),
+            "-map", "0:v:0",
+            "-vf", vf,
+            "-filter_complex", filter_complex,
+            "-map", "[aout]",
+            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+            "-shortest", "-fflags", "+genpts",
+            str(out_path),
+        ]
+    else:
+        cmd = [
+            "-y",
+            "-stream_loop", "-1", "-i", str(clip_path),
+            "-i", str(audio_path),
+            "-map", "0:v:0", "-map", "1:a:0",
+            "-vf", vf,
+            "-af", "apad=pad_dur=0.2",
+            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+            "-shortest", "-fflags", "+genpts",
+            str(out_path),
+        ]
+
     _run(cmd, f"passA/{scene_id}")
     print(f"  [{scene_id}] Pass A done → {out_path.name}")
     return out_path
@@ -113,18 +144,30 @@ def pass_a_all(
     scenes_tmp_dir: Path,
     aspect: str,
     vertical_strategy: str = "crop",
+    sfx_paths: "dict[str, tuple[Path | None, float]] | None" = None,
     max_workers: int = 2,
 ) -> dict[str, Path]:
-    """Run Pass A for all scenes in parallel (max_workers=2 to avoid thrashing)."""
-    print(f"Pass A: encoding {len(scenes)} scenes (up to {max_workers} parallel)...")
+    """Run Pass A for all scenes in parallel (max_workers=2 to avoid thrashing).
+
+    sfx_paths: optional dict mapping scene_id -> (sfx_path, sfx_volume).
+               Scenes without an entry, or with sfx_path=None, get no SFX mix.
+    """
+    sfx_paths = sfx_paths or {}
+    sfx_count = sum(1 for p, _ in sfx_paths.values() if p is not None)
+    print(
+        f"Pass A: encoding {len(scenes)} scenes "
+        f"({sfx_count} with SFX, up to {max_workers} parallel)..."
+    )
     results: dict[str, Path] = {}
     futures = {}
     with ThreadPoolExecutor(max_workers=max_workers) as pool:
         for scene in scenes:
             sid = scene["scene_id"]
             out_path = scenes_tmp_dir / f"scene_{sid}.mp4"
+            sfx_path, sfx_vol = sfx_paths.get(sid, (None, 0.12))
             fut = pool.submit(
-                pass_a, sid, clip_paths[sid], audio_paths[sid], out_path, aspect, vertical_strategy
+                pass_a, sid, clip_paths[sid], audio_paths[sid], out_path,
+                aspect, vertical_strategy, sfx_path, sfx_vol,
             )
             futures[fut] = sid
         for fut in as_completed(futures):

@@ -1,0 +1,101 @@
+{
+  "_note": "Library-based SFX map. Download files from pixabay.com/sound-effects/ and save to scripts/assemble/sfx_library/<filename>. All files are free for commercial use under the Pixabay Content License (no attribution required).",
+  "default_volume": 0.12,
+  "moods": {
+    "void-opening": {
+      "file": "cinematic-sub-bass-drone.mp3",
+      "description": "Deep sub-bass drone, dark void, minimal — cold opens, black screen, single ember moments",
+      "pixabay_query": "cinematic sub bass drone dark ambience",
+      "fallback": "golden-ambient"
+    },
+    "ancient-river": {
+      "file": "river-birds-ambient.mp3",
+      "description": "Gentle river, birdsong, warm outdoor air — Eden, Tigris/Euphrates, fertile valley scenes",
+      "pixabay_query": "river birds nature ambient peaceful flowing water",
+      "fallback": "golden-ambient"
+    },
+    "ancient-city": {
+      "file": "ancient-city-ambience.mp3",
+      "description": "Distant crowd murmur, open-air city, warm day — Babylon, Nimrod, tower of Babel, early civilization",
+      "pixabay_query": "ancient city crowd ambience outdoor market murmur",
+      "fallback": "golden-ambient"
+    },
+    "desert-wind": {
+      "file": "desert-wind-ambient.mp3",
+      "description": "Dry desert wind, sparse, open — wilderness, Sahara caravans, nomads, sand dunes, Abraham's journey",
+      "pixabay_query": "desert wind ambient dry sparse outdoor",
+      "fallback": "golden-ambient"
+    },
+    "ocean-ship": {
+      "file": "ocean-waves-ship.mp3",
+      "description": "Ocean waves, creaking wood hull — Phoenician ships, Mediterranean trade, Atlantic crossing, slave ships",
+      "pixabay_query": "ocean waves sailing ship wood creak ambient",
+      "fallback": "somber-grief"
+    },
+    "triumph-crowd": {
+      "file": "triumph-crowd-distant.mp3",
+      "description": "Distant crowd, celebration, imperial scale — Mansa Musa pilgrimage, empire processions, victories",
+      "pixabay_query": "crowd cheering distant triumph outdoor ambient",
+      "fallback": "golden-ambient"
+    },
+    "somber-grief": {
+      "file": "somber-wind-low.mp3",
+      "description": "Low, mournful wind, minor tone — exile, captivity, dispersion, Atlantic crossing grief",
+      "pixabay_query": "sad ambient dark drone wind mournful cinematic",
+      "fallback": "desert-wind"
+    },
+    "study-library": {
+      "file": "quiet-interior-ambient.mp3",
+      "description": "Quiet interior, soft ambience, lamplight feel — Timbuktu scholars, manuscripts, libraries, scrolls",
+      "pixabay_query": "quiet library interior ambient peaceful indoor",
+      "fallback": "golden-ambient"
+    },
+    "map-animation": {
+      "file": "minimal-transition-ambient.mp3",
+      "description": "Minimal, transitional — map animations, glowing migration lines, chapter cards",
+      "pixabay_query": "minimal ambient drone transition cinematic subtle",
+      "fallback": "golden-ambient"
+    },
+    "vision-divine": {
+      "file": "ethereal-sacred-ambient.mp3",
+      "description": "Ethereal, sacred, minimal — Ancient of Days vision, divine light, abstract silhouette scenes",
+      "pixabay_query": "ethereal sacred ambient choir drone spiritual",
+      "fallback": "golden-ambient"
+    },
+    "resurrection": {
+      "file": "wind-building-hopeful.mp3",
+      "description": "Wind rising, building to hope — Ezekiel dry bones, valley awakening, bones rising, final sunrise",
+      "pixabay_query": "wind building cinematic hopeful rising ambient",
+      "fallback": "golden-ambient"
+    },
+    "throne-royal": {
+      "file": "royal-court-ambient.mp3",
+      "description": "Formal, warm, stately — throne rooms, Solomon's court, Queen of Sheba, Hebrew kings",
+      "pixabay_query": "royal court ambient stately warm indoor",
+      "fallback": "golden-ambient"
+    },
+    "golden-ambient": {
+      "file": "cinematic-golden-pad.mp3",
+      "description": "Warm cinematic pad, golden, revelatory — default for any scene without a more specific match",
+      "pixabay_query": "cinematic ambient warm orchestral pad golden",
+      "fallback": null
+    }
+  },
+  "keyword_rules": [
+    ["void-opening",   ["black screen", "no music yet", "sub-bass swell", "single ember", "void", "deep navy void"]],
+    ["vision-divine",  ["ancient of days", "only light and majesty", "fiery flame", "abstract", "awe", "silhouette", "do not render"]],
+    ["resurrection",   ["dry bones", "valley of", "breath returning", "risen host", "bones rise", "valley full", "bone came to bone"]],
+    ["somber-grief",   ["slave ship", "slave", "captive", "somber", "grief", "cold palette", "holds of the ships", "loaded onto ships"]],
+    ["study-library",  ["library", "manuscript", "timbuktu", "scholar", "lamplight", "books", "sankore", "reading"]],
+    ["triumph-crowd",  ["pilgrimage", "mansa musa", "procession", "tens of thousands", "immense procession"]],
+    ["ocean-ship",     ["ship at anchor", "sailing ship", "atlantic", "creaking", "ocean waves", "phoenician harbor", "slave ship"]],
+    ["desert-wind",    ["sahara", "desert", "dunes", "camel", "caravan", "wilderness", "sand", "trans-saharan"]],
+    ["ancient-city",   ["babylon", "ziggurat", "tower of babel", "city of brick", "babel", "nimrod", "dispersing"]],
+    ["ancient-river",  ["garden", "eden", "tigris", "euphrates", "fertile", "mesopotamia", "river delta", "reed boats"]],
+    ["throne-royal",   ["throne", "royal court", "solomon", "enthroned", "crowned", "king of kings", "court"]],
+    ["ocean-ship",     ["mediterranean", "phoenician ship", "harbor", "cedar ship", "tyrion"]],
+    ["map-animation",  ["map", "glowing line", "migration line", "golden trail", "migration", "gold trail"]],
+    ["ancient-city",   ["sumerian", "lagash", "ancient city", "marketplace", "wealthy"]],
+    ["golden-ambient", []]
+  ]
+}

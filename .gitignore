@@ -85,6 +85,9 @@ output/scenes_tmp/
 output/renders/
 tools/ffmpeg/
 
+# SFX library — MP3s downloaded locally from Pixabay, not committed (binary assets)
+scripts/assemble/sfx_library/*.mp3
+
 # "From Babylon to Timbuktu" — copyrighted book (Rudolph R. Windsor, 1969).
 # The source scan, OCR full text, and any verbatim transcripts/derivatives stay
 # LOCAL ONLY; this repo is public. NOTE: our ORIGINAL documentary script

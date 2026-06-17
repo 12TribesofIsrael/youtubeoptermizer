@@ -33,6 +33,7 @@ from assemble.transcribe import transcribe_all
 from assemble.durations import probe
 from assemble.ass_writer import write_merged_ass
 from assemble.ffmpeg_build import pass_a_all, write_concat_list, pass_b
+from assemble.sfx import resolve_sfx
 
 FONTS_DIR = ROOT / "scripts" / "assemble" / "fonts"
 DANIEL_VOICE_ID = "onwK4e9ZLuTAKqWW03F9"
@@ -95,6 +96,12 @@ def main():
     # --- Phase 3: Whisper word timestamps ---
     words_by_scene = transcribe_all(scenes, audio_paths, args.whisper_model)
 
+    # --- Phase 3.5: Resolve SFX paths from library (no API call) ---
+    sfx_paths = {scene["scene_id"]: resolve_sfx(scene) for scene in scenes}
+    sfx_count = sum(1 for p, _ in sfx_paths.values() if p is not None)
+    if sfx_count:
+        print(f"SFX: {sfx_count}/{len(scenes)} scenes have library audio.\n")
+
     # --- Phase 4: Pass A (per-scene encode) ---
     # Must run before subtitle writing so we can probe the actual output durations.
     # Each Pass A output is raw_audio + 0.2s (apad). Probing here ensures cumulative
@@ -102,7 +109,7 @@ def main():
     # per scene (2.6s off by scene 14, which makes karaoke race ahead of speech).
     scene_paths = pass_a_all(
         scenes, clip_paths, audio_paths, dirs["scenes_tmp"],
-        aspect, args.vertical_strategy
+        aspect, args.vertical_strategy, sfx_paths=sfx_paths,
     )
 
     # --- Phase 5: Probe Pass A output durations for exact subtitle offsets ---
