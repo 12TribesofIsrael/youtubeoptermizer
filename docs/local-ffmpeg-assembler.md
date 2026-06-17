@@ -245,6 +245,132 @@ The Python plumbing is trivial. The ASS karaoke timing + first-render FFmpeg deb
 - Replacing Remotion `src/anchor-doc/` or `src/cta-overlay/` — different shape of work (motion graphics, not clip-stitching).
 - Melanated-character / no-text rules — already enforced upstream by [`script-to-scenes.py`](../scripts/script-to-scenes.py).
 
+## Sound Effects Pipeline (Phase 2.5 — Planned)
+
+**Status:** Researched / not yet built. ElevenLabs SFX API confirmed viable; implementation pending key verification step.
+
+Adds contextual ambient audio under each scene's narration. Daniel voice stays at full volume; SFX sits at –20 dBFS with 0.5s fade in/out. Viewer hears narration clearly, feels the scene.
+
+### Why it matters
+
+- Monotonous AI narration alone causes ~35% drop-off in the first 45 seconds (RetentionRabbit 2025 benchmark)
+- A 10-percentage-point retention improvement → ~25% more impressions from the algorithm
+- No biblical content creator has automated this pipeline — first-mover gap
+
+### Tool: ElevenLabs SFX API
+
+Already in the stack. Separate endpoint from TTS — no new API key needed, but verify before building:
+
+```bash
+curl -X POST https://api.elevenlabs.io/v1/sound-generation \
+  -H "xi-api-key: $ELEVENLABS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "ancient desert wind, cinematic, low drone", "duration_seconds": 5}' \
+  --output test_sfx.mp3
+```
+
+**Cost:** ~8,000 credits for a 20-scene video (10 sec SFX × 20 scenes × 40 credits/sec) — fits on the $5/mo Starter plan. Negligible vs. ElevenLabs TTS cost.
+
+**Limit:** 30 sec max per API call. Scenes longer than 30s → FFmpeg loops the SFX clip.
+
+### Manifest schema change
+
+Add optional `sfx` key per scene. Backward-compatible — assembler skips Phase 2.5 if no scene has `sfx`.
+
+```json
+{
+  "scene_id": "01",
+  "narration_text": "...",
+  "kling_url": "...",
+  "sfx": {
+    "prompt": "deep cinematic sub-bass drone, dark void, ominous atmosphere",
+    "volume": 0.12
+  }
+}
+```
+
+### Tonal zone map — "From Eden to Timbuktu"
+
+The script's `[SCENE: ...]` cues are natural SFX prompts. Key zones:
+
+| Part | Mood | SFX prompt |
+|---|---|---|
+| Cold Open | Dark void, single ember | `"deep cinematic sub-bass drone, silence, dark void"` |
+| Part 1–3 | Ancient, revelatory | `"ambient Mesopotamian riverbank, distant wind, golden warmth"` |
+| Part 7 (Empires) | Triumphant, African | `"West African outdoor market ambience, distant djembe, warm breeze"` |
+| Part 8 (Dispersion) | Grief, ships | `"ocean waves, creaking wooden hull, distant wind, somber"` |
+| Conclusion | Dry bones rising | `"ancient wind building, low reverberant rumble, breath, tension to hope"` |
+
+### New script: `scripts/tag-sfx.py`
+
+Reads a manifest + optional script file → calls Claude API per scene → writes `sfx.prompt` into each scene. Run once per video, review prompts, then assemble.
+
+```
+python scripts/tag-sfx.py \
+  --manifest output/manifests/eden-to-timbuktu.json \
+  --script docs/fbtt-original-episode-script.md \
+  --out output/manifests/eden-to-timbuktu-sfx.json
+```
+
+Logic: extract `[SCENE: ...]` cue for each scene → send to Claude with the tonal-zone context → returns `sfx_prompt` string → write into manifest.
+
+### Pipeline insertion point
+
+Between Phase 2 (TTS) and Phase 3 (Whisper):
+
+```
+Phase 2:   TTS narration per scene
+Phase 2.5: SFX generation (ElevenLabs /v1/sound-generation, 1 call/scene, cached to output/sfx/<topic>/)
+Phase 3:   Whisper transcription
+Phase 4:   Pass A — FFmpeg amix: narration at 1.0 + SFX at volume=0.12
+```
+
+### Pass A audio filter change
+
+Current (narration only):
+```
+-af "apad=pad_dur=0.2"
+```
+
+With SFX (when `sfx` key present in scene):
+```
+-filter_complex \
+  "[1:a]volume=1.0[narr];
+   [2:a]volume=0.12,afade=t=in:st=0:d=0.5,afade=t=out:st=END:d=0.5[sfx];
+   [narr][sfx]amix=inputs=2:duration=first:dropout_transition=0[aout]" \
+-map 0:v -map "[aout]"
+```
+
+- `duration=first` anchors to narration length (SFX loops/truncates to match)
+- If SFX clip is shorter than scene → FFmpeg `-stream_loop -1` on the SFX input to loop it
+- `dropout_transition=0` avoids fade artifact at SFX loop points
+
+### New module: `scripts/assemble/sfx.py`
+
+```python
+def generate_sfx(prompt: str, duration_s: float, api_key: str, cache_path: Path) -> Path:
+    """Generate or return cached SFX clip for a scene."""
+```
+
+Cache keyed on `sha256(prompt + str(round(duration_s, 1)))` — same prompt + duration returns cached file. No re-billing on reruns.
+
+### Implementation order
+
+1. **Verify key** — run the curl test above; confirm `.mp3` returned and plays
+2. **Build `sfx.py`** — generation + caching (~30 min)
+3. **Build `tag-sfx.py`** — manifest tagger via Claude API (~1 hr)
+4. **Wire into `assemble-video.py`** — Phase 2.5 + Pass A filter_complex switch (~1 hr)
+5. **Canary test** — 3-scene subset with `--keep-intermediates`, verify SFX audible at scene boundaries, confirm narration not drowned out
+6. **Full render** — "From Eden to Timbuktu" first use
+
+### Out of scope (this phase)
+
+- Music generation (Suno, Mubert) — SFX only; music adds licensing complexity
+- Auto-detection of SFX volume from narration loudness normalization — manual `volume` per scene is sufficient for now
+- Veo 3 (embeds SFX natively into the clip) — relevant if clip generator ever switches from Kling
+
+---
+
 ## Related docs
 
 - [custom-script-2.0.md](custom-script-2.0.md) — the verbatim-preserving render pipeline this assembler plugs into
