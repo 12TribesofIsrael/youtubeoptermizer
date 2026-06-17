@@ -84,3 +84,16 @@ output/subs/
 output/scenes_tmp/
 output/renders/
 tools/ffmpeg/
+
+# "From Babylon to Timbuktu" — copyrighted book (Rudolph R. Windsor, 1969).
+# The source scan, OCR full text, and any verbatim transcripts/derivatives stay
+# LOCAL ONLY; this repo is public. NOTE: our ORIGINAL documentary script
+# (docs/fbtt-original-episode-script.md) is our own work and IS committed.
+docs/From babylon to timbuktu.pdf
+docs/fbtt_raw_djvu.txt
+docs/frombabylontotimbuktu.md
+docs/frombabylontotimbuktu-narration.md
+docs/frombabylontotimbuktu-speechify.txt
+docs/_fbtt_chunk*.txt
+# Copyrighted genealogy chart (ESV Study Bible / Crossway) — reference only, keep local
+docs/Genealogy_of_Jesus_pictures2-locked.pdf
