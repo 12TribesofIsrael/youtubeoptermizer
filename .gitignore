@@ -36,6 +36,9 @@ clonevideos/
 *.webm
 *.mkv
 
+# TTS narration audio (ElevenLabs/Speechify exports) — large, regenerable, local only
+docs/audio/
+
 # Claude Code local state — ignore everything in .claude/ EXCEPT the
 # memory subfolder (which is synced cross-machine via `npm run memory:push`).
 .claude/*
