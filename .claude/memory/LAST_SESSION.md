@@ -2,40 +2,34 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-05-27T00:00:00Z
-  project: youtubeoptermizer
+  ended: 2026-06-17T00:00:00Z
+  project: youtubeoptermizer (AI Bible Gospels YT optimization)
   branch: main
-  originSessionId: 51b1b09d-2943-411c-a6ef-5b536434ea27
+  originSessionId: 38ede334-c627-463f-ae37-a68d5a7de7b3
 ---
 
-# Last Session — 2026-05-27
+# Last Session — 2026-06-17
 
 ## What the user wanted
-Build and validate the local FFmpeg assembler (replacing JSON2Video as last-mile video assembly), fix a subtitle timing bug discovered during validation, and document the tool for the BMB AI Automations repo.
+Turn `docs/frombabylontotimbuktu.md` (a raw, unpunctuated YouTube auto-transcript of Windsor's book) into a narration-ready audiobook for the channel — then, once copyright blocked that, pivot to an ORIGINAL ~2-hour flagship comeback documentary covering the whole book's arc, for Speechify→Remotion→YouTube.
 
 ## What we did
-- Resumed mid-build from previous session; 19-scene validation render of 1 Maccabees Ch.3 had already completed (512 MB output)
-- Discovered subtitle timing bug: karaoke captions raced ahead of audio because cumulative ASS offsets used raw MP3 durations, but each Pass A scene is ~2.4s longer than raw audio due to FFmpeg buffer overhead (not just 0.2s apad as assumed)
-- Fixed by reordering phases in `scripts/assemble-video.py`: Pass A now runs before ASS writing; probed Pass A output durations drive cumulative subtitle offsets (commit e36f1b8)
-- Fixed `\k` minimum floor to 2cs in `scripts/assemble/ass_writer.py` (Whisper 0-duration word glitch guard)
-- Fixed Unicode arrow `→` → `->` in `scripts/assemble/ffmpeg_build.py` (Windows cp1252 crash)
-- Verified fix with 3-scene canary — scene 2 events start at 0:00:14.63, exactly matching Pass A scene 1 duration
-- Re-ran full 19-scene render (`output/renders/1maccabees-ch3.mp4`, 512.2 MB) — all intermediates cached, no API cost
-- Updated `docs/local-ffmpeg-assembler.md` status from PLANNED to BUILT
-- Wrote `C:\Users\Claude\bmb-ai-automations\docs\WALKTHROUGH-ffmpeg-video-assembler.md` (not committed — separate repo, separate Claude instance)
-- Committed and pushed all youtubeoptermizer changes: e36f1b8
+- Found the source file was chapters 1–4 of Windsor tripled; deduped + punctuated → `docs/frombabylontotimbuktu-narration.md` and `-speechify.txt` (now gitignored).
+- Downloaded full archive.org OCR (`docs/fbtt_raw_djvu.txt`); tried to clean/format the full book via sub-agents — **blocked**: book is copyrighted (1969, ~2064), AND Anthropic's content filter hard-blocks bulk verbatim reproduction (3×). User said "I have rights" but provided no clearance doc; verbatim path is closed regardless via the filter.
+- **Pivoted to original work**: wrote `docs/fbtt-original-episode-script.md` — original ~2hr documentary "From Eden to Timbuktu" (Cold Open + Intro + 8 Parts incl. **Part 5: Lineage of the Messiah, Abraham→Christ via Matthew 1** + Conclusion). ~15,150 narration words. Cites Windsor as source, NOT a reproduction. Brand `[SCENE]` cues + KJV scripture + anti-extremism guardrail in conclusion.
+- Generated `docs/fbtt-eden-to-timbuktu-speechify.txt` via a transform script (scene cues stripped, no markdown, no digits, spoken chapter announcements). ~15,033 words.
+- Gitignored the copyrighted book files; committed script+narration (`9dc3d7d`); later added `docs/audio/` ignore rule (`8c05443`). All pushed to origin/main.
+- Used the genealogy chart `docs/Genealogy_of_Jesus_pictures2-locked.pdf` (ESV, copyrighted) only as a reference for the Matthew 1 chain.
+- Scoped a repo cleanup (Explore agents mapped clutter + path deps) but user deferred it.
 
 ## Decisions worth remembering
-- **Pass A duration ≠ raw audio + 0.2s**: actual overhead is ~2.4s per scene (FFmpeg 8.x behavior with `-stream_loop -1 -shortest -fflags +genpts`). Root cause unclear but probing Pass A outputs is the correct fix regardless of why.
-- **All 19 fal.media Kling URLs still valid as of 2026-05-27** — clips cached locally.
-- Integration is currently a two-step manual handoff: `render-via-pipeline.py --skip-json2video` writes manifest → user manually runs `assemble-video.py`. Tommy explicitly asked about automating this.
+- Original-prose pivot is the durable strategy for book-based content (copyright + content-filter both block verbatim). See [[feedback_fbtt_copyright_not_public_domain]].
+- Did NOT untrack `docs/Genealogy_..._locked.pdf` (still tracked) — user deferred cleanup.
 
 ## Open threads / next session starts here
-1. **Wire `--assemble` flag on `scripts/render-via-pipeline.py`**: ~10-line addition — after `--skip-json2video` writes the manifest path, automatically subprocess into `assemble-video.py`. Makes the full pipeline one command. Tommy asked about this; answer was "yes want me to wire that up?" and session ended before confirming.
-2. **Commit the bmb-ai-automations doc**: `C:\Users\Claude\bmb-ai-automations\docs\WALKTHROUGH-ffmpeg-video-assembler.md` was written but not committed. Confirm with Tommy if that repo is open for direct commits.
-3. **Tommy to review `output/renders/1maccabees-ch3.mp4`** — 3-scene canary confirmed timing fix works, but full 19-scene hasn't been visually reviewed yet. Check: Daniel voice all scenes, karaoke tracks speech end-to-end, no boundary pops.
-4. **Modal deployment** — once full video review passes, ship assembler to Modal (container + FFmpeg + Whisper model in Volume + ElevenLabs key as Modal Secret + output to R2).
-5. **Whisper upgrade**: consider making `small.en` the default model — better for KJV proper nouns (Maccabeus, Apollonius, etc.). Currently `base`.
+- **Repo cleanup (deferred, user said "don't worry about clean up now")**: safe wins when resumed — delete local-only scratch (~24 root `testing-*.png`/`tiktok-*.png`/`tmp_*`/`tictok.mp4`, `__pycache__/`, ~40 `analytics/_tt-*`/`_tiktok-*` debug files); `git rm --cached docs/Genealogy_of_Jesus_pictures2-locked.pdf`; optionally reorganize `docs/` into topic subfolders (update CLAUDE.md/README links). DO NOT move `scripts/` (27 files hardcode `sys.path` parent.parent), `analytics/`, `output/`, `training/`, `faith-walk-live/`, `static/`, `templates/`, OAuth files, or `scripts/assemble/` — all pinned by code.
+- Script still needs: final KJV verse verification vs `docs/1611KjvW_apocrypha - Copy.pdf`; user then runs Speechify (Daniel voice `onwK4e9ZLuTAKqWW03F9`) → MP3 → Remotion/CapCut.
+- 119 MB narration MP3 lives in `docs/audio/` (now gitignored) — exceeds GitHub 100MB limit, keep local.
 
 ## Uncommitted work
 Clean working tree.
