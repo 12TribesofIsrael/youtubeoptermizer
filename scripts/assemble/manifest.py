@@ -23,9 +23,15 @@ def load(manifest_path: Path) -> dict[str, Any]:
         raise ValueError("scenes must be a non-empty list")
 
     for i, scene in enumerate(data["scenes"]):
-        for key in ("scene_id", "kling_url", "narration_text"):
+        for key in ("scene_id", "narration_text"):
             if key not in scene:
                 raise ValueError(f"Scene {i} missing required key: {key}")
+        # A scene's video source is either a Kling URL (downloaded) or a local
+        # clip_path (archival/stock footage). Hybrid manifests mix both.
+        if not scene.get("kling_url") and not scene.get("clip_path"):
+            raise ValueError(
+                f"Scene {i} ({scene.get('scene_id')}) needs either 'kling_url' or 'clip_path'"
+            )
 
     return data
 

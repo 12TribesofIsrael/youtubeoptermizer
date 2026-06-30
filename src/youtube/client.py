@@ -213,3 +213,53 @@ class YouTubeClient:
             )
             .execute()
         )
+
+    # ── Upload ──────────────────────────────────────────────
+
+    def upload_video(self, filepath, title, description="", tags=None,
+                     category_id="27", privacy="private", publish_at=None,
+                     playlist_id=None, thumbnail=None, made_for_kids=False,
+                     on_progress=None):
+        """Upload a new video with metadata; optionally schedule, thumbnail, and playlist.
+
+        Resumable upload, mirroring the pattern in scripts/upload-shorts.py.
+
+        privacy:    "private" | "unlisted" | "public". For a scheduled drop, pass
+                    privacy="private" + publish_at (ISO-8601 UTC, e.g. "2026-07-05T15:00:00Z")
+                    — YouTube auto-flips it to Public at that time.
+        category_id 27 = Education (channel default). 22 = People & Blogs.
+        on_progress optional callback(percent:int) during upload.
+        Returns the new video_id.
+        """
+        status = {
+            "privacyStatus": privacy,
+            "selfDeclaredMadeForKids": made_for_kids,
+            "madeForKids": made_for_kids,
+        }
+        if publish_at:
+            # publishAt requires privacyStatus=private; YouTube flips it Public at that time.
+            status["privacyStatus"] = "private"
+            status["publishAt"] = publish_at
+        body = {
+            "snippet": {
+                "title": title,
+                "description": description,
+                "tags": tags or [],
+                "categoryId": category_id,
+            },
+            "status": status,
+        }
+        media = MediaFileUpload(str(filepath), chunksize=4 * 1024 * 1024, resumable=True)
+        request = self.youtube.videos().insert(part="snippet,status", body=body, media_body=media)
+        response = None
+        while response is None:
+            chunk_status, response = request.next_chunk()
+            if chunk_status and on_progress:
+                on_progress(int(chunk_status.progress() * 100))
+        video_id = response["id"]
+
+        if thumbnail:
+            self.set_thumbnail(video_id, thumbnail)
+        if playlist_id:
+            self.add_to_playlist(playlist_id, video_id)
+        return video_id

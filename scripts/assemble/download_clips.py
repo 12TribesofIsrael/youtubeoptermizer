@@ -5,7 +5,23 @@ from pathlib import Path
 
 import requests
 
+ROOT = Path(__file__).resolve().parents[2]
 MIN_SIZE_BYTES = 100 * 1024  # 100 KB sanity floor
+
+
+def _resolve_local(scene_id: str, clip_path: str) -> Path:
+    """Resolve a local archival/stock clip path (absolute, or relative to repo root)."""
+    p = Path(clip_path)
+    if not p.is_absolute():
+        p = ROOT / clip_path
+    p = p.resolve()
+    if not p.exists():
+        raise RuntimeError(f"clip_path for scene {scene_id} not found: {p}")
+    size = p.stat().st_size
+    if size < MIN_SIZE_BYTES:
+        raise RuntimeError(f"Local clip for scene {scene_id} too small ({size} bytes): {p}")
+    print(f"  [{scene_id}] local clip {size / (1024*1024):.1f} MB <- {p.name}")
+    return p
 
 
 def _download_one(scene_id: str, url: str, out_path: Path, retries: int = 3) -> Path:
@@ -38,6 +54,10 @@ def download_all(scenes: list[dict], clips_dir: Path, max_workers: int = 4) -> d
         for scene in scenes:
             sid = scene["scene_id"]
             out_path = clips_dir / f"scene_{sid}.mp4"
+            # Local archival/stock clip — use in place, no download (source of truth).
+            if scene.get("clip_path"):
+                results[sid] = _resolve_local(sid, scene["clip_path"])
+                continue
             if out_path.exists() and out_path.stat().st_size >= MIN_SIZE_BYTES:
                 print(f"  [{sid}] already cached, skipping download")
                 results[sid] = out_path

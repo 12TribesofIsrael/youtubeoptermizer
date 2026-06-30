@@ -20,7 +20,23 @@ import subprocess
 import sys
 from pathlib import Path
 
-PIPELINE_DIR = Path("C:/Users/Claude/ai-bible-gospels/workflows/custom-script")
+from dotenv import load_dotenv
+
+# Load this repo's gitignored .env so FAL_KEY / ELEVENLABS_API_KEY / ANTHROPIC_API_KEY
+# propagate to the pipeline subprocess (generate.py reads them from the environment).
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+
+# Pipeline location varies by machine. Honor ABG_PIPELINE_DIR env override, then
+# try known locations (Claude-user clone, then Owner's aibiblegospelmaster clone).
+_PIPELINE_CANDIDATES = [
+    os.environ.get("ABG_PIPELINE_DIR"),
+    "C:/Users/Claude/ai-bible-gospels/workflows/custom-script",
+    "C:/Users/Owner/repos/aibiblegospelmaster/workflows/custom-script",
+]
+PIPELINE_DIR = next(
+    (Path(p) for p in _PIPELINE_CANDIDATES if p and Path(p).exists()),
+    Path("C:/Users/Claude/ai-bible-gospels/workflows/custom-script"),
+)
 # Daniel Steady Broadcaster — channel-locked viral voice (reference_daniel_voice.md)
 DEFAULT_VOICE_ID = "onwK4e9ZLuTAKqWW03F9"
 KLING_MODELS = ("v1.6", "v2.1", "v3.0", "v3.0-pro", "o3", "o3-pro")
