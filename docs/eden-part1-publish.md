@@ -38,10 +38,10 @@ This is Part 1 of a series. New chapters are in production.
 
 ⏱ CHAPTERS
 0:00 — Cold Open: A People Between Two Rivers
-[TBD] — Introduction: The Claim We're Going to Examine
-[TBD] — Part One: Ancient Black Civilization
-[TBD] — The Builders of Babylon
-[TBD] — Two Ethiopias & the Scattering at Babel
+1:16 — Introduction: The Claim We're Going to Examine
+3:52 — Part One: Ancient Black Civilization
+6:57 — The Builders of Babylon
+11:42 — Two Ethiopias & the Scattering at Babel
 
 📖 SCRIPTURES REFERENCED
 Genesis 2:10–14 · Genesis 10:6–10 (the Table of Nations)
