@@ -4,6 +4,19 @@ Track every change made to the AI BIBLE GOSPELS channel, with dates and expected
 
 ---
 
+## 2026-06-30 — Flagship: "From Eden to Timbuktu" Part 1 uploaded (PRIVATE)
+
+First long-form flagship documentary, built toward the **2026-07-08 YPP reapplication**.
+
+- **Video:** `vnkEWbCVMTA` — "From Eden to Timbuktu: The Hidden History of the Black Hebrews | Part 1 — Ancient Black Civilization", 13.6 min, uploaded PRIVATE.
+- **Pipeline:** 26-scene local FFmpeg assembler. Hybrid visuals — 6 Kling figure clips (identity-stacked) + 20 gpt-image-1 cards/maps/stills + real Met Open Access PD artifacts (Sumerian votive statue, proto-cuneiform tablet). Narration: Tommy's ElevenLabs voice clone (`RKqAcMj3TkzJjyZpEbj0`).
+- **New reusable infra:** caption glossary (fixes Whisper's biblical-name misspellings — "Cush" not "Kush"), content-aware TTS cache, `clip_path` hybrid manifests, Met artifact sourcer, `client.upload_video()`.
+- **Thumbnail:** "THE BLACK HEBREWS" (gold serif + melanated figure), 1280x720.
+- **MANUAL (Studio, can't API):** set Altered/synthetic-content = YES; then Public/schedule before 2026-07-08; add to "From Eden to Timbuktu" playlist.
+- **Next:** drip Parts 2-8 weekly post-launch; cut Shorts from Part 1 hooks for redistribution.
+
+---
+
 ## Baseline Metrics (Before Optimization)
 **Snapshot Date:** March 16, 2026
 
