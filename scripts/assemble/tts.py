@@ -1,4 +1,6 @@
 """Synthesize Daniel narration per scene via ElevenLabs API."""
+import hashlib
+import json
 import os
 import sys
 from pathlib import Path
@@ -25,6 +27,11 @@ def _get_api_key() -> str:
     return key
 
 
+def _voice_fingerprint(text: str, voice_id: str, model_id: str, voice_speed: float) -> str:
+    raw = f"{voice_id}|{model_id}|{voice_speed}|{text}"
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
 def synthesize(
     text: str,
     out_path: Path,
@@ -32,10 +39,21 @@ def synthesize(
     model_id: str = DEFAULT_MODEL_ID,
     voice_speed: float = 0.9,
 ) -> Path:
-    """Call ElevenLabs TTS and write MP3 to out_path. Returns out_path."""
-    if out_path.exists():
-        print(f"  TTS cached: {out_path.name}")
-        return out_path
+    """Call ElevenLabs TTS and write MP3 to out_path. Returns out_path.
+
+    Content-aware cache: reuse the MP3 only if a sidecar records the SAME
+    (text, voice, model, speed). Editing the narration invalidates the cache so we
+    never burn a re-render onto stale audio.
+    """
+    fp = _voice_fingerprint(text, voice_id, model_id, voice_speed)
+    sidecar = out_path.with_suffix(".mp3.json")
+    if out_path.exists() and sidecar.exists():
+        try:
+            if json.loads(sidecar.read_text(encoding="utf-8")).get("fp") == fp:
+                print(f"  TTS cached: {out_path.name}")
+                return out_path
+        except Exception:
+            pass  # malformed sidecar -> re-synthesize
 
     api_key = _get_api_key()
     settings = {**VOICE_SETTINGS}
@@ -56,6 +74,7 @@ def synthesize(
         raise RuntimeError(f"ElevenLabs HTTP {r.status_code}: {detail}")
 
     out_path.write_bytes(r.content)
+    sidecar.write_text(json.dumps({"fp": fp, "chars": len(text)}), encoding="utf-8")
     print(f"  TTS wrote {out_path.name} ({len(r.content)/1024:.1f} KB, {len(text)} chars)")
     return out_path
 

@@ -30,6 +30,7 @@ from assemble import manifest as manifest_mod
 from assemble.download_clips import download_all
 from assemble.tts import synthesize_all
 from assemble.transcribe import transcribe_all
+from assemble.caption_glossary import correct_by_scene
 from assemble.durations import probe
 from assemble.ass_writer import write_merged_ass
 from assemble.ffmpeg_build import pass_a_all, write_concat_list, pass_b
@@ -95,6 +96,10 @@ def main():
 
     # --- Phase 3: Whisper word timestamps ---
     words_by_scene = transcribe_all(scenes, audio_paths, args.whisper_model)
+
+    # --- Phase 3.1: Fix Whisper's phonetic spellings of biblical proper nouns ---
+    # (Cush not "Kush", Hiddekel not "Hittacle"). Text-only swap; timing untouched.
+    words_by_scene = correct_by_scene(words_by_scene)
 
     # --- Phase 3.5: Resolve SFX paths from library (no API call) ---
     sfx_paths = {scene["scene_id"]: resolve_sfx(scene) for scene in scenes}
