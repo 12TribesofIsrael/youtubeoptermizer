@@ -18,14 +18,22 @@ from pathlib import Path
 FPS = 30
 W, H = 1920, 1080
 
-# Base: fit the image into 1920x1080 with letterbox pad, square pixels.
-FIT = f"scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,setsar=1"
+# Two ways to reconcile a non-16:9 source with the frame:
+#   pad  -> scale down, letterbox/pillarbox the remainder (nothing is lost, bars appear)
+#   crop -> scale up, crop the overflow (fills the frame, edges are lost)
+# 3:2 cards (1536x1024, what gpt-image-1 emits) pillarbox 150px per side under "pad",
+# which visibly narrows the frame when cut against full-bleed Kling clips. "crop" matches
+# them. Default stays "pad" — Part 1 was built and shipped with it.
+FIT_PAD = f"scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,setsar=1"
+FIT_CROP = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},setsar=1"
 
 
-def _vf(motion: str, dur: float) -> str:
+def _vf(motion: str, dur: float, fit: str = "pad") -> str:
     frames = int(dur * FPS)
     if motion == "static":
-        return f"{FIT},fps={FPS}"
+        base = FIT_CROP if fit == "crop" else FIT_PAD
+        return f"{base},fps={FPS}"
+    # Ken Burns already fills the frame (scale-up + crop), so `fit` doesn't apply to it.
     # Ken Burns: upscale for headroom, then zoompan a slow push centered.
     if motion in ("kenburns-in", "kenburns", "zoom-in"):
         z = "min(zoom+0.0004,1.25)"
@@ -40,8 +48,8 @@ def _vf(motion: str, dur: float) -> str:
     )
 
 
-def convert(src: Path, dst: Path, motion: str, dur: float):
-    vf = _vf(motion, dur)
+def convert(src: Path, dst: Path, motion: str, dur: float, fit: str = "pad"):
+    vf = _vf(motion, dur, fit)
     cmd = [
         "ffmpeg", "-y", "-loop", "1", "-i", str(src), "-t", f"{dur}",
         "-vf", vf, "-r", str(FPS),
@@ -63,6 +71,8 @@ def main():
     ap.add_argument("--batch", help="folder of PNGs -> sibling MP4s")
     ap.add_argument("--motion", default="static")
     ap.add_argument("--dur", type=float, default=40.0)
+    ap.add_argument("--fit", choices=("pad", "crop"), default="pad",
+                    help="how a non-16:9 still meets the frame; only affects --motion static")
     args = ap.parse_args()
 
     if args.batch:
@@ -71,12 +81,12 @@ def main():
         if not pngs:
             sys.exit(f"no PNGs in {folder}")
         print(f"Converting {len(pngs)} stills ({args.motion}, {args.dur}s)...")
-        ok = sum(convert(p, p.with_suffix(".mp4"), args.motion, args.dur) for p in pngs)
+        ok = sum(convert(p, p.with_suffix(".mp4"), args.motion, args.dur, args.fit) for p in pngs)
         print(f"Done: {ok}/{len(pngs)} clips.")
     else:
         if not args.src or not args.dst:
             sys.exit("provide IN.png OUT.mp4, or --batch FOLDER")
-        convert(Path(args.src), Path(args.dst), args.motion, args.dur)
+        convert(Path(args.src), Path(args.dst), args.motion, args.dur, args.fit)
 
 
 if __name__ == "__main__":

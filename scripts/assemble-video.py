@@ -18,6 +18,16 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+# The assemble package prints progress with Unicode glyphs (→ ✓ … —). On a Windows console
+# defaulting to cp1252 those raise UnicodeEncodeError mid-encode, which pass_a_all re-raises as
+# "Pass A failed" — killing an otherwise-successful render at the first scene. Force UTF-8 stdout
+# so no progress glyph can ever abort the run; errors="replace" is a belt-and-suspenders backstop.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
 if not os.environ.get("ELEVENLABS_API_KEY"):
