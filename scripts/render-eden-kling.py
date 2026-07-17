@@ -67,6 +67,11 @@ MOTION = {
     # asking a standing crowd to "rise to their feet" would just produce mush. Crane over the
     # risen host instead and let the light do the work — the narration carries the resurrection.
     "cn_3": "Slow majestic crane upward and back over the vast standing host as dawn light spreads across the valley; dust and breath drifting in the golden air; the people hold still and hold the camera's gaze.",
+    # The still is a field of scattered dry bones — no people, no skin. Animate the MOMENT of the
+    # prophecy: wind moving across the valley, bones stirring/rattling, dust lifting. The narration
+    # carries "sinew and flesh"; cn_3 (already rendered) shows the risen Black Hebrew host. Keep
+    # this about the wind and the tremor, not about growing flesh, which Kling would turn to mush.
+    "cn_2": "A slow, reverent push-in across a vast valley of dry, bleached human bones under a heavy grey sky; a cold wind rises and moves visibly across the field, lifting dust and stirring and rattling the scattered bones; a faint tremor runs through the whole valley as if it is about to wake; ominous awe and dread, not gore; the light shifts.",
     "cn_5": "Slow push-in on the faces; recognition dawning; warm golden light; the subjects hold the camera's gaze.",
 }
 
