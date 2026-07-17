@@ -119,6 +119,17 @@ EDOM_SUFFIX = (
     "hairy, brown or auburn hair and beard, ancient Edomite garments, "
     "NOT African, NOT melanated, NOT Black Hebrew Israelite"
 )
+
+# Post-biblical Europeans (e.g. Blumenbach in his 1795 study, the armies of Ferdinand and
+# Isabella at Granada). These need the Caucasian rendering WITHOUT Edomite costume: EDOM_SUFFIX
+# hard-codes "ancient Edomite garments", which put an eighteenth-century German naturalist in
+# a biblical robe on the 2026-07-16 Eden canary. Same complexion lever, era left to the scene.
+# Not an Esau/Edom theological claim — purely "render this figure as European".
+EUROPEAN_SUFFIX = (
+    ", Caucasian European with pale fair complexion, "
+    "period-accurate dress and setting for the era described in the scene, "
+    "NOT African, NOT melanated, NOT Black Hebrew Israelite"
+)
 # Jacob mentions: when BOTH Jacob and Esau are in a scene (e.g., the pottage
 # scene), the source [Visual:] cue must explicitly describe both — the
 # converter does NOT auto-inject either suffix to avoid contradictions. Detected
