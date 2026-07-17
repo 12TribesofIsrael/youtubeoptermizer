@@ -1,6 +1,6 @@
 ---
 name: YPP monetization suspension — April 2026
-description: AI Bible Gospels YPP suspension for "inauthentic content"; BOTH appeals (Apr 14, Apr 23) rejected with same boilerplate; 90-day reapply window opens 2026-07-08
+description: AI Bible Gospels YPP suspension for "inauthentic content"; BOTH appeals rejected. The 2026-07-08 date is NOT the gate — reapply is blocked on ELIGIBILITY (1,393/3,000 watch hrs, verified 2026-07-16)
 type: project
 originSessionId: 23f60aef-a5cf-4bb6-b791-d4575ab1ee73
 ---
@@ -14,7 +14,36 @@ originSessionId: 23f60aef-a5cf-4bb6-b791-d4575ab1ee73
 - **2026-04-22, 9:54 PM PT**: Second appeal submitted via YouTube Help → Contact Us form (different path than the support ticket). New ticket `4-0622000041063`. Sharda confirmed forwarded for internal re-review.
 - **2026-04-23, 1:40 PM PT (~16 hrs later)**: **SECOND APPEAL ALSO REJECTED.** Identical boilerplate to the first. Same 90-day reapply directive.
 
-**Verdict: BOTH appeals dead. No further appeal path. 90-day reapply window opens 2026-07-08.**
+**Verdict: BOTH appeals dead. No further appeal path.**
+
+---
+
+## ⚠ UPDATE 2026-07-16 — the 07-08 date was never the real gate
+
+The 90-day window opened and **the Reapply button is still greyed out**. It is gated on
+**eligibility**, not the calendar (Studio, "showing data as of Jul 11, 2026"):
+
+- 6,000 subscribers / 500 ✅
+- 3 uploads in 90 days / 3 ✅
+- **and one of:** 1,393 valid public watch hrs / **3,000** ❌  ·  7.8K Shorts views / **3M** ❌
+
+**The Shorts path is fantasy** — the channel did 72K Shorts views in a *year*, 7.8K in the last
+90 days. Watch hours is the only door.
+
+**YPP watch hours EXCLUDE Shorts.** Verified via Analytics `creatorContentType`: trailing 365d =
+1,389 hrs videoOnDemand (matches Studio's 1,393) + 351 hrs shorts (does not count).
+
+**~80% of all qualifying watch time is ONE video** — "The Prophecy Revealed" (1h29m,
+`mAJS97kNC5E`): ~1,100 of 1,389 hrs, stable and *growing*, ~100-150 hrs/month from search.
+
+So: **no deadline pressure** — the button won't let you reapply prematurely, so no attempt can be
+burned. Realistic approval is **2027**, needing roughly one more Prophecy-Revealed-caliber
+evergreen matured ~12 months. This is what forced the single-cut pivot —
+[[project_eden_single_cut_decision]].
+
+Also note "Option 1: Appeal" says *"only choose this if you haven't deleted any videos since your
+channel was suspended"* — the catalog cull disqualifies that path anyway, and its deadline
+(2026-04-30) is long past.
 
 **What the rejection said (verbatim, both times):**
 "Monetization on your channel has been disabled because we've determined that a significant portion of your channel does not comply with YouTube Partner Program terms... Inauthentic content refers to content that seems like it has been mass produced. This can mean content that looks like it has been made with a template, has minimal variation across videos, or is a slideshow with low narrative, commentary, or educational value."
@@ -33,8 +62,11 @@ Examples YouTube listed:
 
 **How to apply:**
 - **No appeal options remain.** Stop drafting/submitting appeals to the same path — they're auto-rejected.
-- **Reapply window: 2026-07-08.** Use the 90 days to build a clean catalog: long-form Bible Movie Series, fewer/no template Shorts, strong narrative voiceovers.
-- **Keep the 15 unscheduled "12 Tribes" Shorts paused** — drip-release after reapproval, not before.
+- **Do NOT cite 2026-07-08 as the gate** — see the 2026-07-16 update above. The blocker is
+  1,393/3,000 watch hours, and only LONG-FORM hours count.
+- ~~Keep the 15 unscheduled "12 Tribes" Shorts paused~~ — **stale.** As of 2026-07-16 only 4
+  non-public videos exist channel-wide (2 FWL Shorts private, 2 old unlisted); those 15 drafts
+  are long gone.
 - **Catalog cleanup IS allowed during the wait window.** The "no delete" and "no bulk-edit" rules previously listed here were written for a pending-review state. With both appeals dead and no review pending, those constraints don't apply — improve the channel state for the 2026-07-08 reapply. Targeted deletions of low-quality content and bulk metadata improvements (AEO description templates, brand consistency, scrubbing dissolved-entity refs like "Technology Gurus LLC") are fine. The reapply reviewer judges current channel state, not change velocity.
 - **Cross-channel risk** still active: original notice warned other channels are at risk — don't try to monetize or redirect to alt channels during the wait.
 - Channel signed-in account: `aibiblegospels444@gmail.com`. User: Tommy Lee.
