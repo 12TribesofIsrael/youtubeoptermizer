@@ -2,70 +2,61 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-07-17T00:15:00-04:00
-  project: youtubeoptermizer (AI Bible Gospels)
+  ended: 2026-07-17T00:00:00Z
+  project: youtubeoptermizer (AI Bible Gospels YT optimization)
   branch: main
-  originSessionId: f7ab7509-48d8-4513-bb44-a0c0a9c3c5de
+  version: n/a
+  originSessionId: 15371fc8-3343-4eb2-86d4-f785dc9e9b70
 ---
 
-# Last Session — 2026-07-16
+# Last Session — 2026-07-17
 
 ## What the user wanted
-Started as "what's next on our list" — became a full strategic re-plan plus the entire visual
-build of the flagship documentary. Tommy wanted the highest-leverage next move; the analytics
-said the 8-part drip couldn't work, so we pivoted to one 86-min cut and built all 103 scenes.
+Find the intro/outro/logo post-production pipeline used to brand finished movies,
+and copy it into this repo so a ready-to-go video can be wrapped with intro +
+outro + logo here. Then test-render it, fix a redundant-scene issue, and commit.
 
 ## What we did
-- **Diagnosed the real YPP blocker** (this reframes everything — see
-  [[project_eden_single_cut_decision]]): reapply is greyed out on **eligibility, not date** —
-  1,393/3,000 valid public watch hrs. YPP watch hours **exclude Shorts** (Shorts path is 3M
-  views/90d; channel did 72K in a *year*). ONE video — "The Prophecy Revealed" (1h29m,
-  `mAJS97kNC5E`) — carries ~1,100 of 1,389 qualifying hrs, stable/growing, ~100-150 hrs/mo.
-- **Verified Part 1 shipped**: `vnkEWbCVMTA` went PUBLIC 2026-07-03 (47 views/2wks). Channel:
-  6,000 subs, 740,810 views, 211 videos, monetization off.
-- **Pivoted to a single ~86-min cut.** Watch hrs = duration x views; a 13.6-min part can't be an
-  engine at any retention. 86 min ≈ Prophecy Revealed's 89. Realistic approval: **2027**.
-- **Recovered Part 1's assets from the laptop** — mapped `Z:` → `\\10.0.0.82\repos` persistently
-  (`net use /persistent:yes`; creds were already saved). All 6 Kling clips + 110 files / 579 MB
-  copied to the desktop and verified (size match + decode probe).
-- **Found the 86.2-min ElevenLabs narration** already on disk — verified complete by Whispering
-  the last 45s (ends on the exact sign-off). Independently confirmed by word count: 12,873 words
-  (Parts 2-8) ≈ 73.6 min + Part One's ~12 = ~86.
-- **Wrote + built the whole thing** (commit `df49e08`): 103-scene plan, parser, generator,
-  scripture typesetter, Kling runner. **95 stills/cards + 8 Kling clips @1920x1080/15s.**
-- Spend: ~$18 OpenAI, ~$26 fal (~$44 total). **fal balance now $1.39.**
+- Located the pipeline in the ai-bible-gospels repo: workflows/biblical-cinematic/
+  scripts/post_produce.py (the current working single-file version, updated
+  2026-07-02) + the add-covers skill that wraps it. Note: the repo's README.txt
+  and batch_post_produce.py there are STALE/broken (batch imports check_ffmpeg
+  which no longer exists; readme describes separate intro/outro files). Only
+  post_produce.py is authoritative.
+- Copied it into youtubeoptermizer, re-pathed for this repo:
+  scripts/post_produce.py, assets/postproduction/{intro_outro.mp4, logo1.png},
+  drop folder postproduction/, output to output/<name>_final.mp4.
+- Brand clip is ONE merged intro_outro.mp4 (~155.6s total); script splits it at
+  DEFAULT_SPLIT — intro = brand[0..split], main video (+logo bottom-left), outro
+  = brand[split..end]. Logo only on main (brand is pre-branded).
+- Smoke-tested end to end, then rendered a labeled 1080p test clip through it.
+- Fixed the redundant scene the user spotted at ~46s: split was 26s which sliced
+  the "Story of Israel's Return" identity card mid-frame (card runs ~19.6-27.567s),
+  so its tail replayed at the top of the outro. Moved DEFAULT_SPLIT 26 -> 27.6 so
+  the cut lands on the scene boundary; outro now opens on the blue-cross artwork.
+  Verified by extracting the outro-start frame.
+- Committed to main: c44f2b5 (scripts/post_produce.py + 2 READMEs, 318 insertions).
+  Brand mp4 + logo png gitignored (*.mp4/*.png) - repo is public.
+- Added to GLOBAL ~/.claude/CLAUDE.md: cross-machine repo access now explicitly
+  covers reads + copy-use out of any repo (desktop C:\Users\Claude\ and laptop
+  Z:\ / C:\Users\Owner\repos\) into the active repo.
 
 ## Decisions worth remembering
-- **Density**: ~42s/scene (103 scenes), not Part One's 31s churn. I overshot my own ~60s
-  recommendation and said so; Tommy accepted 42s.
-- **Kling audio OFF + pro tier**: pro is the only 1080p path (standard caps at 720p) — must match
-  Part One's six 1080p clips. See [[reference_kling_v3_resolution_tiers]].
-- **Catalan Atlas sourced, not generated** — see [[feedback_never_generate_primary_sources]].
-- **Part One stays public as a teaser/funnel** into the full cut (deferred to launch day).
+- Committed straight to main (not a branch) - matches this repo's established
+  solo workflow; every recent commit is on main.
+- Fixed redundancy via single split-boundary move rather than decoupling
+  intro-end from outro-start - the repeat was purely the mid-card slice, so one
+  number fixed it cleanly and kept the script simple.
 
 ## Open threads / next session starts here
-1. **TOP UP FAL — $1.39 left.** No room to re-render even one clip. Suggest ~$20.
-2. **Narration**: regenerate per-scene TTS from the plan (voice `RKqAcMj3TkzJjyZpEbj0`, speed
-   0.92). Part One's 26 scenes are TTS-cached and won't re-cost. The 86-min mp3 is the runtime
-   *reference*, not the build source. **This was approved but not yet started.**
-3. **Assemble** via `scripts/assemble-video.py`; Part One reuses `output/*/eden-part1*`.
-4. **SFX still untested** — the 13-file library exists but `tag-sfx.py` has never run against a
-   real manifest (open since 2026-06-17).
-5. Optional: the p3_6 chain card renders 3 of 4 words (drops "ENGLISH") — Tommy waved it through.
-6. Long-cold (from the stale 06-17 log): `--assemble` flag on `render-via-pipeline.py`, Modal
-   deployment, Whisper `small.en`.
+- NOT pushed. c44f2b5 is committed locally only; user was asked push-or-not and
+  session ended before answering. Offer to `git push origin main` first.
+- Outro is long: after blue crosses + a brief "repent" scene, the THANK YOU /
+  SUBSCRIBE card holds ~113s (41.6s -> 155.6s end). Offered to trim it; user
+  hasn't decided. If they want it shorter, add an outro-end/duration cap to
+  post_produce.py.
+- Test artifacts under output/ and postproduction/_pipeline_test.mp4 are
+  gitignored scratch - safe to leave or delete.
 
 ## Uncommitted work
-Clean working tree. `df49e08` pushed to origin.
-
-## Note on process
-Every failure this build had ONE root cause: **description leaking into copy, or prohibitions
-naming what they forbade**. Chapter card printed "MOUNT ARARAT"; receipts card invented "A HOUSE
-/ A CAR / A CLOCK"; family tree printed ISHMAEL twice with no Abraham (Tommy caught it); "do not
-depict the prophet Mohammed" rendered a robed man at the Kaaba; CTA grew a "THE SUNRISE
-CONTINUES" headline. Canaries caught nearly all of it — 4 images before 95, 1 Kling clip before
-8. **Keep the canary discipline.**
-
-Also: a memory file I'd confirmed written silently vanished mid-session
-(`reference_kling_v3_resolution_tiers.md`) — only caught because the MEMORY.md index count
-didn't move. Verify the count, don't trust "file created".
+Clean working tree.
