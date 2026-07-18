@@ -80,3 +80,5 @@
 - [Typeset scripture, never generate it](feedback_typeset_scripture_never_generate.md) — gpt-image-1 drops/misspells scripture words; use scripts/compose-scripture-card.py (model renders light, PIL renders words)
 - [Kling generate_audio defaults TRUE](feedback_kling_generate_audio_defaults_true.md) — omitting it bills +50% for silence; verify payload matches quoted rate before bulk, check balance delta after clip #1
 - [Kling v3 resolution tiers](reference_kling_v3_resolution_tiers.md) — standard caps 720p; PRO + 16:9 1920x1080 source = 1080p; Kling mirrors input aspect; motion prompts describe CAMERA only
+- [YT tag 500-char cap](feedback_yt_tag_500_char_cap.md) — videos.insert rejects invalidTags when combined tag length >~500 chars (incl quotes+commas); keep to ~15-18 tags; fails before video created (clean retry)
+- [Viral thumbnail generator](reference_viral_thumbnail_generator.md) — scripts/generate-eden-full-thumbnail.py: fal FLUX-pro bg + PIL gold-serif typeset text (reliable, no garbled letters); 3 CTR variants 1280x720
