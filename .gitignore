@@ -104,3 +104,7 @@ docs/_fbtt_chunk*.txt
 # Copyrighted genealogy chart (ESV Study Bible / Crossway) — reference only, keep local
 docs/Genealogy_of_Jesus_pictures2-locked.pdf
 output/manifests/
+
+# Notifier heartbeat stamp + stderr capture for the weekly competitor tracker
+analytics/competitors/.heartbeat
+analytics/competitors/tracker.err

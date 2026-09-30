@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a YouTube channel optimization workspace for **AI Bible Gospels** (@AIBIBLEGOSPELS) — a Bible content channel focused on the 12 Tribes of Israel, Hebrew Israelite identity, and biblical prophecy. The channel has ~5,876 subscribers and 764K total views as of the analysis date.
+This is a YouTube channel optimization workspace for **AI Bible Gospels** (@AIBIBLEGOSPELS) — a Bible content channel focused on the 12 Tribes of Israel, Hebrew Israelite identity, and biblical prophecy. The channel has ~5,876 subscribers and 764K total views as of the analysis date (6,000 subs / 746,668 views on 2026-09-30).
+
+**Monetization is suspended** ("inauthentic content", 2026-04-09, both appeals rejected — `.claude/memory/project_ypp_suspension_2026.md`). The way back is 3,000 long-form watch hours in 365 days; `scripts/ypp-watch-hours.py` is the tracker. The 84-episode Complete Biblical Timeline series lives in `C:\Users\Claude\biblerevamp` and launches 2026-10-04.
 
 The goal is for Claude to act as a **YouTube optimization assistant**, helping with content strategy, metadata optimization, analytics interpretation, and channel growth.
 
@@ -24,6 +26,9 @@ The goal is for Claude to act as a **YouTube optimization assistant**, helping w
 | `src/youtube/client.py` | Python API client — list/update/delete videos, playlists, analytics |
 | `src/youtube/auth.py` | OAuth 2.0 authentication and token management |
 | `scripts/` | Automation scripts for audits, bulk updates, deletions |
+| `scripts/ypp-watch-hours.py` | The one number that decides when monetization can be reapplied for: qualifying (long-form + live) watch hours in the trailing 365 days vs the 3,000 gate, 28-day pace, months to go. Appends `analytics/ypp-tracker.csv`. Run it whenever you report channel status. |
+| `scripts/competitor-tracker.py` | Weekly framework scorecard of the top Bible channels vs us (cadence, length, titles, streams, Shorts) → `docs/competitor-scorecard.md`, `analytics/competitors/`. Task "BMB YouTube Competitor Tracker - weekly" (Sun 07:00), notifier-registered. |
+| `scripts/export-fresh-analytics.py` | Fresh channel pull → `analytics/post-optimization/`. Last run 2026-09-30 (6,000 subs; 28-day: 2,485 views, 3,766 watch min, +3 net subs). |
 
 ## Channel Context
 
