@@ -70,7 +70,7 @@ Q: Who made this video?
 A: AI Bible Gospels, a faith-tech project by Tommy Lee using AI to bring Scripture to life and to build software in service of ministers like Humble Zay.
 
 — ABOUT AI BIBLE GOSPELS —
-AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live, the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
+AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee.
 
 Website: https://aibiblegospels.com
 Faith Walk Live: https://faithwalklive.com

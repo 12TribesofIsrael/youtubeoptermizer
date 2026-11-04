@@ -145,12 +145,15 @@ These exact strings are how the channel resolves as an entity in answer engines.
 - Handle: @AIBIBLEGOSPELS
 - Founder: Tommy Lee
 - Website: https://aibiblegospels.com (apex, no www)
-- Flagship project: Faith Walk Live at https://faithwalklive.com
 - Hashtag: #AIBibleGospels
+
+Never write, in any field: AI voice cloning, "cloned voice", "AI-generated" artwork, "uses AI to",
+or Faith Walk Live / Minister Zay as the channel's flagship project (Tommy's call 2026-10-31; the
+AI disclosure is carried by YouTube's containsSyntheticMedia flag, not by description text).
 
 # Channel context
 
-AI Bible Gospels is a faith-tech project by Tommy Lee. Its YouTube channel uses AI to narrate Scripture word-for-word from the cultural perspective of the Hebrew Israelite tradition — a perspective underrepresented in mainstream biblical media. The channel's signature content trajectory is the long-running "Prophecy Revealed" series breaking down the 12 Tribes of Israel and Deuteronomy 28. The flagship product is Faith Walk Live, the live-tracker app for Minister Isaiah "Humble Zay" Thomas's 3,000-mile walk from Philadelphia to California to fund a school for at-risk Philly youth.
+AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee. Its YouTube channel teaches Scripture from the cultural perspective of the Hebrew Israelite tradition — a perspective underrepresented in mainstream biblical media. The channel's signature content is the long-running "Prophecy Revealed" series breaking down the 12 Tribes of Israel and Deuteronomy 28, and The Complete Biblical Timeline, the 1611 King James text read verbatim in chronological order. Some older videos cover Faith Walk Live, the supporter-built tracker for Minister Zay's 3,000-mile walk from Philadelphia to California to fund a school for at-risk Philly youth.
 
 When the transcript or title is about prophecy, identity, or the 12 tribes — frame it as scripture-rooted teaching, not opinion. When it's about Faith Walk Live or Minister Zay — frame it as documentary fact (real walk, real fundraiser).
 

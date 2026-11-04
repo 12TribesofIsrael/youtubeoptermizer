@@ -1,4 +1,9 @@
-"""Overwrite the channel About-page description with the AEO-spec text."""
+"""Overwrite the channel About-page description with the AEO-spec text.
+
+Tommy hand-wrote the live About text after 2026-10-31. This script refuses to replace a
+live About that differs from ABOUT_TEXT unless --force is passed, so a re-run cannot
+silently wipe his own words.
+"""
 
 import sys
 from pathlib import Path
@@ -7,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.youtube.client import YouTubeClient
 
-ABOUT_TEXT = """AI Bible Gospels is a faith-tech brand founded by Tommy Lee that uses AI to narrate Scripture word-for-word from a cultural perspective underrepresented in biblical media. Flagship project: Faith Walk Live (faithwalklive.com), the live tracker for Minister Zay's 3,000-mile walk from Philadelphia to California.
+ABOUT_TEXT = """AI Bible Gospels (@AIBIBLEGOSPELS) is a faith-tech brand founded by Tommy Lee.
 
 Website: https://aibiblegospels.com
 Faith Walk Live: https://faithwalklive.com
@@ -27,6 +32,11 @@ print(f"\nNew description ({len(ABOUT_TEXT)} chars):")
 print("-" * 60)
 print(ABOUT_TEXT)
 print("-" * 60)
+
+if old_desc.strip() != ABOUT_TEXT.strip() and "--force" not in sys.argv:
+    print("\nLive About text differs and may be Tommy's own wording. Not overwriting.")
+    print("Re-run with --force only if he asked for this replacement.")
+    sys.exit(1)
 
 print("\nUpdating channel About page...")
 client.update_channel_description(ABOUT_TEXT)
