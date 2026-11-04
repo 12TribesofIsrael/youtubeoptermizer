@@ -1,0 +1,565 @@
+{
+ "date": "2026-10-04",
+ "channels": [
+  {
+   "handle": "HolyBibleChannel",
+   "role": "peer",
+   "subs": 873000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 126.3,
+   "median_views_last10": 409534,
+   "views_per_sub": 0.4691,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 1,
+   "shorts_median_views": 4200,
+   "title_subtitle_pct": 100,
+   "title_hook_pct": 10,
+   "title_question_pct": 0,
+   "title_full_pct": 20,
+   "latest_upload": "20260525",
+   "top_recent": [
+    {
+     "title": "1 Samuel — From Samuel’s Calling to David’s Anointing: The Rise of a King",
+     "views": 1453278,
+     "min": 142
+    },
+    {
+     "title": "Judges — Strength, Betrayal, and Redemption",
+     "views": 994888,
+     "min": 107
+    },
+    {
+     "title": "1 Kings — Rise of Glory, Fall of Hearts, and the Voice of the Prophets",
+     "views": 642963,
+     "min": 129
+    }
+   ]
+  },
+  {
+   "handle": "DeepBibleStories",
+   "role": "peer",
+   "subs": 686000,
+   "uploads_28d": 15,
+   "uploads_per_week": 3.75,
+   "median_len_min": 69.7,
+   "median_views_last10": 11780,
+   "views_per_sub": 0.0172,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 6,
+   "shorts_median_views": 6300,
+   "title_subtitle_pct": 50,
+   "title_hook_pct": 80,
+   "title_question_pct": 20,
+   "title_full_pct": 10,
+   "latest_upload": "20261003",
+   "top_recent": [
+    {
+     "title": "Fix Your Thoughts: What Nobody Tells You About Biblical Mindset Renewal",
+     "views": 15824,
+     "min": 105
+    },
+    {
+     "title": "The Prophecy of The Valley of Dry Bones Explained | DEEP BIBLE STORIES",
+     "views": 15191,
+     "min": 86
+    },
+    {
+     "title": "10 Lessons From Galatians That Will SHATTER Your Religion EXPLAINED",
+     "views": 13714,
+     "min": 70
+    }
+   ]
+  },
+  {
+   "handle": "TheAIBibleOfficial",
+   "role": "peer",
+   "subs": 415000,
+   "uploads_28d": 3,
+   "uploads_per_week": 0.75,
+   "median_len_min": 5.8,
+   "median_views_last10": 42362,
+   "views_per_sub": 0.1021,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 3400,
+   "title_subtitle_pct": 0,
+   "title_hook_pct": 40,
+   "title_question_pct": 0,
+   "title_full_pct": 20,
+   "latest_upload": "20261002",
+   "top_recent": [
+    {
+     "title": "Isaiah's INSANE Vision of God's Throne Room",
+     "views": 255027,
+     "min": 5
+    },
+    {
+     "title": "The Birth of Jesus...",
+     "views": 109356,
+     "min": 9
+    },
+    {
+     "title": "When Jesus Speaks, Demons Obey",
+     "views": 47374,
+     "min": 6
+    }
+   ]
+  },
+  {
+   "handle": "TheSecretsOfTheBibleAIOfficial",
+   "role": "peer",
+   "subs": 605000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 4.4,
+   "median_views_last10": 3206,
+   "views_per_sub": 0.0053,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 0,
+   "shorts_median_views": null,
+   "title_subtitle_pct": 60,
+   "title_hook_pct": 100,
+   "title_question_pct": 90,
+   "title_full_pct": 0,
+   "latest_upload": "20260929",
+   "top_recent": [
+    {
+     "title": "Why Did God Put Israel’s FAILURES Inside the Ark?",
+     "views": 61503,
+     "min": 4
+    },
+    {
+     "title": "Who Dressed JESUS After the Resurrection? | What the Gospels Tell Us",
+     "views": 19923,
+     "min": 4
+    },
+    {
+     "title": "Why God Doesn’t Fight SATAN Himself | Revelation 20 Explained",
+     "views": 11322,
+     "min": 6
+    }
+   ]
+  },
+  {
+   "handle": "BibleNutshells",
+   "role": "peer",
+   "subs": 447000,
+   "uploads_28d": 3,
+   "uploads_per_week": 0.75,
+   "median_len_min": 23.3,
+   "median_views_last10": 169915,
+   "views_per_sub": 0.3801,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 11,
+   "shorts_median_views": 3600,
+   "title_subtitle_pct": 100,
+   "title_hook_pct": 30,
+   "title_question_pct": 10,
+   "title_full_pct": 70,
+   "latest_upload": "20261003",
+   "top_recent": [
+    {
+     "title": "The Bible (Full Movie 2026) | 4K Animated Bible Movie",
+     "views": 2204741,
+     "min": 31
+    },
+    {
+     "title": "The Birth of Jesus Christ | Animated Bible Movie",
+     "views": 2051937,
+     "min": 36
+    },
+    {
+     "title": "David y Goliat | Película Bíblica Animada",
+     "views": 1889706,
+     "min": 23
+    }
+   ]
+  },
+  {
+   "handle": "AIBIBLESAGAS",
+   "role": "peer",
+   "subs": 121000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 48.1,
+   "median_views_last10": 354248,
+   "views_per_sub": 2.9277,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 5,
+   "shorts_median_views": 11000,
+   "title_subtitle_pct": 14,
+   "title_hook_pct": 100,
+   "title_question_pct": 0,
+   "title_full_pct": 86,
+   "latest_upload": "20260418",
+   "top_recent": [
+    {
+     "title": "THE BOOK OF NUMBERS (THE MOVIE) @AIBIBLESAGAS",
+     "views": 1232934,
+     "min": 58
+    },
+    {
+     "title": "THE BOOK OF 1st SAMUEL (THE MOVIE) @AIBIBLESAGAS",
+     "views": 602714,
+     "min": 101
+    },
+    {
+     "title": "THE BOOK OF JUDGES (THE MOVIE) @AIBIBLESAGAS",
+     "views": 409225,
+     "min": 58
+    }
+   ]
+  },
+  {
+   "handle": "bible.animations",
+   "role": "peer",
+   "subs": 797000,
+   "uploads_28d": 2,
+   "uploads_per_week": 0.5,
+   "median_len_min": 39.4,
+   "median_views_last10": 275264,
+   "views_per_sub": 0.3454,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 57000,
+   "title_subtitle_pct": 10,
+   "title_hook_pct": 90,
+   "title_question_pct": 10,
+   "title_full_pct": 10,
+   "latest_upload": "20261003",
+   "top_recent": [
+    {
+     "title": "The Humans BEFORE Adam and Eve were SCARY...",
+     "views": 2286201,
+     "min": 34
+    },
+    {
+     "title": "The CRAZY Jesus Theory going VIRAL right now (and it might actually be true)",
+     "views": 584836,
+     "min": 32
+    },
+    {
+     "title": "Why Everyone is Talking about the Nephilim right now...",
+     "views": 494006,
+     "min": 34
+    }
+   ]
+  },
+  {
+   "handle": "BibleChroniclesAnimation",
+   "role": "peer",
+   "subs": 485000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 22.7,
+   "median_views_last10": 131601,
+   "views_per_sub": 0.2713,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 6,
+   "shorts_median_views": 15000,
+   "title_subtitle_pct": 100,
+   "title_hook_pct": 25,
+   "title_question_pct": 0,
+   "title_full_pct": 0,
+   "latest_upload": "20260815",
+   "top_recent": [
+    {
+     "title": "The Story of Lazarus and the Rich Man | The Parable That Warns About Eternity | Animated Bible Story",
+     "views": 518412,
+     "min": 22
+    },
+    {
+     "title": "The Story of Hosea | Shocking Animated Bible Story of The Most Heartbreaking Relationship",
+     "views": 268320,
+     "min": 23
+    },
+    {
+     "title": "The Passion of Christ | Last Supper, Trial, Crucifixion, Death & Resurrection | Animated Bible Story",
+     "views": 245792,
+     "min": 55
+    }
+   ]
+  },
+  {
+   "handle": "BibleStoriesinBlack",
+   "role": "peer",
+   "subs": 107000,
+   "uploads_28d": 2,
+   "uploads_per_week": 0.5,
+   "median_len_min": 15.7,
+   "median_views_last10": 10069,
+   "views_per_sub": 0.0941,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 1900,
+   "title_subtitle_pct": 80,
+   "title_hook_pct": 50,
+   "title_question_pct": 40,
+   "title_full_pct": 0,
+   "latest_upload": "20260927",
+   "top_recent": [
+    {
+     "title": "Why Did David’s Son Absalom Rebel Against Him?",
+     "views": 58501,
+     "min": 15
+    },
+    {
+     "title": "David and Bathsheba: The Woman Behind the Story",
+     "views": 48061,
+     "min": 17
+    },
+    {
+     "title": "Why Did King David Bring Mephibosheth to His Table? | Bible Story",
+     "views": 13691,
+     "min": 14
+    }
+   ]
+  },
+  {
+   "handle": "IUICintheClassRoom",
+   "role": "peer",
+   "subs": 203000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 49.7,
+   "median_views_last10": 19519,
+   "views_per_sub": 0.0962,
+   "streams_28d": 5,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 9000,
+   "title_subtitle_pct": 44,
+   "title_hook_pct": 11,
+   "title_question_pct": 0,
+   "title_full_pct": 0,
+   "latest_upload": "20260827",
+   "top_recent": [
+    {
+     "title": "The Hidden Truth About The Feast of Tabernacles",
+     "views": 100668,
+     "min": 88
+    },
+    {
+     "title": "In a Game of Fools Without The Rules",
+     "views": 22968,
+     "min": 197
+    },
+    {
+     "title": "Our Forefathers Built This; We as Sons Must Preserve This!",
+     "views": 22495,
+     "min": 51
+    }
+   ]
+  },
+  {
+   "handle": "aGATHERING144",
+   "role": "peer",
+   "subs": 137000,
+   "uploads_28d": 7,
+   "uploads_per_week": 1.75,
+   "median_len_min": 8.6,
+   "median_views_last10": 2756,
+   "views_per_sub": 0.0201,
+   "streams_28d": 5,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 1400,
+   "title_subtitle_pct": 100,
+   "title_hook_pct": 0,
+   "title_question_pct": 29,
+   "title_full_pct": 0,
+   "latest_upload": "20261003",
+   "top_recent": [
+    {
+     "title": "If the World Hate You: John 15 | Decoding the Times",
+     "views": 3788,
+     "min": 9
+    },
+    {
+     "title": "Joseph Didn't Know the Book Was Being Written | Sabbath Teaching",
+     "views": 3115,
+     "min": 9
+    },
+    {
+     "title": "Behold, How Good and How Pleasant: Psalms 133 | Decoding the Times",
+     "views": 2811,
+     "min": 9
+    }
+   ]
+  },
+  {
+   "handle": "BenayahIsrael",
+   "role": "peer",
+   "subs": 98700,
+   "uploads_28d": 3,
+   "uploads_per_week": 0.75,
+   "median_len_min": 17.5,
+   "median_views_last10": 7238,
+   "views_per_sub": 0.0733,
+   "streams_28d": 5,
+   "live_now": 0,
+   "shorts_listed": 3,
+   "shorts_median_views": 8000,
+   "title_subtitle_pct": 40,
+   "title_hook_pct": 0,
+   "title_question_pct": 10,
+   "title_full_pct": 0,
+   "latest_upload": "20261001",
+   "top_recent": [
+    {
+     "title": "Nancy Grace Crosses Up Officer Tatum",
+     "views": 30682,
+     "min": 20
+    },
+    {
+     "title": "Moedim - Episode 1 - The Nephilim and the Serpent",
+     "views": 14951,
+     "min": 31
+    },
+    {
+     "title": "New Music - Real Israel's National Anthem - Ride Out",
+     "views": 14945,
+     "min": 9
+    }
+   ]
+  },
+  {
+   "handle": "ScourbyYouBible",
+   "role": "peer",
+   "subs": 309000,
+   "uploads_28d": 6,
+   "uploads_per_week": 1.5,
+   "median_len_min": 11.3,
+   "median_views_last10": 1005,
+   "views_per_sub": 0.0033,
+   "streams_28d": 0,
+   "live_now": 5,
+   "shorts_listed": 15,
+   "shorts_median_views": 558,
+   "title_subtitle_pct": 100,
+   "title_hook_pct": 0,
+   "title_question_pct": 0,
+   "title_full_pct": 0,
+   "latest_upload": "20261003",
+   "top_recent": [
+    {
+     "title": "8 | Psalm 23:1 | Mini Sermon | TOP 100 Bible Verses KJV | By Alexander Scourby | Audio & text",
+     "views": 1435,
+     "min": 11
+    },
+    {
+     "title": "John 17:12 | Mini Sermon | Greatest Bible Verses KJV | By Alexander Scourby | Audio & text",
+     "views": 1242,
+     "min": 12
+    },
+    {
+     "title": "9 | Psalm 23:3 | Mini Sermon | TOP 100 Bible Verses KJV | By Alexander Scourby | Audio & text",
+     "views": 1059,
+     "min": 10
+    }
+   ]
+  },
+  {
+   "handle": "bibleproject",
+   "role": "watch",
+   "subs": 5480000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": 5.5,
+   "median_views_last10": 68315,
+   "views_per_sub": 0.0125,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 20000,
+   "title_subtitle_pct": 20,
+   "title_hook_pct": 20,
+   "title_question_pct": 30,
+   "title_full_pct": 0,
+   "latest_upload": "20260824",
+   "top_recent": [
+    {
+     "title": "Global Stories: Japan",
+     "views": 239880,
+     "min": 12
+    },
+    {
+     "title": "Exploring Wisdom In All 10 Commandments",
+     "views": 161586,
+     "min": 54
+    },
+    {
+     "title": "Why The Sabbath Is One Of The Most Important Practices In Human History",
+     "views": 100094,
+     "min": 6
+    }
+   ]
+  },
+  {
+   "handle": "SaddlebackKids",
+   "role": "watch",
+   "subs": 1000000,
+   "uploads_28d": 0,
+   "uploads_per_week": 0.0,
+   "median_len_min": null,
+   "median_views_last10": null,
+   "views_per_sub": null,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 13,
+   "shorts_median_views": 48000,
+   "title_subtitle_pct": 0,
+   "title_hook_pct": 0,
+   "title_question_pct": 0,
+   "title_full_pct": 0,
+   "latest_upload": "",
+   "top_recent": []
+  },
+  {
+   "handle": "AIBIBLEGOSPELS",
+   "role": "ours",
+   "subs": 6000,
+   "uploads_28d": 2,
+   "uploads_per_week": 0.5,
+   "median_len_min": 9.4,
+   "median_views_last10": 65,
+   "views_per_sub": 0.0109,
+   "streams_28d": 0,
+   "live_now": 0,
+   "shorts_listed": 15,
+   "shorts_median_views": 849,
+   "title_subtitle_pct": 90,
+   "title_hook_pct": 60,
+   "title_question_pct": 10,
+   "title_full_pct": 30,
+   "latest_upload": "20261004",
+   "top_recent": [
+    {
+     "title": "REVELATION 21 : Is This What the New Jerusalem Looks Like?",
+     "views": 142,
+     "min": 5
+    },
+    {
+     "title": "FROM EDEN TO TIMBUKTU: The Hidden History of the Black Hebrews | Full Documentary",
+     "views": 131,
+     "min": 97
+    },
+    {
+     "title": "The Complete Story: Why Your Bible Timeline Is Broken | KJV + Apocrypha",
+     "views": 99,
+     "min": 5
+    }
+   ]
+  }
+ ]
+}
