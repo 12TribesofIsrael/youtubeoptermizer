@@ -81,4 +81,6 @@
 - [Kling generate_audio defaults TRUE](feedback_kling_generate_audio_defaults_true.md) — omitting it bills +50% for silence; verify payload matches quoted rate before bulk, check balance delta after clip #1
 - [Kling v3 resolution tiers](reference_kling_v3_resolution_tiers.md) — standard caps 720p; PRO + 16:9 1920x1080 source = 1080p; Kling mirrors input aspect; motion prompts describe CAMERA only
 - [YT tag 500-char cap](feedback_yt_tag_500_char_cap.md) — videos.insert rejects invalidTags when combined tag length >~500 chars (incl quotes+commas); keep to ~15-18 tags; fails before video created (clean retry)
+- [Brand line: no AI-disclosure text](feedback_brand_line_no_ai_disclosure_text.md) — since 2026-10-31 no cloning/AI-art/Faith Walk lines in YT copy; YT scripts fixed 2026-11-04; IG/FB scripts + Eden live description still carry old text
+- [Biblical Timeline series state](project_biblical_timeline_series_state.md) — 84 eps scheduled to 12-26; only e01 has Tommy's Take; Saturday lives not happening; biblerevamp owns uploads
 - [Viral thumbnail generator](reference_viral_thumbnail_generator.md) — scripts/generate-eden-full-thumbnail.py: fal FLUX-pro bg + PIL gold-serif typeset text (reliable, no garbled letters); 3 CTR variants 1280x720
